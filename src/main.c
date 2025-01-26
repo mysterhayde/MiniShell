@@ -11,10 +11,12 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_mini	mini;
 
+	(void)argc;
+	(void)argv;
 	init(&mini, envp);
 	while (1)
 	{
-		ft_printf("MyShell> %s, %s", argv[0], envp[0]);
+		ft_printf("%s ~ MyShell> ", mini.user);
 		get_next_line(1);
 	}
 	return (0);
