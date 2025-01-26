@@ -3,7 +3,7 @@ CC = cc
 RM = rm -rf
 FLAGS = -Werror -Wextra -Wall -g3
 
-SRC = $(MAIN_SRC)
+SRC = src/$(MAIN_SRC)
 MAIN_SRC = main.c 
 
 LIBFT_A = libft.a
