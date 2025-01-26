@@ -1,0 +1,26 @@
+ECHO
+NAME
+echo - display a line of text
+SYNOPSIS
+echo [-n] [string ...]
+DESCRIPTION
+The echo utility writes any specified operands to standard output. By default, a newline is output after the last operand.
+OPTIONS
+
+-n: Do not output the trailing newline
+
+ALLOWED FUNCTIONS
+
+write()
+malloc() / free() (if needed for string manipulation)
+
+RETURN VALUE
+
+Returns 0 on success
+Returns 1 if write fails
+
+NOTES
+
+Multiple arguments should be separated by a single space in the output
+If no arguments are given, only a newline is printed (unless -n option is used)
+Does not interpret escape sequences

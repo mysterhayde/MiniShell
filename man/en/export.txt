@@ -1,0 +1,24 @@
+EXPORT
+NAME
+export - set export attribute for shell variables
+SYNOPSIS
+export [name[=value] ...]
+DESCRIPTION
+Sets the export attribute on variables, making them available to child processes.
+ALLOWED FUNCTIONS
+
+malloc() / free()
+write()
+
+RETURN VALUE
+
+Returns 0 on success
+Returns 1 if invalid identifier
+
+NOTES
+
+Without arguments, displays all exported variables
+Format for display: declare -x name="value"
+Variables must be displayed in alphabetical order
+Variable names must be valid (start with letter or underscore, followed by letters, numbers, or underscores)
+Handles appending to existing variables using +=

@@ -1,0 +1,22 @@
+EXIT
+NOM
+exit - provoque la sortie du shell
+SYNOPSIS
+exit [n]
+DESCRIPTION
+Quitte le shell avec un statut n, si spécifié. Si n est omis, le statut de sortie est celui de la dernière commande exécutée.
+FONCTIONS AUTORISÉES
+
+exit()
+
+VALEUR DE RETOUR
+
+Si n est spécifié, sort avec le statut n modulo 256
+Si n est omis, sort avec le statut de la dernière commande exécutée
+
+NOTES
+
+Doit gérer uniquement les arguments numériques
+Les arguments non numériques doivent générer un message d'erreur et un statut de sortie 2
+Doit gérer les statuts de sortie de 0 à 255
+Doit nettoyer correctement toutes les ressources allouées avant de quitter

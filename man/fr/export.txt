@@ -1,0 +1,24 @@
+EXPORT
+NOM
+export - définit l'attribut d'exportation pour les variables shell
+SYNOPSIS
+export [nom[=valeur] ...]
+DESCRIPTION
+Définit l'attribut d'exportation sur les variables, les rendant disponibles aux processus enfants.
+FONCTIONS AUTORISÉES
+
+malloc() / free()
+write()
+
+VALEUR DE RETOUR
+
+Renvoie 0 en cas de succès
+Renvoie 1 si l'identifiant est invalide
+
+NOTES
+
+Sans arguments, affiche toutes les variables exportées
+Format d'affichage : declare -x nom="valeur"
+Les variables doivent être affichées par ordre alphabétique
+Les noms de variables doivent être valides (commencer par une lettre ou un underscore, suivi de lettres, chiffres ou underscores)
+Gère l'ajout aux variables existantes avec +=
