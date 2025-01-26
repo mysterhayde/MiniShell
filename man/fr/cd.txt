@@ -1,0 +1,59 @@
+Documentation des Commandes Intégrées de Minishell
+ECHO
+NOM
+
+echo - affiche une ligne de texte
+SYNOPSIS
+
+echo [-n] [chaîne ...]
+DESCRIPTION
+
+L'utilitaire echo écrit les opérandes spécifiés sur la sortie standard. Par défaut, un saut de ligne est ajouté après le dernier opérande.
+OPTIONS
+
+    -n: N'affiche pas le saut de ligne final
+
+FONCTIONS AUTORISÉES
+
+    write()
+    malloc() / free() (si nécessaire pour la manipulation de chaînes)
+
+VALEUR DE RETOUR
+
+    Renvoie 0 en cas de succès
+    Renvoie 1 si l'écriture échoue
+
+NOTES
+
+    Les arguments multiples doivent être séparés par un seul espace dans la sortie
+    Si aucun argument n'est donné, seul un saut de ligne est imprimé (sauf avec l'option -n)
+    N'interprète pas les séquences d'échappement
+
+CD
+NOM
+
+cd - change le répertoire de travail
+SYNOPSIS
+
+cd [répertoire]
+DESCRIPTION
+
+Change le répertoire de travail courant du processus appelant vers le répertoire spécifié.
+FONCTIONS AUTORISÉES
+
+    chdir()
+    getcwd()
+    malloc() / free()
+    perror()
+
+VALEUR DE RETOUR
+
+    Renvoie 0 en cas de succès
+    Renvoie 1 si le répertoire n'existe pas ou si les permissions sont insuffisantes
+
+NOTES
+
+    Doit gérer les chemins relatifs et absolus
+    Doit mettre à jour les variables d'environnement PWD et OLDPWD
+    Si aucun répertoire n'est spécifié, doit changer vers le répertoire personnel
+    Gérer "cd -" pour revenir au répertoire précédent (OLDPWD)

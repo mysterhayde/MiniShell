@@ -1,0 +1,22 @@
+UNSET
+NAME
+unset - remove variable or function names
+SYNOPSIS
+unset name [name ...]
+DESCRIPTION
+Remove variables from the shell environment.
+ALLOWED FUNCTIONS
+
+malloc() / free()
+
+RETURN VALUE
+
+Returns 0 on success
+Returns 1 if invalid identifier
+
+NOTES
+
+Can remove multiple variables at once
+Should not display any output
+Invalid identifiers should be ignored
+Should handle attempt to unset non-existent variables gracefully

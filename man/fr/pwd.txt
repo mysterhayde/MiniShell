@@ -1,0 +1,23 @@
+PWD
+NOM
+pwd - affiche le répertoire de travail courant
+SYNOPSIS
+pwd
+DESCRIPTION
+Affiche le chemin complet du répertoire de travail courant.
+FONCTIONS AUTORISÉES
+
+getcwd()
+malloc() / free()
+write()
+
+VALEUR DE RETOUR
+
+Renvoie 0 en cas de succès
+Renvoie 1 si impossible de déterminer le répertoire courant
+
+NOTES
+
+Doit afficher le chemin absolu
+Aucune option n'a besoin d'être supportée
+Doit gérer le cas où le répertoire courant est supprimé

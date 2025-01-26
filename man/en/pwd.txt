@@ -1,0 +1,23 @@
+PWD
+NAME
+pwd - print working directory
+SYNOPSIS
+pwd
+DESCRIPTION
+Prints the full pathname of the current working directory.
+ALLOWED FUNCTIONS
+
+getcwd()
+malloc() / free()
+write()
+
+RETURN VALUE
+
+Returns 0 on success
+Returns 1 if unable to determine current directory
+
+NOTES
+
+Should print the absolute path
+No options need to be supported
+Should handle when current directory is unlinked

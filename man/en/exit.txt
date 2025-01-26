@@ -1,0 +1,22 @@
+EXIT
+NAME
+exit - cause the shell to exit
+SYNOPSIS
+exit [n]
+DESCRIPTION
+Exits the shell with a status of n, if specified. If n is omitted, the exit status is that of the last command executed.
+ALLOWED FUNCTIONS
+
+exit()
+
+RETURN VALUE
+
+If n is specified, exits with status n modulo 256
+If n is omitted, exits with the status of the last executed command
+
+NOTES
+
+Should handle numeric arguments only
+Non-numeric arguments should result in error message and exit status 2
+Must handle exit status 0-255
+Must properly clean up all allocated resources before exiting
