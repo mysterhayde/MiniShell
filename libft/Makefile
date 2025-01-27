@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+         #
+#    By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/10 21:12:44 by hdougoud          #+#    #+#              #
-#    Updated: 2024/12/16 14:17:50 by hdougoud         ###   ########.fr        #
+#    Updated: 2025/01/27 13:04:09 by cbopp            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -78,8 +78,8 @@ WHITE	= \033[1;37m
 all: $(NAME)
 
 $(NAME): $(OBJECTS)
-	ar rcs $(NAME) $(OBJECTS)
-	echo -e "$(GREEN)Libft done$(WHITE)"
+	@ar rcs $(NAME) $(OBJECTS)
+#	echo -e "$(GREEN)Libft done$(WHITE)"
 	
 clean:
 	rm -f $(OBJECTS)

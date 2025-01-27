@@ -1,10 +1,15 @@
 NAME = minishell
 CC = cc
 RM = rm -rf
-FLAGS = -Werror -Wextra -Wall -g3
+FLAGS = -Werror -Wextra -Wall -g
+MAKE := make --no-print-directory
 
 SRC = src/$(MAIN_SRC)
 MAIN_SRC = main.c 
+
+INIT_SRC = init.c
+INIT_DIR = src/init/
+INIT = $(addprefix $(INIT_DIR), $(INIT_SRC))
 
 LIBFT_A = libft.a
 LIBFT_DIR = libft/
@@ -22,14 +27,14 @@ CURSIVE='\033[3m'
 
 $(NAME): $(OBJS)
 	@echo $(CURSIVE)$(GRAY) " - Making libft..." $(NONE)
-	@make -C $(LIBFT_DIR)
+	@$(MAKE) -C $(LIBFT_DIR)
 	@echo $(CURSIVE)$(GRAY) " - Compiling $(NAME)..." $(NONE)
-	cc $(FLAGS) $(OBJS) $(LIBFT) $(PRINTF) -o $(NAME)
+	@cc $(FLAGS) $(OBJS) $(LIBFT) $(PRINTF) -o $(NAME)
 	@echo $(GREEN)"- Compiled -"$(NONE)
 
-$(OBJS): $(SRC)
+$(OBJS): $(SRC) $(INIT)
 	@echo $(CURSIVE)$(GRAY) " - Making object files..." $(NONE)
-	@$(CC) $(FLAGS) -c $(SRC)
+	@$(CC) $(FLAGS) -c $(SRC) $(INIT)
 
 %.o: %.c
 	@$(CC) $(FLAGS) -c $< -o $@
@@ -39,12 +44,12 @@ all: $(NAME)
 clean:
 	@echo $(CURSIVE)$(GRAY) " -> Cleaning object files.." $(NONE)
 	@$(RM) $(OBJS)
-	make -C $(LIBFT_DIR) clean
+	@$(MAKE) -C $(LIBFT_DIR) clean
 
 fclean: clean
-	@echo $(CURSIVE)$(GRAY) " -> Removing $(NAME) and $(CHECKER)..." $(NONE)
+	@echo $(CURSIVE)$(GRAY) " -> Removing $(NAME)" $(NONE)
 	@$(RM) $(NAME)
-	@make -C $(LIBFT_DIR) fclean
+	@$(MAKE) -C $(LIBFT_DIR) fclean
 
 re: fclean all
 
