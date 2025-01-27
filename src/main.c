@@ -2,6 +2,8 @@
 
 /**
  * @brief Sends for all variables that need to be defined
+ * @param t_mini *mini
+ * @param char **envp
  */
 void	init(t_mini *mini, char **envp)
 {
@@ -15,7 +17,7 @@ int	main(int argc, char **argv, char **envp)
 	char	*test;
 
 	char	*path;
-	path = ft_strdup("man");
+	path = ft_strdup("/home");
 
 	(void)argc;
 	(void)argv;
@@ -25,6 +27,8 @@ int	main(int argc, char **argv, char **envp)
 	{
 		ft_printf("%s ~ MyShell> ", mini.user);
 		test = get_next_line(1);
+		if (test == NULL)
+			return (0);
 		if (ft_strncmp(test, "pwd", 3) == 0)
 			pwd(&mini);
 		else if (ft_strncmp(test, "cd", 2) == 0)
@@ -33,6 +37,8 @@ int	main(int argc, char **argv, char **envp)
 			env(&mini);
 		else if (ft_strncmp(test, "echo", 4) == 0)
 			echo(TRUE, mini.user);
+		else if (ft_strncmp(test, "exit", 4) == 0)
+			exit_builtin(1);
 	}
 	return (0);
 }
