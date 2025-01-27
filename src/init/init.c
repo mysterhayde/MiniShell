@@ -22,6 +22,7 @@ static void	getuser(t_mini *mini)
 	}
 	mini->user = ft_strdup(mini->envp[i] + 5);
 }
+
 void	setupenv(t_mini *mini)
 {
 	getuser(mini);

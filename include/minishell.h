@@ -21,9 +21,9 @@ typedef enum e_bool
 
 typedef struct s_token
 {
-	char	*token;
-	t_bool	cmd;
-	t_token	*next;
+	char			*token;
+	t_bool			cmd;
+	struct s_token	*next;
 }	t_token;
 
 typedef struct s_mini 
@@ -42,5 +42,6 @@ void	setupenv(t_mini *mini);
 int		pwd(t_mini *mini);
 int		cd(const char *path);
 int		env(t_mini *mini);
+int		echo(t_bool newline, char *str);
 
 #endif

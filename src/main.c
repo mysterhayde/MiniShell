@@ -1,4 +1,3 @@
-
 #include "../include/minishell.h"
 
 /**
@@ -22,7 +21,7 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	init(&mini, envp);
 	test = malloc(sizeof(char) * BUFFER_SIZE);
-	while (1)
+	while (TRUE)
 	{
 		ft_printf("%s ~ MyShell> ", mini.user);
 		test = get_next_line(1);
@@ -32,6 +31,8 @@ int	main(int argc, char **argv, char **envp)
 			cd(path);
 		else if (ft_strncmp(test, "env", 3) == 0)
 			env(&mini);
+		else if (ft_strncmp(test, "echo", 4) == 0)
+			echo(TRUE, mini.user);
 	}
 	return (0);
 }
