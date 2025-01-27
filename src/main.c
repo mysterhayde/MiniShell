@@ -21,7 +21,7 @@ int	main(int argc, char **argv, char **envp)
 		ft_printf("%s ~ MyShell> ", mini.user);
 		test = get_next_line(1);
 		if (ft_strncmp(test, "pwd", 3) == 0)
-			pwd();
+			pwd(&mini);
 	}
 	return (0);
 }

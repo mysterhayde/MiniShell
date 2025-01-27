@@ -15,17 +15,17 @@
 
 typedef struct s_mini 
 {
-	int		argc;
-	char	**argv;
 	char	**envp;
 	char	*user;
-	char	**path;
+	char	*cur_path;
 } t_mini;
 
 // Init
+void	getcurpath(t_mini *mini);
 void	setupenv(t_mini *mini);
 
 // cmds
-int		pwd(void);
+int		pwd(t_mini *mini);
+int		cd(char *path);
 
 #endif

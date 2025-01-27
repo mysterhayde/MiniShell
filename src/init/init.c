@@ -1,6 +1,16 @@
 #include "../../include/minishell.h"
 
-void	getuser(t_mini *mini)
+void	getcurpath(t_mini *mini)
+{
+	char	buf[BUFFER_SIZE];
+
+	mini->cur_path = getcwd(buf, BUFFER_SIZE);
+	if (mini->cur_path != NULL)
+		return ;
+	perror("Pwd");
+}
+
+static void	getuser(t_mini *mini)
 {
 	int	i;
 
@@ -15,4 +25,5 @@ void	getuser(t_mini *mini)
 void	setupenv(t_mini *mini)
 {
 	getuser(mini);
+	getcurpath(mini);
 }
