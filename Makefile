@@ -1,7 +1,7 @@
 NAME = minishell
 CC = cc
 RM = rm -rf
-FLAGS = -Werror -Wextra -Wall -g
+FLAGS = -Werror -Wextra -Wall -g -fsanitize=leak
 MAKE := make --no-print-directory
 
 SRC = src/$(MAIN_SRC)
@@ -11,7 +11,7 @@ INIT_SRC = init.c
 INIT_DIR = src/init/
 INIT = $(addprefix $(INIT_DIR), $(INIT_SRC))
 
-CMDS_SRC = pwd.c cd.c env.c echo.c
+CMDS_SRC = pwd.c cd.c env.c echo.c exit.c
 CMDS_DIR = src/cmds/
 CMDS = $(addprefix $(CMDS_DIR), $(CMDS_SRC))
 

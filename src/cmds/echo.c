@@ -2,7 +2,7 @@
 
 /**
  * @brief Writes str to std output with the option to 
- * @param t_bool newline - TRUE=print "\n" FALSE=dont print "\n"
+ * @param t_bool newline - TRUE=print FALSE=!print
  * @param char *str - String to print
  * @returns 1 on success 0 on fail
  */

@@ -10,6 +10,10 @@ void	getcurpath(t_mini *mini)
 	perror("Pwd");
 }
 
+/**
+ * @brief Gets USER from env
+ * @param t_mini *mini
+ */
 static void	getuser(t_mini *mini)
 {
 	int	i;
