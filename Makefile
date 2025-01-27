@@ -11,7 +11,7 @@ INIT_SRC = init.c
 INIT_DIR = src/init/
 INIT = $(addprefix $(INIT_DIR), $(INIT_SRC))
 
-CMDS_SRC = pwd.c cd.c
+CMDS_SRC = pwd.c cd.c env.c
 CMDS_DIR = src/cmds/
 CMDS = $(addprefix $(CMDS_DIR), $(CMDS_SRC))
 

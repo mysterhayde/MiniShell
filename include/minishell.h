@@ -27,5 +27,6 @@ void	setupenv(t_mini *mini);
 // cmds
 int		pwd(t_mini *mini);
 int		cd(const char *path);
+int		env(t_mini *mini);
 
 #endif

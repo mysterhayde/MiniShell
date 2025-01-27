@@ -30,6 +30,8 @@ int	main(int argc, char **argv, char **envp)
 			pwd(&mini);
 		else if (ft_strncmp(test, "cd", 2) == 0)
 			cd(path);
+		else if (ft_strncmp(test, "env", 3) == 0)
+			env(&mini);
 	}
 	return (0);
 }
