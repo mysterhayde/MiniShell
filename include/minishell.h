@@ -23,6 +23,9 @@ typedef struct s_mini
 } t_mini;
 
 // Init
-int	setupenv(t_mini mini);
+void	setupenv(t_mini *mini);
+
+// cmds
+int		pwd(void);
 
 #endif
