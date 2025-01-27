@@ -4,17 +4,14 @@
  * @brief Gets current working directory
  * @warning Returns 0 on success, 1 on failure
  */
-int	pwd(void)
+int	pwd(t_mini *mini)
 {
-	char	buf[BUFFER_SIZE];
-	char	*tmp;
-
-	tmp = malloc(sizeof(char *) * BUFFER_SIZE);
-	tmp = getcwd(buf, BUFFER_SIZE);
-	if (tmp != NULL)
+	getcurpath(mini);
+	if (mini->cur_path != NULL)
 	{
-		ft_printf("%s\n", buf);
+		ft_printf("%s\n", mini->cur_path);
 		return (0);
 	}
+	perror("pwd");
 	return (1);
 }
