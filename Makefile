@@ -11,6 +11,10 @@ INIT_SRC = init.c
 INIT_DIR = src/init/
 INIT = $(addprefix $(INIT_DIR), $(INIT_SRC))
 
+CMDS_SRC = pwd.c
+CMDS_DIR = src/cmds/
+CMDS = $(addprefix $(CMDS_DIR), $(CMDS_SRC))
+
 LIBFT_A = libft.a
 LIBFT_DIR = libft/
 LIBFT = $(addprefix $(LIBFT_DIR), $(LIBFT_A))
@@ -32,9 +36,9 @@ $(NAME): $(OBJS)
 	@cc $(FLAGS) $(OBJS) $(LIBFT) $(PRINTF) -o $(NAME)
 	@echo $(GREEN)"- Compiled -"$(NONE)
 
-$(OBJS): $(SRC) $(INIT)
+$(OBJS): $(SRC) $(INIT) $(CMDS)
 	@echo $(CURSIVE)$(GRAY) " - Making object files..." $(NONE)
-	@$(CC) $(FLAGS) -c $(SRC) $(INIT)
+	@$(CC) $(FLAGS) -c $(SRC) $(INIT) $(CMDS)
 
 %.o: %.c
 	@$(CC) $(FLAGS) -c $< -o $@
