@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 14:42:44 by root              #+#    #+#             */
-/*   Updated: 2025/01/27 15:54:26 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/01/27 18:57:03 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void	ft_free_chartable(char **table)
 	}
 	free(table);
 }
+
 /**
  * @brief Prints all the elements in a table of strings
  * @param char **table of chars
