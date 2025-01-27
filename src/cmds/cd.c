@@ -3,6 +3,7 @@
 /**
  * @brief Basic cd, not completed
  * @param constchar *path
+ * @returns 0 on success, 1 on fail
  * @warning DOES NOT WORK WITH ABSOLUTE PATH
  */
 int	cd(const char *path)
