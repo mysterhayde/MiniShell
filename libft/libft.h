@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 13:27:54 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/01/27 13:59:02 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/01/27 15:48:09 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,10 @@ int		print_hex_pf(unsigned int un, int *value, char param);
 char	*get_next_line(int fd);
 int		ft_gnl_strchr(char *str);
 
-//------------------------------------------------------------------------------
+//-----------------------------------Tables-------------------------------------
+
+size_t	ft_chartable_linecount(char **table);
+void	ft_free_chartable(char **table);
+int		ft_print_chartable(char **table);
 
 #endif
