@@ -13,11 +13,25 @@
 # include <readline/history.h>
 # include "../libft/libft.h"
 
+typedef enum e_bool
+{
+	TRUE = 1,
+	FALSE = 0
+}	t_bool;
+
+typedef struct s_token
+{
+	char	*token;
+	t_bool	cmd;
+	t_token	*next;
+}	t_token;
+
 typedef struct s_mini 
 {
 	char	**envp;
 	char	*user;
 	char	*cur_path;
+	t_token	*tokens;
 } t_mini;
 
 // Init
