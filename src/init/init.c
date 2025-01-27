@@ -15,9 +15,8 @@ static void	getuser(t_mini *mini)
 	int	i;
 
 	i = 0;
-	while (mini->envp[i] && ft_strnstr(mini->envp[i], "USER", 4) == 0)
+	while (mini->envp[i] && ft_strnstr(mini->envp[i], "USER=", 5) == 0)
 	{
-		(mini->envp)++;
 		i++;
 	}
 	mini->user = ft_strdup(mini->envp[i] + 5);
