@@ -22,11 +22,10 @@ int	main(int argc, char **argv, char **envp)
 	(void)argc;
 	(void)argv;
 	init(&mini, envp);
-	test = malloc(sizeof(char) * BUFFER_SIZE);
 	while (TRUE)
 	{
-		ft_printf("%s ~ MyShell> ", mini.user);
-		test = get_next_line(1);
+		ft_printf("%s ", mini.user);
+		test = readline("~ MyShell> ");
 		if (test == NULL)
 			return (0);
 		if (ft_strncmp(test, "pwd", 3) == 0)
