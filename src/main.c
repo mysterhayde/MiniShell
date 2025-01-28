@@ -10,7 +10,7 @@ void	init(t_mini *mini, char **envp)
 	mini->envp = envp;
 	setupenv(mini);
 }
-
+//test
 int	main(int argc, char **argv, char **envp)
 {
 	t_mini	mini;
