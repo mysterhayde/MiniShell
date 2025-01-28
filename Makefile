@@ -33,7 +33,7 @@ $(NAME): $(OBJS)
 	@echo $(CURSIVE)$(GRAY) " - Making libft..." $(NONE)
 	@$(MAKE) -C $(LIBFT_DIR)
 	@echo $(CURSIVE)$(GRAY) " - Compiling $(NAME)..." $(NONE)
-	@cc $(FLAGS) $(OBJS) $(LIBFT) $(PRINTF) -o $(NAME)
+	@cc $(FLAGS) $(OBJS) $(LIBFT) $(PRINTF) -o $(NAME) -lreadline -lhistory
 	@echo $(GREEN)"- Compiled -"$(NONE)
 
 $(OBJS): $(SRC) $(INIT) $(CMDS)

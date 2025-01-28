@@ -23,6 +23,7 @@ typedef struct s_token
 {
 	char			*token;
 	t_bool			cmd;
+	t_bool			arg;
 	struct s_token	*next;
 }	t_token;
 
@@ -43,5 +44,6 @@ int		pwd(t_mini *mini);
 int		cd(const char *path);
 int		env(t_mini *mini);
 int		echo(t_bool newline, char *str);
+void	exit_builtin(int n);
 
 #endif
