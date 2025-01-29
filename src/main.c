@@ -28,15 +28,17 @@ int	main(int argc, char **argv, char **envp)
 		test = readline("~ MyShell> ");
 		if (test == NULL)
 			return (0);
-		if (ft_strncmp(test, "pwd", 3) == 0)
+		if (ft_strmincmp(test, "pwd", 3) == 0)
 			pwd(&mini);
-		else if (ft_strncmp(test, "cd", 2) == 0)
+		else if (ft_strmincmp(test, "export", 6) == 0)
+			export(mini);
+		else if (ft_strmincmp(test, "cd", 2) == 0)
 			cd(path);
-		else if (ft_strncmp(test, "env", 3) == 0)
+		else if (ft_strmincmp(test, "env", 3) == 0)
 			env(&mini);
-		else if (ft_strncmp(test, "echo", 4) == 0)
+		else if (ft_strmincmp(test, "echo", 4) == 0)
 			echo(TRUE, mini.user);
-		else if (ft_strncmp(test, "exit", 4) == 0)
+		else if (ft_strmincmp(test, "exit", 4) == 0)
 			exit_builtin(1);
 	}
 	return (0);
