@@ -24,14 +24,16 @@ int	main(int argc, char **argv, char **envp)
 	init(&mini, envp);
 	while (TRUE)
 	{
+
 		ft_printf("%s ", mini.user);
 		test = readline("~ MyShell> ");
+		test = parsing(test);
 		if (test == NULL)
 			return (0);
 		if (ft_strmincmp(test, "pwd", 3) == 0)
 			pwd(&mini);
-		else if (ft_strmincmp(test, "export", 6) == 0)
-			export(mini);
+		//else if (ft_strmincmp(test, "export", 6) == 0)
+		//	export(mini);
 		else if (ft_strmincmp(test, "cd", 2) == 0)
 			cd(path);
 		else if (ft_strmincmp(test, "env", 3) == 0)

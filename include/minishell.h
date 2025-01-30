@@ -46,4 +46,14 @@ int		env(t_mini *mini);
 int		echo(t_bool newline, char *str);
 void	exit_builtin(int n);
 
+
+/*--------------------------------- Parsing ---------------------------------*/
+
+char	*parsing(char *str);
+
+
+/*---------------------------------- Error ----------------------------------*/
+
+void	show_error(char *str);
+
 #endif

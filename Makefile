@@ -5,7 +5,8 @@ FLAGS = -Werror -Wextra -Wall -g -fsanitize=leak
 MAKE := make --no-print-directory
 
 SRC = src/$(MAIN_SRC)
-MAIN_SRC = main.c 
+MAIN_SRC =	main.c \
+			show_error.c
 
 INIT_SRC = init.c
 INIT_DIR = src/init/
@@ -14,6 +15,12 @@ INIT = $(addprefix $(INIT_DIR), $(INIT_SRC))
 CMDS_SRC = pwd.c cd.c env.c echo.c exit.c
 CMDS_DIR = src/cmds/
 CMDS = $(addprefix $(CMDS_DIR), $(CMDS_SRC))
+
+PARS_SRC = parsing.c
+PARS_DIR = src/parsing/
+PARS = $(addprefix $(PARS_DIR), $(PARS_SRC))
+
+ALL_SRC = $(SRC) $(INIT) $(CMDS) $(PARS)
 
 LIBFT_A = libft.a
 LIBFT_DIR = libft/
@@ -36,9 +43,9 @@ $(NAME): $(OBJS)
 	@cc $(FLAGS) $(OBJS) $(LIBFT) $(PRINTF) -o $(NAME) -lreadline -lhistory
 	@echo $(GREEN)"- Compiled -"$(NONE)
 
-$(OBJS): $(SRC) $(INIT) $(CMDS)
+$(OBJS): $(ALL_SRC)
 	@echo $(CURSIVE)$(GRAY) " - Making object files..." $(NONE)
-	@$(CC) $(FLAGS) -c $(SRC) $(INIT) $(CMDS)
+	@$(CC) $(FLAGS) -c $(ALL_SRC)
 
 %.o: %.c
 	@$(CC) $(FLAGS) -c $< -o $@
