@@ -4,9 +4,10 @@ RM = rm -rf
 FLAGS = -Werror -Wextra -Wall -g -fsanitize=leak
 MAKE := make --no-print-directory
 
-SRC = src/$(MAIN_SRC)
+SRC_DIR  = src/
 MAIN_SRC =	main.c \
 			show_error.c
+SRC = $(addprefix $(SRC_DIR), $(MAIN_SRC))
 
 INIT_SRC = init.c
 INIT_DIR = src/init/
@@ -28,7 +29,7 @@ LIBFT = $(addprefix $(LIBFT_DIR), $(LIBFT_A))
 # PRINTF_A = libftprintf.a
 # PRINTF_DIR = libft/printf/
 PRINTF = $(addprefix $(PRINTF_DIR), $(PRINTF_A))
-OBJS = *.o
+OBJS = $(ALL_SRC:.c=.o)
 
 NONE='\033[0m'
 GREEN='\033[32m'
@@ -43,9 +44,9 @@ $(NAME): $(OBJS)
 	@cc $(FLAGS) $(OBJS) $(LIBFT) $(PRINTF) -o $(NAME) -lreadline -lhistory
 	@echo $(GREEN)"- Compiled -"$(NONE)
 
-$(OBJS): $(ALL_SRC)
-	@echo $(CURSIVE)$(GRAY) " - Making object files..." $(NONE)
-	@$(CC) $(FLAGS) -c $(ALL_SRC)
+##$(OBJS): $(ALL_SRC)
+##	@echo $(CURSIVE)$(GRAY) " - Making object files..." $(NONE)
+##	@$(CC) $(FLAGS) -c $(ALL_SRC)
 
 %.o: %.c
 	@$(CC) $(FLAGS) -c $< -o $@

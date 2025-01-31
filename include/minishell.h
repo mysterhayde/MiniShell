@@ -9,6 +9,7 @@
 # include <sys/stat.h>
 # include <dirent.h>
 # include <string.h>
+# include <errno.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../libft/libft.h"
