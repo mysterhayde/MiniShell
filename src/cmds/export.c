@@ -1,7 +1,7 @@
 #include "../../include/minishell.h"
 
-int	export(t_mini mini)
+int	export(t_mini *mini)
 {
-	char	**tempenv;
-
+	//char	**tempenv
+	return (mini->ret);
 }
