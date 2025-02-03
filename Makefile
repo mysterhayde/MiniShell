@@ -4,8 +4,10 @@ RM = rm -rf
 FLAGS = -Werror -Wextra -Wall -g -fsanitize=leak
 MAKE := make --no-print-directory
 
-SRC = src/$(MAIN_SRC)
-MAIN_SRC = main.c 
+SRC_DIR  = src/
+MAIN_SRC =	main.c \
+			show_error.c
+SRC = $(addprefix $(SRC_DIR), $(MAIN_SRC))
 
 INIT_SRC = init.c
 INIT_DIR = src/init/
@@ -19,13 +21,19 @@ EXEC_SRC = execute.c builtin.c
 EXEC_DIR = src/exec/
 EXEC = $(addprefix $(EXEC_DIR), $(EXEC_SRC))
 
+PARS_SRC = parsing.c
+PARS_DIR = src/parsing/
+PARS = $(addprefix $(PARS_DIR), $(PARS_SRC))
+
+ALL_SRC = $(SRC) $(INIT) $(CMDS) $(PARS)
+
 LIBFT_A = libft.a
 LIBFT_DIR = libft/
 LIBFT = $(addprefix $(LIBFT_DIR), $(LIBFT_A))
 # PRINTF_A = libftprintf.a
 # PRINTF_DIR = libft/printf/
 PRINTF = $(addprefix $(PRINTF_DIR), $(PRINTF_A))
-OBJS = *.o
+OBJS = $(ALL_SRC:.c=.o)
 
 NONE='\033[0m'
 GREEN='\033[32m'
@@ -40,9 +48,9 @@ $(NAME): $(OBJS)
 	@cc $(FLAGS) $(OBJS) $(LIBFT) $(PRINTF) -o $(NAME) -lreadline -lhistory
 	@echo $(GREEN)"- Compiled -"$(NONE)
 
-$(OBJS): $(SRC) $(INIT) $(CMDS) $(EXEC)
-	@echo $(CURSIVE)$(GRAY) " - Making object files..." $(NONE)
-	@$(CC) $(FLAGS) -c $(SRC) $(INIT) $(CMDS) $(EXEC)
+##$(OBJS): $(ALL_SRC)
+##	@echo $(CURSIVE)$(GRAY) " - Making object files..." $(NONE)
+##	@$(CC) $(FLAGS) -c $(ALL_SRC)
 
 %.o: %.c
 	@$(CC) $(FLAGS) -c $< -o $@

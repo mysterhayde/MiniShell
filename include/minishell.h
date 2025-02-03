@@ -9,15 +9,16 @@
 # include <sys/stat.h>
 # include <dirent.h>
 # include <string.h>
+# include <errno.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../libft/libft.h"
 
-typedef struct s_children
-{
-	pid_t	pid;
-	t_children	*next;
-}	t_children;
+// typedef struct s_children
+// {
+// 	pid_t	pid;
+// 	t_children	*next;
+// }	t_children;
 
 typedef enum e_bool
 {
@@ -25,12 +26,27 @@ typedef enum e_bool
 	FALSE = 0
 }	t_bool;
 
+/**
+ * @brief Type of token
+ * @enum CMD = 1
+ * @enum ARG = 2
+ * @enum C_OP = 3
+ * @enum R_OP = 4
+ */
+typedef enum e_type
+{
+	CMD = 1,
+	ARG = 2,
+	C_OP = 3,
+	R_OP = 4
+}	t_type;
+
 typedef struct s_token
 {
-	char			*token;
-	t_bool			cmd;
-	t_bool			arg;
+	char			*str;
+	t_type			type;
 	struct s_token	*next;
+//	struct s_token	*last;
 }	t_token;
 
 typedef struct s_mini 
@@ -38,10 +54,12 @@ typedef struct s_mini
 	char		**envp;
 	char		*user;
 	char		*cur_path;
-	t_token		*tokens;
+	t_bool		is_pipe;
+	t_token		*token;
+	t_token		*backup;
 	int			exit;
 	int			ret;
-	t_children	children;
+	// t_children	children;
 } t_mini;
 
 // Init
@@ -59,5 +77,15 @@ void	exit_builtin(int n);
 void	execute(t_mini *mini);
 int		is_builtin(char *cmd);
 int		exec_builtin(t_mini *mini, char **cmd);
+
+
+/*--------------------------------- Parsing ---------------------------------*/
+
+void	parsing(char *str, t_mini *mini);
+
+
+/*---------------------------------- Error ----------------------------------*/
+
+void	show_error(char *str);
 
 #endif

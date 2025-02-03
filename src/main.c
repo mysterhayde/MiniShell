@@ -16,16 +16,14 @@ int	main(int argc, char **argv, char **envp)
 	t_mini	mini;
 	char	*test;
 
-	char	*path;
-	path = ft_strdup("/home");
-
 	(void)argc;
 	(void)argv;
 	init(&mini, envp);
 	while (mini.exit == 0)
 	{
-		//parse()
-		
+		ft_printf("%s ", mini.user);
+		test = readline("~ MyShell> ");
+		parsing(test, &mini);
 	}	
 
 	// 	ft_printf("%s ", mini.user);
