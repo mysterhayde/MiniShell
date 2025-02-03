@@ -15,6 +15,10 @@ CMDS_SRC = pwd.c cd.c env.c echo.c exit.c
 CMDS_DIR = src/cmds/
 CMDS = $(addprefix $(CMDS_DIR), $(CMDS_SRC))
 
+EXEC_SRC = execute.c builtin.c
+EXEC_DIR = src/exec/
+EXEC = $(addprefix $(EXEC_DIR), $(EXEC_SRC))
+
 LIBFT_A = libft.a
 LIBFT_DIR = libft/
 LIBFT = $(addprefix $(LIBFT_DIR), $(LIBFT_A))
@@ -36,9 +40,9 @@ $(NAME): $(OBJS)
 	@cc $(FLAGS) $(OBJS) $(LIBFT) $(PRINTF) -o $(NAME) -lreadline -lhistory
 	@echo $(GREEN)"- Compiled -"$(NONE)
 
-$(OBJS): $(SRC) $(INIT) $(CMDS)
+$(OBJS): $(SRC) $(INIT) $(CMDS) $(EXEC)
 	@echo $(CURSIVE)$(GRAY) " - Making object files..." $(NONE)
-	@$(CC) $(FLAGS) -c $(SRC) $(INIT) $(CMDS)
+	@$(CC) $(FLAGS) -c $(SRC) $(INIT) $(CMDS) $(EXEC)
 
 %.o: %.c
 	@$(CC) $(FLAGS) -c $< -o $@
