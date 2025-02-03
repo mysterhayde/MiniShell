@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 10:00:47 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/02/03 17:08:48 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/02/03 17:58:12 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ void	add_last_token(char *str, t_mini *mini, int type)
 	while (mini->token->next)
 		mini->token = mini->token->next;
 	mini->token->next = new_token(str, type);
+	mini->token = mini->token->next;
 }
 
 /**
@@ -72,7 +73,7 @@ void	parsing(char *str, t_mini *mini)
 	while (tab[i])
 	{
 		tab[i] = ft_strtrim(tab[i], " ");
-		if (is_operator(tab[i]) == 1)
+		if (is_operator(mini, tab[i]) == 1)
 			add_last_token(tab[i], mini, OP);
 		else if (mini->token == NULL || mini->token->type == OP)
 			add_last_token(tab[i], mini, CMD);

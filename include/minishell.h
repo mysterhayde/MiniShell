@@ -66,7 +66,7 @@ void	exit_builtin(int n);
 
 /*--------------------------------- Parsing ---------------------------------*/
 
-int		is_operator(char *str);
+int	is_operator(t_mini *mini, char *str);
 void	parsing(char *str, t_mini *mini);
 
 
