@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 10:00:47 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/02/03 14:58:56 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/02/03 17:08:48 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,12 +72,16 @@ void	parsing(char *str, t_mini *mini)
 	while (tab[i])
 	{
 		tab[i] = ft_strtrim(tab[i], " ");
-		if (mini->token == NULL)
+		if (is_operator(tab[i]) == 1)
+			add_last_token(tab[i], mini, OP);
+		else if (mini->token == NULL || mini->token->type == OP)
 			add_last_token(tab[i], mini, CMD);
 		else if (mini->token->type == CMD || mini->token->type == ARG)
 			add_last_token(tab[i], mini, ARG);
 		i++;
 	}
+		mini->token = mini->backup;
+
 
 	t_token *count;
 	count = malloc(sizeof(t_token));
@@ -88,8 +92,24 @@ void	parsing(char *str, t_mini *mini)
 			printf("Token type		%s\n", "CMD");
 		else if (count->type == 2)
 			printf("Token type		%s\n", "ARG");
-		printf("Token sring		%s\n", count->str);
+		else if (count->type == 3)
+			printf("Token type		%s\n", "OP");
+		printf("Token string		%s\n", count->str);
 		printf("\n");
 		count = count->next;
 	}
+
+	// j = 0;
+	// while(tab[j])
+	// 	printf("%s\n", tab[j++]);
+	// pid_t	pid;
+	// pid = fork();
+	// if (pid == 0)
+	// {
+	// 	char *tmp = ft_strjoin("/bin/", tab[0]);
+	// 	if (execve(tmp, tab, NULL) == -1)
+	// 		show_error("execve failed");
+	// }
+	// else
+	// 	waitpid(pid, NULL, 0);
 }
