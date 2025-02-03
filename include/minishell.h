@@ -40,6 +40,7 @@ typedef struct s_token
 	char			*str;
 	t_type			type;
 	struct s_token	*next;
+//	struct s_token	*last;
 }	t_token;
 
 typedef struct s_mini 
@@ -47,7 +48,9 @@ typedef struct s_mini
 	char	**envp;
 	char	*user;
 	char	*cur_path;
-	t_token	*tokens;
+	t_bool	is_pipe;
+	t_token	*token;
+	t_token	*backup;
 } t_mini;
 
 // Init
@@ -64,7 +67,7 @@ void	exit_builtin(int n);
 
 /*--------------------------------- Parsing ---------------------------------*/
 
-char	*parsing(char *str, t_token *token);
+void	parsing(char *str, t_mini *mini);
 
 
 /*---------------------------------- Error ----------------------------------*/
