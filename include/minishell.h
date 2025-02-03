@@ -20,11 +20,25 @@ typedef enum e_bool
 	FALSE = 0
 }	t_bool;
 
+/**
+ * @brief Type of token
+ * @enum CMD = 1
+ * @enum ARG = 2
+ * @enum C_OP = 3
+ * @enum R_OP = 4
+ */
+typedef enum e_type
+{
+	CMD = 1,
+	ARG = 2,
+	C_OP = 3,
+	R_OP = 4
+}	t_type;
+
 typedef struct s_token
 {
-	char			*token;
-	t_bool			cmd;
-	t_bool			arg;
+	char			*str;
+	t_type			type;
 	struct s_token	*next;
 }	t_token;
 
@@ -50,7 +64,7 @@ void	exit_builtin(int n);
 
 /*--------------------------------- Parsing ---------------------------------*/
 
-char	*parsing(char *str);
+char	*parsing(char *str, t_token *token);
 
 
 /*---------------------------------- Error ----------------------------------*/
