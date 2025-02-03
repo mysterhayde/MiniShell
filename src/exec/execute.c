@@ -21,4 +21,6 @@ void	execute(t_mini *mini)
 		exit_builtin(mini);
 	else if (cmd && is_builtin(cmd[0]))
 		mini->ret = exec_builtin(mini, cmd);
+	else if (cmd)
+		mini->ret = exec_bin(mini, cmd);
 }
