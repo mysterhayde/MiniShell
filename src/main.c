@@ -14,6 +14,7 @@ void	init(t_mini *mini, char **envp)
 int	main(int argc, char **argv, char **envp)
 {
 	t_mini	mini;
+	t_token	token;
 	char	*test;
 
 	char	*path;
@@ -27,7 +28,7 @@ int	main(int argc, char **argv, char **envp)
 
 		ft_printf("%s ", mini.user);
 		test = readline("~ MyShell> ");
-		test = parsing(test);
+		test = parsing(test, &token);
 		if (test == NULL)
 			return (0);
 		if (ft_strmincmp(test, "pwd", 3) == 0)
