@@ -24,15 +24,25 @@ typedef enum e_bool
  * @brief Type of token
  * @enum CMD = 1
  * @enum ARG = 2
- * @enum C_OP = 3
- * @enum R_OP = 4
+ * @enum PIPE = 3
+ * @enum RDIT = 4
+ * @enum FILE = 5
  */
 typedef enum e_type
 {
 	CMD = 1,
 	ARG = 2,
-	OP = 3,
+	PIPE = 3,
+	RDIT = 4,	//Redirections
+	FD = 5
 }	t_type;
+
+typedef struct s_debug
+{
+	char			**cmd;
+	struct s_debug	*next;
+}	t_debug;
+
 
 typedef struct s_token
 {
@@ -50,7 +60,8 @@ typedef struct s_mini
 	t_bool	is_pipe;
 	t_token	*token;
 	t_token	*backup;
-} t_mini;
+	t_debug	*debug;
+}	t_mini;
 
 // Init
 void	getcurpath(t_mini *mini);
@@ -66,9 +77,9 @@ void	exit_builtin(int n);
 
 /*--------------------------------- Parsing ---------------------------------*/
 
-int	is_operator(t_mini *mini, char *str);
+int		is_operator(t_mini *mini, char *str);
 void	parsing(char *str, t_mini *mini);
-
+char	**split_args(char *str);
 
 /*---------------------------------- Error ----------------------------------*/
 
