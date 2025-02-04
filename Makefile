@@ -17,7 +17,7 @@ CMDS_SRC = pwd.c cd.c env.c echo.c exit.c
 CMDS_DIR = src/cmds/
 CMDS = $(addprefix $(CMDS_DIR), $(CMDS_SRC))
 
-PARS_SRC = parsing.c
+PARS_SRC = parsing.c check_operator.c split_entry.c
 PARS_DIR = src/parsing/
 PARS = $(addprefix $(PARS_DIR), $(PARS_SRC))
 

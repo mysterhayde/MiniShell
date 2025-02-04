@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 10:00:47 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/02/04 16:48:24 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/02/04 16:53:58 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,30 +96,30 @@ void	parsing(char *str, t_mini *mini)
 	mini->token = mini->backup;
 
 
-	t_token *count;
-	count = malloc(sizeof(t_token));
-	count = mini->backup;
-	while (count)
-	{
-		if (count->type == 1)
-			printf("Token type		%s\n", "CMD");
-		else if (count->type == 2)
-			printf("Token type		%s\n", "ARG");
-		else if (count->type == 3)
-			printf("Token type		%s\n", "PIPE");
-		else if (count->type == 4)
-			printf("Token type		%s\n", "REDIRECTION");
-		printf("Token string		%s\n", count->str);
-		printf("\n");
-		count = count->next;
-	}
+	// t_token *count;
+	// count = malloc(sizeof(t_token));
+	// count = mini->backup;
+	// while (count)
+	// {
+	// 	if (count->type == 1)
+	// 		printf("Token type		%s\n", "CMD");
+	// 	else if (count->type == 2)
+	// 		printf("Token type		%s\n", "ARG");
+	// 	else if (count->type == 3)
+	// 		printf("Token type		%s\n", "PIPE");
+	// 	else if (count->type == 4)
+	// 		printf("Token type		%s\n", "REDIRECTION");
+	// 	printf("Token string		%s\n", count->str);
+	// 	printf("\n");
+	// 	count = count->next;
+	// }
 	
-	int	d = 0;
-	while (mini->debug->cmd[d])
-	{
-		printf("%s\n", mini->debug->cmd[d]);
-		d++;
-	}
+	// int	d = 0;
+	// while (mini->debug->cmd[d])
+	// {
+	// 	printf("%s\n", mini->debug->cmd[d]);
+	// 	d++;
+	// }
 
 	// j = 0;
 	// while(tab[j])
