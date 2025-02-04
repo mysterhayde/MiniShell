@@ -24,6 +24,7 @@ int	main(int argc, char **argv, char **envp)
 		ft_printf("%s ", mini.user);
 		test = readline("~ MyShell> ");
 		parsing(test, &mini);
+		execute(&mini);
 	}	
 
 	// 	ft_printf("%s ", mini.user);
