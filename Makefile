@@ -17,7 +17,7 @@ CMDS_SRC = pwd.c cd.c env.c echo.c exit.c
 CMDS_DIR = src/cmds/
 CMDS = $(addprefix $(CMDS_DIR), $(CMDS_SRC))
 
-EXEC_SRC = execute.c builtin.c
+EXEC_SRC = execute.c builtin.c bin.c path.c
 EXEC_DIR = src/exec/
 EXEC = $(addprefix $(EXEC_DIR), $(EXEC_SRC))
 
@@ -25,7 +25,7 @@ PARS_SRC = parsing.c
 PARS_DIR = src/parsing/
 PARS = $(addprefix $(PARS_DIR), $(PARS_SRC))
 
-ALL_SRC = $(SRC) $(INIT) $(CMDS) $(PARS)
+ALL_SRC = $(SRC) $(INIT) $(CMDS) $(PARS) $(EXEC)
 
 LIBFT_A = libft.a
 LIBFT_DIR = libft/

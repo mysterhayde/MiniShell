@@ -9,8 +9,8 @@
  */
 int	echo(char **cmd)
 {
-	int	ret;
-
+	// int	ret;
+	(void)cmd;
 	// ret = 0;
 	// if (newline)
 	// 	ret += ft_printf("%s", str);
