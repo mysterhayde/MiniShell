@@ -17,11 +17,7 @@ CMDS_SRC = pwd.c cd.c env.c echo.c exit.c
 CMDS_DIR = src/cmds/
 CMDS = $(addprefix $(CMDS_DIR), $(CMDS_SRC))
 
-EXEC_SRC = execute.c builtin.c bin.c path.c
-EXEC_DIR = src/exec/
-EXEC = $(addprefix $(EXEC_DIR), $(EXEC_SRC))
-
-EXEC_SRC = execute.c builtin.c bin.c path.c
+EXEC_SRC = execute.c builtin.c bin.c path.c pipe.c
 EXEC_DIR = src/exec/
 EXEC = $(addprefix $(EXEC_DIR), $(EXEC_SRC))
 

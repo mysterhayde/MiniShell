@@ -6,13 +6,14 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 13:48:12 by cbopp             #+#    #+#             */
-/*   Updated: 2025/02/05 14:55:22 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/02/05 18:06:15 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	try_pipe(void)
+void	try_pipe(int	*pipefd)
 {
-	
+	if (pipe(pipefd) == -1)
+		show_error("Pipe");
 }

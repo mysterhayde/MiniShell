@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 17:10:09 by cbopp             #+#    #+#             */
-/*   Updated: 2025/02/05 17:10:26 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/02/05 18:07:41 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,8 @@ void	execute(t_mini *mini);
 int		is_builtin(char *cmd);
 int		exec_builtin(t_mini *mini, char **cmd);
 int		exec_bin(t_mini *mini, char **cmd);
+int		minipipe(t_mini *mini);
+void	try_pipe(int	*pipefd);
 
 /*---------------------------------- Path -----------------------------------*/
 char	*find_path(char *cmd, char **envp);
