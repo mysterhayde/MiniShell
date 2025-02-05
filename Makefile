@@ -21,7 +21,11 @@ EXEC_SRC = execute.c builtin.c bin.c path.c
 EXEC_DIR = src/exec/
 EXEC = $(addprefix $(EXEC_DIR), $(EXEC_SRC))
 
-PARS_SRC = parsing.c
+EXEC_SRC = execute.c builtin.c bin.c path.c
+EXEC_DIR = src/exec/
+EXEC = $(addprefix $(EXEC_DIR), $(EXEC_SRC))
+
+PARS_SRC = parsing.c check_operator.c split_entry.c
 PARS_DIR = src/parsing/
 PARS = $(addprefix $(PARS_DIR), $(PARS_SRC))
 
@@ -47,10 +51,6 @@ $(NAME): $(OBJS)
 	@echo $(CURSIVE)$(GRAY) " - Compiling $(NAME)..." $(NONE)
 	@cc $(FLAGS) $(OBJS) $(LIBFT) $(PRINTF) -o $(NAME) -lreadline -lhistory
 	@echo $(GREEN)"- Compiled -"$(NONE)
-
-##$(OBJS): $(ALL_SRC)
-##	@echo $(CURSIVE)$(GRAY) " - Making object files..." $(NONE)
-##	@$(CC) $(FLAGS) -c $(ALL_SRC)
 
 %.o: %.c
 	@$(CC) $(FLAGS) -c $< -o $@

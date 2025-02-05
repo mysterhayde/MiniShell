@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 13:27:54 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/01/30 15:23:07 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/02/05 17:50:49 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,5 +115,8 @@ int		ft_gnl_strchr(char *str);
 size_t	ft_chartable_linecount(char **table);
 void	ft_free_chartable(char **table);
 int		ft_print_chartable(char **table);
+
+void	*set(void *vtarget, void *target_new);
+void	*set2(void **vtarget, void *target_new);
 
 #endif

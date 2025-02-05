@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/05 15:04:03 by cbopp             #+#    #+#             */
+/*   Updated: 2025/02/05 15:05:28 by cbopp            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/minishell.h"
 
 /**
@@ -26,9 +38,5 @@ int	main(int argc, char **argv, char **envp)
 		parsing(test, &mini);
 		execute(&mini);
 	}	
-
-	// 	ft_printf("%s ", mini.user);
-	// 	test = readline("~ MyShell> ");
-
 	return (0);
 }

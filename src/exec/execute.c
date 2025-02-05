@@ -1,30 +1,48 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   execute.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/05 13:48:06 by cbopp             #+#    #+#             */
+/*   Updated: 2025/02/05 16:43:16 by cbopp            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/minishell.h"
 
-// pid_t	go_fork(void)
-// {
-// 	pid_t	pid;
+/**
+ * @brief Launches all of the forks and manages the redirection of FDs
+ * @param t_mini *mini
+ */
+int	minipipe(t_mini *mini)
+{
+	int		pipefd[2];
+	size_t	i;
 
-// 	pid = fork();
-// 	if (pid == -1)
-// 		//free()
-// 	return (pid);
-// }
+	i = 0;
+	if (pipe(pipefd) == -1)
+		show_error("Pipe");
+	while (i <= mini->pipenum)
+	{
+		if (is_builtin(mini->debug->cmd[0]))
+		{
+			mini->children->pid = fork();
+			if (mini->children->pid == -1)
+				perror("PID");
+			if (mini->children->pid == 0)
+				exec_builtin(mini, mini->debug->cmd);
+		}
+		else
+			exec_bin(mini, mini->debug->cmd);
+		i++;
+	}
 
-// int	minipipe(t_mini *mini, char **cmd)
-// {
-// 	int		fd[2];
-// 	int		i;
-
-// 	i = 0;
-// 	while (i < pipenum + 1)
-// 		mini->children = mini->children->next;
-// 	if builtin 
-// 		mini->children->pid = go_fork(); 
-// 		exec_builtin()
-// 	else
-// 		exec_bin()
-
-// }
+	while (i-- > 0)
+		wait(NULL);
+	return (0);
+}
 
 /**
  * @brief Calls of expansion of argument(s) and then manages builtin or bin commands
@@ -35,25 +53,15 @@
  */
 void	execute(t_mini *mini)
 {
-	// int		i;
-
-	// cmd = cmd_tab(mini);
-	// i = 1;
-	// while (cmd && cmd[i])
-	// {
-	// 	cmd[i] = expand(cmd[i]);
-	// 	i++;
-	// }
 	//Need to add ispipe check below
-	if (mini->token->cmd && ft_strmincmp(mini->token->cmd[0], "exit", 4) == 0)
+	if (mini->debug->cmd && ft_strmincmp(mini->debug->cmd[0], "exit", 4) == 0)
 		exit_builtin(mini);
-	// else if (mini->token->str && mini->is_pipe)
-	// 	mini->ret = minipipe(mini, cmd);
-	else if (mini->token->cmd && is_builtin(mini->token->cmd) && !mini->is_pipe)
-		mini->ret = exec_builtin(mini, mini->token->cmd);
-	else if (mini->token->cmd)
+	else if (mini->debug->cmd && mini->is_pipe)
+		mini->ret = minipipe(mini);
+	else if (mini->debug->cmd && is_builtin(mini->debug->cmd[0]) && !mini->is_pipe)
+		mini->ret = exec_builtin(mini, mini->debug->cmd);
+	else if (mini->debug->cmd)
 	{
-		// mini->children->pid = go_fork();
-		mini->ret = exec_bin(mini, mini->token->cmd);
+		mini->ret = exec_bin(mini, mini->debug->cmd);
 	}
 }
