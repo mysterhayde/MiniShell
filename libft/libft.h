@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 13:27:54 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/01/30 15:23:07 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/02/05 11:34:09 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ char	**ft_split(char const *s, char c);
 
 long	ft_atol(const char *str);
 
+void	free_tab(char **tab);
 void	safe_free(void **ptr);
 void	ft_bzero(void *s, size_t n);
 void	ft_putnbr_fd(int n, int fd);
