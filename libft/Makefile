@@ -6,12 +6,12 @@
 #    By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/10 21:12:44 by hdougoud          #+#    #+#              #
-#    Updated: 2025/02/05 11:37:01 by hdougoud         ###   ########.fr        #
+#    Updated: 2025/02/05 15:59:40 by hdougoud         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libft.a
-GCC = cc
+CC = gcc
 CFLAGS = -Wall -Werror -Wextra
 
 #--------------------------------------DIRECTORY-------------------------------
@@ -59,9 +59,13 @@ GNL_SRCS	=	$(GNL_DIR)/get_next_line.c \
 #ALL_SOURCES
 SOURCES = 		$(LIBFT_SRCS) $(LIBFTBONUS) $(PRINTF_SRCS) $(GNL_SRCS)
 
+vpath %.c $(LIBFT_DIR) $(PRINTF_DIR) $(GNL_DIR)
+
 #-------------------------------------OBJECTS----------------------------------
 
-OBJECTS = 		$(SOURCES:.c=.o)		
+OBJ_DIR = 		Objects/
+OBJ_SRC = 		$(notdir $(SOURCES:.c=.o))
+OBJECTS = 		$(addprefix $(OBJ_DIR), $(OBJ_SRC))
 
 #--------------------------------------COLOR-----------------------------------
 
@@ -76,12 +80,18 @@ WHITE	= \033[1;37m
 
 #--------------------------------------RULES-----------------------------------
 
-all: $(NAME)
+all:$(OBJ_DIR) $(NAME)
+
+$(OBJ_DIR):
+	@mkdir -p $(OBJ_DIR)
 
 $(NAME): $(OBJECTS)
 	@ar rcs $(NAME) $(OBJECTS)
 #	echo -e "$(GREEN)Libft done$(WHITE)"
-	
+
+$(OBJ_DIR)%.o: %.c
+	@$(CC) $(CFLAGS) -c $< -o $@
+
 clean:
 	rm -f $(OBJECTS)
 
