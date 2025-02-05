@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 16:43:29 by cbopp             #+#    #+#             */
-/*   Updated: 2025/02/05 17:51:13 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/02/05 17:57:51 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	*set(void *vtarget, void *target_new)
 }
 
 /**
- * @brief Same as set() but less lines
+ * @brief Same as set() but less lines - Thank you adrian
  * @param void	*target, The variable you want to perform the operation on.
  * @param void	**target_new, The operation you want to perform on target.
  */

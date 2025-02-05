@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 13:48:06 by cbopp             #+#    #+#             */
-/*   Updated: 2025/02/05 16:43:16 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/02/05 18:05:10 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,7 @@ int	minipipe(t_mini *mini)
 	size_t	i;
 
 	i = 0;
-	if (pipe(pipefd) == -1)
-		show_error("Pipe");
+	try_pipe(pipefd);
 	while (i <= mini->pipenum)
 	{
 		if (is_builtin(mini->debug->cmd[0]))
