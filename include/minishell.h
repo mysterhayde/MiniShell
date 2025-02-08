@@ -77,9 +77,12 @@ void	exit_builtin(int n);
 
 /*--------------------------------- Parsing ---------------------------------*/
 
+int		count_words(char const *str);
 int		is_operator(t_mini *mini, char *str);
-void	parsing(char *str, t_mini *mini);
+
 char	**split_args(char *str);
+
+void	parsing(char *str, t_mini *mini);
 
 /*---------------------------------- Error ----------------------------------*/
 
