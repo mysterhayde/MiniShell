@@ -1,7 +1,7 @@
 NAME = minishell
 CC = cc
 RM = rm -rf
-FLAGS = -Werror -Wextra -Wall -g -fsanitize=leak
+FLAGS = -Werror -Wextra -Wall -g -fsanitize=address
 MAKE := make --no-print-directory
 
 #--------------------------------------LIBFT------------------------------------#
@@ -26,7 +26,7 @@ CMDS_SRC = pwd.c cd.c env.c echo.c exit.c
 CMDS_DIR = src/cmds/
 CMDS = $(addprefix $(CMDS_DIR), $(CMDS_SRC))
 
-PARS_SRC = parsing.c check_operator.c split_entry.c
+PARS_SRC = parsing.c check_operator.c split_entry.c count_words.c
 PARS_DIR = src/parsing/
 PARS = $(addprefix $(PARS_DIR), $(PARS_SRC))
 
