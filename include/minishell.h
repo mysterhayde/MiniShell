@@ -49,7 +49,6 @@ typedef struct s_token
 	char			*str;
 	t_type			type;
 	struct s_token	*next;
-//	struct s_token	*last;
 }	t_token;
 
 typedef struct s_mini 
@@ -57,6 +56,7 @@ typedef struct s_mini
 	char	**envp;
 	char	*user;
 	char	*cur_path;
+	int		pipe_num;
 	t_bool	is_pipe;
 	t_token	*token;
 	t_token	*backup;
