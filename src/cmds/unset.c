@@ -1,21 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   export.c                                           :+:      :+:    :+:   */
+/*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/05 15:03:44 by cbopp             #+#    #+#             */
-/*   Updated: 2025/02/09 10:58:36 by cbopp            ###   ########.fr       */
+/*   Created: 2025/02/09 09:39:58 by cbopp             #+#    #+#             */
+/*   Updated: 2025/02/09 10:18:17 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-int	export(t_mini *mini, char **cmd)
+int	unset(t_mini *mini, char **cmd)
 {
-	char	**tempenv;
 
-	
-	return (1);
 }

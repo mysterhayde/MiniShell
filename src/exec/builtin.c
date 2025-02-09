@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 15:03:19 by cbopp             #+#    #+#             */
-/*   Updated: 2025/02/05 15:24:30 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/02/09 09:38:11 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,15 @@ int	exec_builtin(t_mini *mini, char **cmd)
 	if (ft_strmincmp(cmd[0], "pwd", 3) == 0)
 		ret = pwd(mini);
 	else if (ft_strmincmp(cmd[0], "export", 6) == 0)
-		return (0);
+		ret = export(mini, cmd);
 	else if (ft_strmincmp(cmd[0], "cd", 2) == 0)
 		ret = cd(cmd[1]);
 	else if (ft_strmincmp(cmd[0], "env", 3) == 0)
-		env(mini);
+		ret = env(mini);
 	else if (ft_strmincmp(cmd[0], "echo", 4) == 0)
 		ret = echo(cmd);
 	else if (ft_strmincmp(cmd[0], "unset", 5) == 0)
-		return (0);
+		ret = unset(mini, cmd);
 	return (ret);
 }
 
