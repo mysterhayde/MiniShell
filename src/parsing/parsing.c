@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 10:00:47 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/02/04 16:53:58 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/02/09 14:45:35 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,17 +73,23 @@ void	parsing(char *str, t_mini *mini)
 	char	**tab;
 
 	i = 0;
+	mini->pipe_num = 0;
+	mini->is_pipe = FALSE;
 	if (str == NULL)
 		return ;
 	mini->token = NULL;
-	tab = split_args(str);
+	tab = ft_split(str, ' ');
 	mini->debug = malloc(sizeof(t_debug));
 	mini->debug->cmd = tab;
 	while (tab[i])
 	{
 		op = is_operator(mini, tab[i]);
 		if (op == 1)
+		{
 			add_last_token(tab[i], mini, PIPE);
+			mini->is_pipe = TRUE;
+			mini->pipe_num++;
+		}
 		else if (op == 2)
 			add_last_token(tab[i], mini, RDIT);
 		else if (mini->token == NULL || mini->token->type == PIPE
@@ -94,7 +100,7 @@ void	parsing(char *str, t_mini *mini)
 		i++;
 	}
 	mini->token = mini->backup;
-
+	printf("pipe number %d\n", mini->pipe_num);
 
 	// t_token *count;
 	// count = malloc(sizeof(t_token));
