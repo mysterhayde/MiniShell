@@ -1,7 +1,7 @@
 NAME = minishell
 CC = cc
 RM = rm -rf
-FLAGS = -Werror -Wextra -Wall -g -fsanitize=leak
+FLAGS = -Werror -Wextra -Wall -g
 MAKE := make --no-print-directory
 
 SRC_DIR  = src/
