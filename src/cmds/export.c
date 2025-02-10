@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 15:03:44 by cbopp             #+#    #+#             */
-/*   Updated: 2025/02/10 12:39:19 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/02/10 12:55:21 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,27 +67,21 @@ char	**add_env_var(char **envp, char *new_var)
 char	**update_env_var(char **envp, char *var_name, char *new_var)
 {
 	int		i;
-	int		name_len;
-	char	*new_str;
+	char	*tmp;
 
-	name_len = 0;
-	while (var_name[name_len] && var_name[name_len] != '=')
-		name_len++;
 	i = 0;
 	while (envp[i])
 	{
-		if (ft_strmincmp(envp[i], var_name, name_len) == 0
-			&& (envp[i][name_len] == '=' || !envp[i][name_len]))
+		if (match_var_name(envp[i], var_name))
 		{
-			if (!set(&new_str, ft_strdup(new_var)))
+			if (!set(&tmp, ft_strdup(new_var)))
 				return (NULL);
 			free(envp[i]);
-			envp[i] = new_str;
+			envp[i] = tmp;
 			return (envp);
 		}
 		i++;
 	}
-	ft_printf("Adding new var: %s\n", new_var);
 	return (add_env_var(envp, new_var));
 }
 

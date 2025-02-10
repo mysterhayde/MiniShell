@@ -6,11 +6,23 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 15:03:39 by cbopp             #+#    #+#             */
-/*   Updated: 2025/02/10 12:47:49 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/02/10 12:57:51 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+int	match_var_name(const char *env_var, const char *var_name)
+{
+	int	i;
+
+	i = 0;
+	while (var_name[i] && var_name[i] != '=' && env_var[i]
+		&& env_var[i] != '=' && env_var[i] == var_name[i])
+		i++;
+	return ((var_name[i] == '=' || !var_name[i])
+		&& (env_var[i] == '=' || !env_var[i]));
+}
 
 char	**copy_env(char **env)
 {
