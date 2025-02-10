@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 14:42:44 by cbopp             #+#    #+#             */
-/*   Updated: 2025/02/10 12:46:14 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/02/10 12:49:22 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,10 @@ int	ft_print_chartable(char **table)
 	i = 0;
 	size = ft_chartable_linecount(table);
 	while (i < size)
+	{
 		if (ft_printf("%s\n", table[i]) < 0)
 			return (1);
 		i++;
+	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 17:10:09 by cbopp             #+#    #+#             */
-/*   Updated: 2025/02/10 12:17:10 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/02/10 12:58:04 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void	setupenv(t_mini *mini);
 int		pwd(t_mini *mini);
 int		cd(const char *path);
 int		env(t_mini *mini);
-
+int		match_var_name(const char *env_var, const char *var_name);
 int		export(t_mini *mini, char **cmd);
 char	**copy_env(char **env);
 size_t	get_env_size(char **env);
