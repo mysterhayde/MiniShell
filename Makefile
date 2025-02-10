@@ -1,7 +1,7 @@
 NAME = minishell
 CC = cc
 RM = rm -rf
-FLAGS = -Werror -Wextra -Wall -g -fsanitize=address
+FLAGS = -Werror -Wextra -Wall -g
 MAKE := make --no-print-directory
 
 #--------------------------------------LIBFT------------------------------------#
@@ -69,7 +69,7 @@ $(OBJ_DIR)%.o: %.c
 
 clean:
 	@echo $(CURSIVE)$(GRAY) " -> Cleaning object files.." $(NONE)
-	@$(RM) $(OBJS)
+	@$(RM) $(OBJ_DIR)
 	@$(MAKE) -C $(LIBFT_DIR) clean
 
 fclean: clean
