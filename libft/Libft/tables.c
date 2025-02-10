@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 14:42:44 by cbopp             #+#    #+#             */
-/*   Updated: 2025/02/05 15:04:28 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/02/10 12:46:14 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ void	ft_free_chartable(char **table)
 {
 	int	i;
 
+	if (!table)
+		return ;
 	i = 0;
 	while (table[i])
 	{
@@ -48,8 +50,9 @@ int	ft_print_chartable(char **table)
 
 	i = 0;
 	size = ft_chartable_linecount(table);
-	while (i < size - 1)
-		if (ft_printf("%s\n", table[i++]) == 0)
+	while (i < size)
+		if (ft_printf("%s\n", table[i]) < 0)
 			return (1);
+		i++;
 	return (0);
 }
