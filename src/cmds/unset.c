@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 09:39:58 by cbopp             #+#    #+#             */
-/*   Updated: 2025/02/09 10:18:17 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/02/10 11:41:39 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,7 @@
 
 int	unset(t_mini *mini, char **cmd)
 {
-
+	(void)mini;
+	(void)cmd;
+	return (0);
 }
