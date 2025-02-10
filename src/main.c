@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 15:04:03 by cbopp             #+#    #+#             */
-/*   Updated: 2025/02/05 15:05:28 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/02/10 12:30:43 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,12 @@
  */
 void	init(t_mini *mini, char **envp)
 {
-	mini->envp = envp;
+	mini->envp = copy_env(envp);
+	if (!mini->envp)
+	{
+		mini->envp = NULL;
+		return ;
+	}
 	setupenv(mini);
 }
 
