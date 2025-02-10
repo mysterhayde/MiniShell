@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 10:00:47 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/02/09 14:45:35 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/02/10 10:39:48 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void	parsing(char *str, t_mini *mini)
 	if (str == NULL)
 		return ;
 	mini->token = NULL;
-	tab = ft_split(str, ' ');
+	tab = split_args(str);
 	mini->debug = malloc(sizeof(t_debug));
 	mini->debug->cmd = tab;
 	while (tab[i])
