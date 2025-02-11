@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 11:51:45 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/02/10 14:40:49 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/02/11 10:10:55 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,7 @@ static unsigned int	next_word_len(char *str)
 		{
 			while (str[++i] != 39 && str[i])
 					word_len++;
-			if (str[i + 1] == ' ')
-			{
-				word_len++;
-				break ;
-			}
+			continue ;
 		}
 		i++;
 		word_len++;
@@ -61,10 +57,18 @@ static char	**separate_args(char **split, char *str, int word)
 			word_len--;
 		}
 		split[j][i] = '\0';
-		printf("%s\n", split[j]);
 		word--;
 	}
 	split[j] = NULL;
+	//debug
+	j = 0;
+	printf("\n");
+	while(split[j])
+	{
+		printf("%s\n", split[j]);
+		j++;
+	}
+	//debug
 	return (split);
 }
 
