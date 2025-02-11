@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 15:03:44 by cbopp             #+#    #+#             */
-/*   Updated: 2025/02/10 12:55:21 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/02/11 12:15:01 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,8 @@ static int	handle_export_arg(char	***env_ptr, char *arg)
 		ft_printf("export: '%s': not a valid identifier\n", arg);
 		return (0);
 	}
+	if (!ft_strchr(arg, '='))
+		return (0);
 	new_env = update_env_var(*env_ptr, arg, arg);
 	if (!new_env)
 		return (1);
