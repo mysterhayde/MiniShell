@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 17:10:09 by cbopp             #+#    #+#             */
-/*   Updated: 2025/02/10 12:58:04 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/02/11 12:47:22 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ t_bool	is_valid_identifier(char *str);
 
 int		echo(char **cmd);
 int		unset(t_mini *mini, char **cmd);
-void	exit_builtin(t_mini *mini);
+int		exit_builtin(t_mini *mini, char **cmd);
 
 /*--------------------------------- Execute ---------------------------------*/
 void	execute(t_mini *mini);

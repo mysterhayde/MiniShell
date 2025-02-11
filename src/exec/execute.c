@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 13:48:06 by cbopp             #+#    #+#             */
-/*   Updated: 2025/02/05 18:05:10 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/02/11 12:47:26 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	execute(t_mini *mini)
 {
 	//Need to add ispipe check below
 	if (mini->debug->cmd && ft_strmincmp(mini->debug->cmd[0], "exit", 4) == 0)
-		exit_builtin(mini);
+		exit_builtin(mini, mini->debug->cmd);
 	else if (mini->debug->cmd && mini->is_pipe)
 		mini->ret = minipipe(mini);
 	else if (mini->debug->cmd && is_builtin(mini->debug->cmd[0]) && !mini->is_pipe)
