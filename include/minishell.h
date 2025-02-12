@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/12 18:19:27 by hdougoud          #+#    #+#             */
+/*   Updated: 2025/02/12 19:29:45 by hdougoud         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
@@ -43,7 +55,6 @@ typedef struct s_debug
 	struct s_debug	*next;
 }	t_debug;
 
-
 typedef struct s_token
 {
 	char			*str;
@@ -51,7 +62,7 @@ typedef struct s_token
 	struct s_token	*next;
 }	t_token;
 
-typedef struct s_mini 
+typedef struct s_mini
 {
 	char	**envp;
 	char	*user;
@@ -74,13 +85,14 @@ int		env(t_mini *mini);
 int		echo(t_bool newline, char *str);
 void	exit_builtin(int n);
 
-
 /*--------------------------------- Parsing ---------------------------------*/
 
+int		is_separator(char c);
 int		count_words(char const *str);
 int		is_operator(t_mini *mini, char *str);
 
 char	**split_args(char *str);
+char	**check_bash_syntax(char **split);
 
 void	parsing(char *str, t_mini *mini);
 

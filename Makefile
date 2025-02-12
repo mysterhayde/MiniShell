@@ -26,7 +26,7 @@ CMDS_SRC = pwd.c cd.c env.c echo.c exit.c
 CMDS_DIR = src/cmds/
 CMDS = $(addprefix $(CMDS_DIR), $(CMDS_SRC))
 
-PARS_SRC = parsing.c check_operator.c split_entry.c count_words.c
+PARS_SRC = parsing.c parsing_utils.c split_entry.c count_words.c bash_syntax.c
 PARS_DIR = src/parsing/
 PARS = $(addprefix $(PARS_DIR), $(PARS_SRC))
 
@@ -61,7 +61,7 @@ $(LIBFT):
 
 $(NAME): $(OBJECTS)
 	@echo $(CURSIVE)$(GRAY) " - Compiling $(NAME)..." $(NONE)
-	@cc $(FLAGS) $(OBJECTS) $(LIBFT) $(PRINTF) -o $(NAME) -lreadline -lhistory
+	@cc $(FLAGS) $(OBJECTS) $(LIBFT) $(PRINTF) -o $(NAME) -lreadline
 	@echo $(GREEN)"- Compiled -"$(NONE)
 
 $(OBJ_DIR)%.o: %.c
