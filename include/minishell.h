@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 18:19:27 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/02/12 19:29:45 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/02/14 15:30:58 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,15 +49,9 @@ typedef enum e_type
 	FD = 5
 }	t_type;
 
-typedef struct s_debug
-{
-	char			**cmd;
-	struct s_debug	*next;
-}	t_debug;
-
 typedef struct s_token
 {
-	char			*str;
+	char			**cmd;
 	t_type			type;
 	struct s_token	*next;
 }	t_token;
@@ -71,7 +65,6 @@ typedef struct s_mini
 	t_bool	is_pipe;
 	t_token	*token;
 	t_token	*backup;
-	t_debug	*debug;
 }	t_mini;
 
 // Init
