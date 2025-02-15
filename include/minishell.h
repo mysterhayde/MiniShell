@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hayden <hayden@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 18:19:27 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/02/15 13:13:03 by hayden           ###   ########.fr       */
+/*   Updated: 2025/02/15 14:32:21 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,12 +82,14 @@ void	exit_builtin(int n);
 
 int		is_separator(char c);
 int		is_operator(t_mini *mini, char *str);
-int	count_words(char const *str, unsigned int i, unsigned int word);
+int		count_words(char const *str, unsigned int i, unsigned int word);
 
 char	**split_args(char *str);
 char	**check_bash_syntax(char **split);
 
+void	free_token_list(t_mini *mini);
 void	parsing(char *str, t_mini *mini);
+void	add_last_token(char *str, t_mini *mini, int type);
 
 /*---------------------------------- Error ----------------------------------*/
 

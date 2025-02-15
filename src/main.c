@@ -14,34 +14,37 @@ void	init(t_mini *mini, char **envp)
 int	main(int argc, char **argv, char **envp)
 {
 	t_mini	mini;
-	char	*test;
+	char	*entry;
 
 	char	*path;
 	path = ft_strdup("/home");
-
+	mini.token = NULL;
+	mini.backup = NULL;
 	(void)argc;
 	(void)argv;
 	init(&mini, envp);
 	while (TRUE)
 	{
-
 		ft_printf("%s ", mini.user);
-		test = readline("~ MyShell> ");
-		parsing(test, &mini);
-		if (test == NULL)
+		entry = readline("~ MyShell> ");
+		if (entry == NULL)
 			return (0);
-		if (ft_strmincmp(test, "pwd", 3) == 0)
+		parsing(entry, &mini);
+		if (ft_strmincmp(entry, "pwd", 3) == 0)
 			pwd(&mini);
 		//else if (ft_strmincmp(test, "export", 6) == 0)
 		//	export(mini);
-		else if (ft_strmincmp(test, "cd", 2) == 0)
+		else if (ft_strmincmp(entry, "cd", 2) == 0)
 			cd(path);
-		else if (ft_strmincmp(test, "env", 3) == 0)
+		else if (ft_strmincmp(entry, "env", 3) == 0)
 			env(&mini);
-		else if (ft_strmincmp(test, "echo", 4) == 0)
+		else if (ft_strmincmp(entry, "echo", 4) == 0)
 			echo(TRUE, mini.user);
-		else if (ft_strmincmp(test, "exit", 4) == 0)
+		else if (ft_strmincmp(entry, "exit", 4) == 0)
 			exit_builtin(1);
+		// if (entry)
+		// 	free(entry);
+		free_token_list(&mini);
 	}
 	return (0);
 }
