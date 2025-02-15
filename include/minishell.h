@@ -6,7 +6,7 @@
 /*   By: hayden <hayden@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 18:19:27 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/02/14 15:50:16 by hayden           ###   ########.fr       */
+/*   Updated: 2025/02/15 13:13:03 by hayden           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,8 @@ void	exit_builtin(int n);
 /*--------------------------------- Parsing ---------------------------------*/
 
 int		is_separator(char c);
-int		count_words(char const *str);
 int		is_operator(t_mini *mini, char *str);
+int	count_words(char const *str, unsigned int i, unsigned int word);
 
 char	**split_args(char *str);
 char	**check_bash_syntax(char **split);
