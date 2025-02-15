@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_entry.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hayden <hayden@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 11:51:45 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/02/12 19:08:26 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/02/15 13:12:09 by hayden           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ char	**split_args(char *str)
 	int		word;
 	char	**split;
 
-	word = count_words(str);
+	word = count_words(str, 0, 0);
 	split = malloc(sizeof(char *) * (word + 1));
 	if (!split)
 		return (NULL);

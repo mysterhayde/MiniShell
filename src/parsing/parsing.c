@@ -6,7 +6,7 @@
 /*   By: hayden <hayden@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 10:00:47 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/02/14 22:01:58 by hayden           ###   ########.fr       */
+/*   Updated: 2025/02/15 13:34:01 by hayden           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ char	**increase_tab(char **tab, char *str)  //TODO: protect mallocs and check p
 	i = 0;
 	while (tab[i])
 		i++;
-	printf("i = %d\n", i);
 	new_tab = malloc(sizeof(char *) * (i + 2));
 	if (!new_tab)
 		return (NULL);
@@ -36,8 +35,7 @@ char	**increase_tab(char **tab, char *str)  //TODO: protect mallocs and check p
 	if (!new_tab[i])
 		return (NULL);
 	new_tab[i + 1] = NULL;
-	free_tab(tab);
-	return (new_tab);
+	return (free_tab(tab), new_tab);
 }
 
 /**
@@ -49,6 +47,16 @@ char	**increase_tab(char **tab, char *str)  //TODO: protect mallocs and check p
 static t_token	*new_token(char *str, int type)
 {
 	t_token	*new;
+
+	if (type == PIPE)
+		printf("PIPE\n");
+	else if (type == RDIT)
+		printf("RDIT\n");
+	else if (type == CMD)
+		printf("CMD\n");
+	else if (type == ARG)
+		printf("ARG\n");
+
 
 	new = malloc(sizeof(t_token));
 	if (!new)
@@ -77,6 +85,16 @@ static t_token	*new_token(char *str, int type)
  */
 static void	add_last_token(char *str, t_mini *mini, int type)
 {
+	if (type == PIPE)
+		printf("PIPE\n");
+	else if (type == RDIT)
+		printf("RDIT\n");
+	else if (type == CMD)
+		printf("CMD\n");
+	else if (type == ARG)
+		printf("ARG\n");
+
+
 	if (!mini->token)
 	{
 		mini->backup = malloc(sizeof(t_token));
@@ -99,7 +117,9 @@ static void	add_last_token(char *str, t_mini *mini, int type)
 		mini->token->cmd = increase_tab(mini->token->cmd, str);
 		return ;
 	}
-	mini->token = mini->token->next;
+
+	while (mini->token->next)
+		mini->token = mini->token->next;
 	mini->token->next = new_token(str, type);
 	mini->token = mini->token->next;
 }
@@ -131,10 +151,12 @@ static void	print_tokens(t_token *token)			// Debug function
 		if (token->type == CMD)
 		{
 			int i = 0;
+			printf("%s	", token->cmd[i++]);
+			printf(COLOR_GREEN"TYPE:	CMD\n"COLOR_RESET);
 			while (token->cmd[i])
 			{
 				printf("%s	", token->cmd[i++]);
-				printf(COLOR_YELLOW"TYPE:	CMD\n"COLOR_RESET);
+				printf(COLOR_YELLOW"TYPE:	ARG\n"COLOR_RESET);
 			}
 		}
 		else if (token->type == PIPE)
