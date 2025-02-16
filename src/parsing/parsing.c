@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 10:00:47 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/02/16 15:10:06 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/02/16 16:02:50 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,28 +14,22 @@
 
 static void	allocate_tokens(char *str, t_mini *mini)
 {
-	int		op;
-
-	op = is_operator(mini, str);
-	if (op == 1)
-	{
-		add_last_token(str, mini, PIPE);
-		mini->is_pipe = TRUE;
-		mini->pipe_num++;
-	}
-	else if (op == 2)
-		add_last_token(str, mini, RDIT);
-	else if (op == 3)
-		add_last_token(str, mini, HERE_DOC);
-	else if (mini->token == NULL || mini->token->type == PIPE
-		|| mini->token->type == FILES || mini->token->type == LIMITER)
+	if (!mini->token)
 		add_last_token(str, mini, CMD);
-	else if (mini->token->type == CMD || mini->token->type == ARG)
-		add_last_token(str, mini, ARG);
+	else if (is_operator(mini, str) == PIPE)
+		add_last_token(str, mini, PIPE);
+	else if (is_operator(mini, str) == RDIT)
+		add_last_token(str, mini, RDIT);
 	else if (mini->token->type == RDIT)
 		add_last_token(str, mini, FILES);
+	else if (is_operator(mini, str) == HERE_DOC)
+		add_last_token(str, mini, HERE_DOC);
 	else if (mini->token->type == HERE_DOC)
 		add_last_token(str, mini, LIMITER);
+	else if (mini->token->type == CMD)
+		add_last_token(str, mini, ARG);
+	else
+		add_last_token(str, mini, CMD);
 }
 
 static void	print_tokens(t_token *token)			// Debug function
