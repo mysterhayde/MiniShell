@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 14:24:41 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/02/12 18:11:03 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/02/16 14:53:11 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@ int	is_operator(t_mini *mini, char *str)
 		return (2);
 	else if (ft_strmincmp(str, ">", 2) == 0)
 		return (2);
-	else if (ft_strmincmp(str, "<<", 1) == 0)
-		return (2);
 	else if (ft_strmincmp(str, ">>", 1) == 0)
 		return (2);
+	else if (ft_strmincmp(str, "<<", 1) == 0)
+		return (3);
 	return (0);
 }
 
