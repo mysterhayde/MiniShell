@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 14:00:12 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/02/15 15:07:13 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/02/15 15:15:38 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,10 @@ void	free_token_list(t_mini *mini)
 	mini->token = mini->backup;
 	while (mini->token)
 	{
-		printf("%s\n", "token->next");
 		mini->token = mini->token->next;
 		free(mini->backup->cmd);
-		printf("%s\n", "freeing");
 		free(mini->backup);
-		printf("%s\n", "backup->token");
 		mini->backup = mini->token;
-		printf("%s\n", "while end");
 	}
 	mini->token = NULL;
 	mini->backup = NULL;

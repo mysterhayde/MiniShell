@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 10:00:47 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/02/15 14:57:35 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/02/16 15:10:06 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,17 @@ static void	allocate_tokens(char *str, t_mini *mini)
 	}
 	else if (op == 2)
 		add_last_token(str, mini, RDIT);
+	else if (op == 3)
+		add_last_token(str, mini, HERE_DOC);
 	else if (mini->token == NULL || mini->token->type == PIPE
-		|| mini->token->type == RDIT)
+		|| mini->token->type == FILES || mini->token->type == LIMITER)
 		add_last_token(str, mini, CMD);
 	else if (mini->token->type == CMD || mini->token->type == ARG)
 		add_last_token(str, mini, ARG);
+	else if (mini->token->type == RDIT)
+		add_last_token(str, mini, FILES);
+	else if (mini->token->type == HERE_DOC)
+		add_last_token(str, mini, LIMITER);
 }
 
 static void	print_tokens(t_token *token)			// Debug function
@@ -39,23 +45,45 @@ static void	print_tokens(t_token *token)			// Debug function
 		if (token->type == CMD)
 		{
 			int i = 0;
-			printf("%s	", token->cmd[i++]);
-			printf(COLOR_GREEN"TYPE:	CMD\n"COLOR_RESET);
-			while (token->cmd[i])
+			printf("%s	", token->cmd[i]);
+			printf(COLOR_GREEN"TYPE:	CMD");
+			printf(COLOR_RESET"\n");
+			while (token->cmd[++i])
 			{
-				printf("%s	", token->cmd[i++]);
-				printf(COLOR_YELLOW"TYPE:	ARG\n"COLOR_RESET);
+				printf("%s	", token->cmd[i]);
+				printf(COLOR_GREEN_ULTRA"TYPE:	ARG");
+				printf(COLOR_RESET"\n");
 			}
 		}
 		else if (token->type == PIPE)
 		{
 			printf("%s	", token->cmd[0]);
-			printf(COLOR_RED"TYPE:	PIPE\n"COLOR_RESET);
+			printf(COLOR_RED"TYPE:	PIPE");
+			printf(COLOR_RESET"\n");
 		}
 		else if (token->type == RDIT)
 		{
 			printf("%s	", token->cmd[0]);
-			printf("TYPE:	REDIRECTION\n");
+			printf(COLOR_BLUE"TYPE:	REDIRECTION");
+			printf(COLOR_RESET"\n");
+		}
+		else if (token->type == FILES)
+		{
+			printf("%s	", token->cmd[0]);
+			printf(COLOR_PURPLE"TYPE:	FILE");
+			printf(COLOR_RESET"\n");
+		}
+		else if (token->type == HERE_DOC)
+		{
+			printf("%s	", token->cmd[0]);
+			printf(COLOR_CYAN"TYPE:	HERE_DOC");
+			printf(COLOR_RESET"\n");
+		}
+		else if (token->type == LIMITER)
+		{
+			printf("%s	", token->cmd[0]);
+			printf(COLOR_CYAN"TYPE:	LIMITER");
+			printf(COLOR_RESET"\n");
 		}
 		token = token->next;
 	}
@@ -81,7 +109,7 @@ void	parsing(char *str, t_mini *mini)
 		allocate_tokens(tab[i], mini);
 		i++;
 	}
-	//free_tab(tab);
+	//free_tab(tab);  //already freed ??
 	print_tokens(mini->backup); // Debug
 	mini->token = mini->backup;
 }

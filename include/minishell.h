@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 18:19:27 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/02/15 14:32:21 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/02/16 14:59:14 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,9 @@
 # include <readline/history.h>
 # include "../libft/libft.h"
 
+/*---------------------------------- ENUM ------------------------------------*/
+
+
 typedef enum e_bool
 {
 	TRUE = 1,
@@ -34,20 +37,26 @@ typedef enum e_bool
 
 /**
  * @brief Type of token
- * @enum CMD = 1
- * @enum ARG = 2
- * @enum PIPE = 3
- * @enum RDIT = 4
- * @enum FILE = 5
+ * @enum CMD 		= 1
+ * @enum ARG 		= 2
+ * @enum PIPE 		= 3
+ * @enum RDIT 		= 4
+ * @enum FILE 		= 5
+ * @enum HERE_DOC	= 6
+ * @enum LIMITER	= 7
  */
 typedef enum e_type
 {
-	CMD = 1,
-	ARG = 2,
-	PIPE = 3,
-	RDIT = 4,	//Redirections
-	FD = 5
+	CMD			= 1,
+	ARG			= 2,
+	PIPE		= 3,
+	RDIT		= 4, // Redirection
+	FILES		= 5,
+	HERE_DOC	= 6,
+	LIMITER		= 7
 }	t_type;
+
+/*------------------------------- STRUCTURES ---------------------------------*/
 
 typedef struct s_token
 {
@@ -67,11 +76,13 @@ typedef struct s_mini
 	t_token	*backup;
 }	t_mini;
 
-// Init
+/*---------------------------------- INIT ------------------------------------*/
+
 void	getcurpath(t_mini *mini);
 void	setupenv(t_mini *mini);
 
-// cmds
+/*--------------------------------- Builtins --------------------------------*/
+
 int		pwd(t_mini *mini);
 int		cd(const char *path);
 int		env(t_mini *mini);
@@ -82,7 +93,6 @@ void	exit_builtin(int n);
 
 int		is_separator(char c);
 int		is_operator(t_mini *mini, char *str);
-int		count_words(char const *str, unsigned int i, unsigned int word);
 
 char	**split_args(char *str);
 char	**check_bash_syntax(char **split);
