@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 17:28:02 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/02/12 19:28:26 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/02/17 16:04:40 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static char	*clear_quote(char *str, char quote, int *len)
 		return (NULL);
 	while (str[j])
 	{
-		if (str[j] == quote && str[j - 1] != '\\')
+		if (str[j] == quote)
 		{
 			j++;
 			*len = j;
