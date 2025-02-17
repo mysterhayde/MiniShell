@@ -18,14 +18,21 @@
 # include <stdlib.h>
 # include <stdarg.h>
 
-# define INT_MAX 2147483647
-# define INT_MIN -2147483648
+# define INT_MAX			2147483647
+# define INT_MIN 			-2147483648
+
+//-------------------------------- COLORS --------------------------------------
+
 # define COLOR_RED 			"\x1b[31m"
 # define COLOR_GREEN 		"\x1b[32m"
+# define COLOR_GREEN_ULTRA	"\x1b[32;1m"
 # define COLOR_YELLOW		"\x1b[33m"
+# define COLOR_BLUE			"\x1b[34m"
+# define COLOR_PURPLE		"\x1b[35m"
+# define COLOR_CYAN			"\x1b[36m"
 # define COLOR_RESET		"\x1b[0m"
 
-//---------------------------------LIBFT----------------------------------------
+//-------------------------------- LIBFT ---------------------------------------
 
 int		ft_isalnum(int c);
 int		ft_isalpha(int c);
@@ -52,6 +59,7 @@ char	**ft_split(char const *s, char c);
 
 long	ft_atol(const char *str);
 
+void	free_tab(char **tab);
 void	safe_free(void **ptr);
 void	ft_bzero(void *s, size_t n);
 void	ft_putnbr_fd(int n, int fd);
@@ -89,7 +97,7 @@ t_list	*ft_lstnew(void *content);
 t_list	*ft_lstlast(t_list *lst);
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 
-//---------------------------------PRINTF---------------------------------------
+//-------------------------------- PRINTF --------------------------------------
 
 int		putnbr_pf(int n, int *value);
 int		putchar_pf(char c, int value);
@@ -99,7 +107,7 @@ int		unsigned_putnbr_pf(unsigned int n, int *value);
 int		write_pointer_pf(unsigned long un, int *value);
 int		print_hex_pf(unsigned int un, int *value, char param);
 
-//---------------------------------GetNextLine----------------------------------
+//-------------------------------- GetNextLine ---------------------------------
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 1000
@@ -110,7 +118,7 @@ int		print_hex_pf(unsigned int un, int *value, char param);
 char	*get_next_line(int fd);
 int		ft_gnl_strchr(char *str);
 
-//-----------------------------------Tables-------------------------------------
+//---------------------------------- Tables ------------------------------------
 
 size_t	ft_chartable_linecount(char **table);
 void	ft_free_chartable(char **table);

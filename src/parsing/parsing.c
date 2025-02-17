@@ -6,59 +6,82 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 10:00:47 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/02/04 16:53:58 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/02/17 16:24:37 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-/**
- * @brief Create a new node
- * @param char *str
- * @param int type
- * @return t_token node
- */
-t_token	*new_token(char *str, int type)
+static void	allocate_tokens(char *str, t_mini *mini)
 {
-	t_token	*new;
-
-	new = malloc(sizeof(t_token));
-	if (!new)
-	{
-		show_error("Malloc token failed");
-		exit(EXIT_FAILURE);
-	}
-	new->str = str;
-	new->type = type;
-	new->next = NULL;
-	return (new);
-} 
-
-/**
- * @brief add a node to the end of the linked list
- * @param char *str
- * @param t_mini *mini
- * @param int type
- */
-void	add_last_token(char *str, t_mini *mini, int type)
-{	
 	if (!mini->token)
-	{
-		mini->backup = malloc(sizeof(t_token));
-		mini->token = new_token(str, type);
-		if (!mini->token)
-		{
-			show_error("Malloc backup failed");
-			exit(EXIT_FAILURE);
-		}
-		mini->backup = mini->token;
-		return ;
-	}
-	while (mini->token->next)
-		mini->token = mini->token->next;
-	mini->token->next = new_token(str, type);
-	mini->token = mini->token->next;
+		add_last_token(str, mini, CMD);
+	else if (is_operator(mini, str) == PIPE)
+		add_last_token(str, mini, PIPE);
+	else if (is_operator(mini, str) == RDIT)
+		add_last_token(str, mini, RDIT);
+	else if (mini->token->type == RDIT)
+		add_last_token(str, mini, FILES);
+	else if (is_operator(mini, str) == HERE_DOC)
+		add_last_token(str, mini, HERE_DOC);
+	else if (mini->token->type == HERE_DOC)
+		add_last_token(str, mini, LIMITER);
+	else if (mini->token->type == CMD)
+		add_last_token(str, mini, ARG);
+	else
+		add_last_token(str, mini, CMD);
 }
+
+// static void	print_tokens(t_token *token)			// Debug function
+// {
+// 	while (token)
+// 	{
+// 		if (token->type == CMD)
+// 		{
+// 			int i = 0;
+// 			printf("%s	", token->cmd[i]);
+// 			printf(COLOR_GREEN"TYPE:	CMD");
+// 			printf(COLOR_RESET"\n");
+// 			while (token->cmd[++i])
+// 			{
+// 				printf("%s	", token->cmd[i]);
+// 				printf(COLOR_GREEN_ULTRA"TYPE:	ARG");
+// 				printf(COLOR_RESET"\n");
+// 			}
+// 		}
+// 		else if (token->type == PIPE)
+// 		{
+// 			printf("%s	", token->cmd[0]);
+// 			printf(COLOR_RED"TYPE:	PIPE");
+// 			printf(COLOR_RESET"\n");
+// 		}
+// 		else if (token->type == RDIT)
+// 		{
+// 			printf("%s	", token->cmd[0]);
+// 			printf(COLOR_BLUE"TYPE:	REDIRECTION");
+// 			printf(COLOR_RESET"\n");
+// 		}
+// 		else if (token->type == FILES)
+// 		{
+// 			printf("%s	", token->cmd[0]);
+// 			printf(COLOR_PURPLE"TYPE:	FILE");
+// 			printf(COLOR_RESET"\n");
+// 		}
+// 		else if (token->type == HERE_DOC)
+// 		{
+// 			printf("%s	", token->cmd[0]);
+// 			printf(COLOR_CYAN"TYPE:	HERE_DOC");
+// 			printf(COLOR_RESET"\n");
+// 		}
+// 		else if (token->type == LIMITER)
+// 		{
+// 			printf("%s	", token->cmd[0]);
+// 			printf(COLOR_CYAN"TYPE:	LIMITER");
+// 			printf(COLOR_RESET"\n");
+// 		}
+// 		token = token->next;
+// 	}
+// }
 
 /**
  * @brief parse entry in different tokens and distribute 
@@ -69,69 +92,23 @@ void	add_last_token(char *str, t_mini *mini, int type)
 void	parsing(char *str, t_mini *mini)
 {
 	int		i;
-	int		op;
 	char	**tab;
 
 	i = 0;
-	if (str == NULL)
-		return ;
-	mini->token = NULL;
+	mini->pipe_num = 0;
+	mini->is_pipe = FALSE;
 	tab = split_args(str);
-	mini->debug = malloc(sizeof(t_debug));
-	mini->debug->cmd = tab;
+	if (tab == NULL)
+	{
+		show_error("Split args failed");
+		return ;
+	}
 	while (tab[i])
 	{
-		op = is_operator(mini, tab[i]);
-		if (op == 1)
-			add_last_token(tab[i], mini, PIPE);
-		else if (op == 2)
-			add_last_token(tab[i], mini, RDIT);
-		else if (mini->token == NULL || mini->token->type == PIPE
-			|| mini->token->type == RDIT)
-			add_last_token(tab[i], mini, CMD);
-		else if (mini->token->type == CMD || mini->token->type == ARG)
-			add_last_token(tab[i], mini, ARG);
+		allocate_tokens(tab[i], mini);
 		i++;
 	}
+	//free_tab(tab);  //already freed ??
+	//print_tokens(mini->backup); // Debug
 	mini->token = mini->backup;
-
-
-	// t_token *count;
-	// count = malloc(sizeof(t_token));
-	// count = mini->backup;
-	// while (count)
-	// {
-	// 	if (count->type == 1)
-	// 		printf("Token type		%s\n", "CMD");
-	// 	else if (count->type == 2)
-	// 		printf("Token type		%s\n", "ARG");
-	// 	else if (count->type == 3)
-	// 		printf("Token type		%s\n", "PIPE");
-	// 	else if (count->type == 4)
-	// 		printf("Token type		%s\n", "REDIRECTION");
-	// 	printf("Token string		%s\n", count->str);
-	// 	printf("\n");
-	// 	count = count->next;
-	// }
-	
-	// int	d = 0;
-	// while (mini->debug->cmd[d])
-	// {
-	// 	printf("%s\n", mini->debug->cmd[d]);
-	// 	d++;
-	// }
-
-	// j = 0;
-	// while(tab[j])
-	// 	printf("%s\n", tab[j++]);
-	// pid_t	pid;
-	// pid = fork();
-	// if (pid == 0)
-	// {
-	// 	char *tmp = ft_strjoin("/bin/", tab[0]);
-	// 	if (execve(tmp, tab, NULL) == -1)
-	// 		show_error("execve failed");
-	// }
-	// else
-	// 	waitpid(pid, NULL, 0);
 }
