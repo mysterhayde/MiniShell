@@ -3,7 +3,7 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+         #
+#    By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/10 21:12:44 by hdougoud          #+#    #+#              #
 #    Updated: 2025/02/05 17:52:02 by cbopp            ###   ########.fr        #
@@ -11,7 +11,7 @@
 # **************************************************************************** #
 
 NAME = libft.a
-GCC = cc
+CC = gcc
 CFLAGS = -Wall -Werror -Wextra
 
 #--------------------------------------DIRECTORY-------------------------------
@@ -35,7 +35,7 @@ LIBFT_SRCS = 	$(LIBFT_DIR)/ft_isascii.c	$(LIBFT_DIR)/ft_memcpy.c 		$(LIBFT_DIR)/
 				$(LIBFT_DIR)/ft_strncmp.c	$(LIBFT_DIR)/ft_toupper.c		$(LIBFT_DIR)/ft_isalpha.c \
 				$(LIBFT_DIR)/ft_memcmp.c	$(LIBFT_DIR)/ft_putnbr_fd.c		$(LIBFT_DIR)/ft_strjoin.c \
 				$(LIBFT_DIR)/ft_strnstr.c	$(LIBFT_DIR)/ft_atol.c			$(LIBFT_DIR)/ft_safe_free.c \
-				$(LIBFT_DIR)/tables.c		$(LIBFT_DIR)/ft_realloc.c		$(LIBFT_DIR)/set.c
+				$(LIBFT_DIR)/tables.c		$(LIBFT_DIR)/ft_realloc.c		$(LIBFT_DIR)/set.c		$(LIBFT_DIR)/ft_free_tab.c
 
 #BONUS_SOURCES
 LIBFTBONUS =	$(LIBFT_DIR)/ft_lstadd_back_bonus.c \
@@ -59,9 +59,13 @@ GNL_SRCS	=	$(GNL_DIR)/get_next_line.c \
 #ALL_SOURCES
 SOURCES = 		$(LIBFT_SRCS) $(LIBFTBONUS) $(PRINTF_SRCS) $(GNL_SRCS)
 
+vpath %.c $(LIBFT_DIR) $(PRINTF_DIR) $(GNL_DIR)
+
 #-------------------------------------OBJECTS----------------------------------
 
-OBJECTS = 		$(SOURCES:.c=.o)		
+OBJ_DIR = 		Objects/
+OBJ_SRC = 		$(notdir $(SOURCES:.c=.o))
+OBJECTS = 		$(addprefix $(OBJ_DIR), $(OBJ_SRC))
 
 #--------------------------------------COLOR-----------------------------------
 
@@ -76,12 +80,18 @@ WHITE	= \033[1;37m
 
 #--------------------------------------RULES-----------------------------------
 
-all: $(NAME)
+all:$(OBJ_DIR) $(NAME)
+
+$(OBJ_DIR):
+	@mkdir -p $(OBJ_DIR)
 
 $(NAME): $(OBJECTS)
 	@ar rcs $(NAME) $(OBJECTS)
 #	echo -e "$(GREEN)Libft done$(WHITE)"
-	
+
+$(OBJ_DIR)%.o: %.c
+	@$(CC) $(CFLAGS) -c $< -o $@
+
 clean:
 	rm -f $(OBJECTS)
 

@@ -31,7 +31,10 @@ void	init(t_mini *mini, char **envp)
 int	main(int argc, char **argv, char **envp)
 {
 	t_mini	mini;
-	char	*test;
+	char	*entry;
+
+	mini.token = NULL;
+	mini.backup = NULL;
 
 	(void)argc;
 	(void)argv;
@@ -39,9 +42,12 @@ int	main(int argc, char **argv, char **envp)
 	while (mini.exit == 0)
 	{
 		ft_printf("%s ", mini.user);
-		test = readline("~ MyShell> ");
-		parsing(test, &mini);
+		entry = readline("~ MyShell> ");
+		if (entry == NULL)
+			return (0);
+		parsing(entry, &mini);
 		execute(&mini);
-	}	
+		free_token_list(&mini);
+	}
  	return (0);
 }

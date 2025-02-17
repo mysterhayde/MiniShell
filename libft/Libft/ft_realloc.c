@@ -15,8 +15,13 @@
 /**
  * @brief realloc
  * @param void *ptr you want to realloc
+<<<<<<< HEAD
  * @param size_t "sizeof(vartype) * size" to specify what 
  * 				type of size it needs to malloc
+=======
+ * @param size_t sizeof(vartype) * size" to specify what type 
+ * 				 of size it needs to malloc
+>>>>>>> parseur
  */
 void	*ft_realloc(void *ptr, size_t size)
 {

@@ -19,22 +19,22 @@
 int	minipipe(t_mini *mini)
 {
 	int		pipefd[2];
-	size_t	i;
+	int		i;
 
 	i = 0;
 	try_pipe(pipefd);
-	while (i <= mini->pipenum)
+	while (i <= mini->pipe_num)
 	{
-		if (is_builtin(mini->debug->cmd[0]))
+		if (is_builtin(mini->token->cmd[0]))
 		{
 			mini->children->pid = fork();
 			if (mini->children->pid == -1)
 				perror("PID");
 			if (mini->children->pid == 0)
-				exec_builtin(mini, mini->debug->cmd);
+				exec_builtin(mini, mini->token->cmd);
 		}
 		else
-			exec_bin(mini, mini->debug->cmd);
+			exec_bin(mini, mini->token->cmd);
 		i++;
 	}
 
@@ -53,14 +53,14 @@ int	minipipe(t_mini *mini)
 void	execute(t_mini *mini)
 {
 	//Need to add ispipe check below
-	if (mini->debug->cmd && ft_strmincmp(mini->debug->cmd[0], "exit", 4) == 0)
-		exit_builtin(mini, mini->debug->cmd);
-	else if (mini->debug->cmd && mini->is_pipe)
+	if (mini->token->cmd && ft_strmincmp(mini->token->cmd[0], "exit", 4) == 0)
+		exit_builtin(mini, mini->token->cmd);
+	else if (mini->token->cmd && mini->is_pipe)
 		mini->ret = minipipe(mini);
-	else if (mini->debug->cmd && is_builtin(mini->debug->cmd[0]) && !mini->is_pipe)
-		mini->ret = exec_builtin(mini, mini->debug->cmd);
-	else if (mini->debug->cmd)
+	else if (mini->token->cmd && is_builtin(mini->token->cmd[0]) && !mini->is_pipe)
+		mini->ret = exec_builtin(mini, mini->token->cmd);
+	else if (mini->token->cmd)
 	{
-		mini->ret = exec_bin(mini, mini->debug->cmd);
+		mini->ret = exec_bin(mini, mini->token->cmd);
 	}
 }

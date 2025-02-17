@@ -33,6 +33,9 @@ typedef struct s_children
 	struct t_children	*next;
 }	t_children;
 
+/*---------------------------------- ENUM ------------------------------------*/
+
+
 typedef enum e_bool
 {
 	TRUE = 1,
@@ -41,54 +44,55 @@ typedef enum e_bool
 
 /**
  * @brief Type of token
- * @enum CMD = 1
- * @enum ARG = 2
- * @enum PIPE = 3
- * @enum RDIT = 4
- * @enum FILE = 5
+ * @enum CMD 		= 1
+ * @enum ARG 		= 2
+ * @enum PIPE 		= 3
+ * @enum RDIT 		= 4
+ * @enum FILE 		= 5
+ * @enum HERE_DOC	= 6
+ * @enum LIMITER	= 7
  */
 typedef enum e_type
 {
-	CMD = 1,
-	ARG = 2,
-	PIPE = 3,
-	RDIT = 4,	//Redirections
-	FD = 5
+	CMD			= 1,
+	ARG			= 2,
+	PIPE		= 3,
+	RDIT		= 4, // Redirection
+	FILES		= 5,
+	HERE_DOC	= 6,
+	LIMITER		= 7
 }	t_type;
 
-typedef struct s_debug
-{
-	char			**cmd;
-	struct s_debug	*next;
-}	t_debug;
+/*------------------------------- STRUCTURES ---------------------------------*/
 
 typedef struct s_token
 {
-	char			*str;
+	char			**cmd;
 	t_type			type;
 	struct s_token	*next;
 }	t_token;
 
-typedef struct s_mini 
+typedef struct s_mini
 {
 	char		**envp;
 	char		*user;
 	char		*cur_path;
+	int			pipe_num;
 	t_bool		is_pipe;
-	size_t		pipenum;
 	t_token		*token;
 	t_token		*backup;
 	int			exit;
 	int			ret;
 	t_children	*children;
-	t_debug	*debug;
 }	t_mini;
 
-/*----------------------------------- Init -----------------------------------*/
+/*---------------------------------- INIT ------------------------------------*/
+
 void	getcurpath(t_mini *mini);
 void	setupenv(t_mini *mini);
 
-/*----------------------------------- Cmds -----------------------------------*/
+/*--------------------------------- Builtins --------------------------------*/
+
 int		pwd(t_mini *mini);
 int		cd(const char *path);
 int		env(t_mini *mini);
@@ -115,9 +119,15 @@ char	*find_path(char *cmd, char **envp);
 
 /*--------------------------------- Parsing ---------------------------------*/
 
+int		is_separator(char c);
 int		is_operator(t_mini *mini, char *str);
-void	parsing(char *str, t_mini *mini);
+
 char	**split_args(char *str);
+char	**check_bash_syntax(char **split);
+
+void	free_token_list(t_mini *mini);
+void	parsing(char *str, t_mini *mini);
+void	add_last_token(char *str, t_mini *mini, int type);
 
 /*---------------------------------- Error ----------------------------------*/
 
