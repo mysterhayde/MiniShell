@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 15:04:03 by cbopp             #+#    #+#             */
-/*   Updated: 2025/02/18 18:24:57 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/02/18 18:38:37 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	check_entry(char *entry)
 	if (entry == NULL)
 		return (ft_printf("exit\n"), cleanup_history(), 1);
 	if (check_signal_interrupt())
-		return(free(entry), 2);
+		return (free(entry), 2);
 	if (*entry)
 		add_to_history(entry);
 	return (0);
@@ -48,7 +48,7 @@ int	init(t_mini *mini, char **envp)
 	init_readline_history();
 	if (!mini->envp)
 		return (mini->envp = NULL,
-				mini->exit = 1, 0);
+			mini->exit = 1, 0);
 	if (!setup_signal_handlers())
 		mini->exit = 1;
 	setupenv(mini);

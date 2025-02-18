@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 18:20:31 by cbopp             #+#    #+#             */
-/*   Updated: 2025/02/18 18:27:48 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/02/18 18:40:32 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*get_prompt(t_mini *mini)
 		return (NULL);
 	prompt = ft_strdup(temp);
 	if (!prompt)
-		return(free(prompt), NULL);
+		return (free(prompt), NULL);
 	free(temp);
 	return (prompt);
 }
