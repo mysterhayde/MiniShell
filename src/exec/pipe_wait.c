@@ -1,31 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   pipe_wait.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/05 15:03:47 by cbopp             #+#    #+#             */
-/*   Updated: 2025/02/18 17:46:34 by cbopp            ###   ########.fr       */
+/*   Created: 2025/02/18 16:55:01 by cbopp             #+#    #+#             */
+/*   Updated: 2025/02/18 17:04:57 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-/**
- * @brief Gets current working directory
- * @details Uses getcurpath(t_mini *mini) to update mini->cur_path
- * @returns 0 on success, 1 on failure
- */
-int	pwd(t_mini *mini)
+int	wait_for_children(t_mini *mini, pid_t *pids)
 {
-	getcurpath(mini);
-	if (mini->cur_path != NULL)
+	int	i;
+	int	status;
+
+	i = 0;
+	while (i <= mini->pipe_num)
 	{
-		write(STDOUT_FILENO, mini->cur_path, ft_strlen(mini->cur_path));
-		write(STDOUT_FILENO, "\n", 1);
-		return (0);
+		waitpid(pids[i], &status, 0);
+		if (WIFSIGNALED(status))
+			mini->ret = 128 + WTERMSIG(status);
+		i++;
 	}
-	perror("pwd");
-	return (1);
+	return (mini->ret);
 }
