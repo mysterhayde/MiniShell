@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 15:04:03 by cbopp             #+#    #+#             */
-/*   Updated: 2025/02/11 12:51:40 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/02/18 10:13:46 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ int	main(int argc, char **argv, char **envp)
 
 	mini.token = NULL;
 	mini.backup = NULL;
-
 	(void)argc;
 	(void)argv;
 	init(&mini, envp);
@@ -49,5 +48,5 @@ int	main(int argc, char **argv, char **envp)
 		execute(&mini);
 		free_token_list(&mini);
 	}
- 	return (0);
+	return (free(mini.user), 0);
 }
