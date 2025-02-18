@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 17:10:09 by cbopp             #+#    #+#             */
-/*   Updated: 2025/02/11 12:47:22 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/02/18 09:38:13 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ typedef struct s_children
 }	t_children;
 
 /*---------------------------------- ENUM ------------------------------------*/
-
 
 typedef enum e_bool
 {
@@ -112,6 +111,7 @@ int		is_builtin(char *cmd);
 int		exec_builtin(t_mini *mini, char **cmd);
 int		exec_bin(t_mini *mini, char **cmd);
 int		minipipe(t_mini *mini);
+void	find_cmd(t_mini *mini);
 void	try_pipe(int	*pipefd);
 
 /*---------------------------------- Path -----------------------------------*/
