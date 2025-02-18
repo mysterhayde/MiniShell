@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 15:03:44 by cbopp             #+#    #+#             */
-/*   Updated: 2025/02/11 12:15:01 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/02/18 18:40:06 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,8 @@ int	export(t_mini *mini, char **cmd)
 
 	if (!cmd[1])
 		return (print_export_list(mini->envp));
-	if (!(tempenv = copy_env(mini->envp)))
+	tempenv = copy_env(mini->envp);
+	if (!tempenv)
 		return (1);
 	i = 1;
 	while (cmd[i])
