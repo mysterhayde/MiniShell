@@ -6,79 +6,32 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 13:48:12 by cbopp             #+#    #+#             */
-/*   Updated: 2025/02/18 10:06:17 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/02/18 17:21:01 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static void	handle_pipe_child(int i, int pipe_count, int *pipe_fds)
+static void	handle_pipe_child(int i, t_mini *mini, int *pipe_fds)
 {
 	int	j;
-	int	fd_in;
-	int	fd_out;
 
 	j = 0;
 	if (i > 0)
 	{
-		fd_in = pipe_fds[(i - 1) * 2];
-		dup2(fd_in, STDIN_FILENO);
-		close(fd_in);
+		dup2(pipe_fds[(i - 1) * 2], STDIN_FILENO);
+		close(pipe_fds[(i - 1) * 2]);
 	}
-	if (i < pipe_count)
+	if (i < mini->pipe_num)
 	{
-		fd_out = pipe_fds[i * 2 + 1];
-		dup2(fd_out, STDOUT_FILENO);
-		close(fd_out);
+		dup2(pipe_fds[i * 2 + 1], STDOUT_FILENO);
+		close(pipe_fds[i * 2 + 1]);
 	}
-	while (j < (pipe_count * 2))
-	{
-		close(pipe_fds[j]);
-		j++;
-	}
+	while (j < (mini->pipe_num * 2))
+		close(pipe_fds[j++]);
 }
 
-static void	close_pipes(int pipe_count, int *pipe_fds)
-{
-	int	i;
-
-	i = 0;
-	while (i < (pipe_count * 2))
-	{
-		close(pipe_fds[i]);
-		i++;
-	}
-}
-
-static int	create_pipes(int pipe_count, int **pipe_fds)
-{
-	int	i;
-
-	*pipe_fds = malloc(sizeof(int) * (pipe_count * 2));
-	if (!*pipe_fds)
-		return (0);
-	i = 0;
-	while (i < pipe_count)
-	{
-		if (pipe((*pipe_fds) + (i * 2)) == -1)
-		{
-			free(*pipe_fds);
-			return (0);
-		}
-		i++;
-	}
-	return (1);
-}
-
-static void	handle_parent_pipes(int i, int pipe_count, int *pipe_fds)
-{
-	if (i > 0)
-		close(pipe_fds[(i - 1) * 2]);     // Close read end of previous pipe
-	if (i < pipe_count)
-		close(pipe_fds[i * 2 + 1]);       // Close write end of current pipe
-}
-
-static int	execute_piped_command(t_mini *mini, int i, int *pipe_fds)
+int	exec_pipe_cmd(t_mini *mini, int i, int *pipe_fds)
 {
 	pid_t	pid;
 
@@ -87,41 +40,31 @@ static int	execute_piped_command(t_mini *mini, int i, int *pipe_fds)
 		return (-1);
 	if (pid == 0)
 	{
-		handle_pipe_child(i, mini->pipe_num, pipe_fds);
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
+		handle_pipe_child(i, mini, pipe_fds);
 		if (is_builtin(mini->token->cmd[0]))
 			exit(exec_builtin(mini, mini->token->cmd));
-		else
-			exec_bin(mini, mini->token->cmd);
+		exec_bin(mini, mini->token->cmd);
+		exit(1);
 	}
-	handle_parent_pipes(i, mini->pipe_num, pipe_fds);
+	if (i > 0)
+		close(pipe_fds[(i - 1) * 2]);
+	if (i < mini->pipe_num)
+		close(pipe_fds[i * 2 + 1]);
 	return (pid);
 }
 
 int	minipipe(t_mini *mini)
 {
-	int		*pipe_fds;
-	int		i;
-	pid_t	*pids;
+	t_pipe	p;
 
-	if (!create_pipes(mini->pipe_num, &pipe_fds))
+	if (!create_pipes(mini->pipe_num, &p.pipe_fds))
 		return (1);
-	pids = malloc(sizeof(pid_t) * (mini->pipe_num + 1));
-	if (!pids)
-		return (free(pipe_fds), 1);
-	i = 0;
-	while (i <= mini->pipe_num)
-	{
-		pids[i] = execute_piped_command(mini, i, pipe_fds);
-		if (pids[i] == -1)
-			return (close_pipes(mini->pipe_num, pipe_fds),
-				free(pipe_fds), free(pids), 1);
-		if (i < mini->pipe_num)
-			find_cmd(mini);
-		i++;
-	}
-	close_pipes(mini->pipe_num, pipe_fds);
-	i = 0;
-	while (i <= mini->pipe_num)
-		waitpid(pids[i++], NULL, 0);
-	return (free(pipe_fds), free(pids), 0);
+	p.pids = malloc(sizeof(pid_t) * (mini->pipe_num + 1));
+	if (!p.pids)
+		return (free(p.pipe_fds), 1);
+	if (run_pipe_commands(mini, &p) == 1)
+		return (1);
+	return (wait_pipe_children(mini, &p));
 }

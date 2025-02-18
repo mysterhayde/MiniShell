@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 14:24:41 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/02/16 15:55:54 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/02/18 17:55:49 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ int	is_operator(t_mini *mini, char *str)
 	if (ft_strmincmp(str, "|", 1) == 0)
 	{
 		mini->is_pipe = TRUE;
+		mini->pipe_num++;
 		return (PIPE);
 	}
 	else if (ft_strmincmp(str, "<", 1) == 0)

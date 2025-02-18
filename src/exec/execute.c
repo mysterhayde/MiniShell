@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 13:48:06 by cbopp             #+#    #+#             */
-/*   Updated: 2025/02/18 09:25:24 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/02/18 17:56:13 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,29 +22,14 @@
  */
 void	execute(t_mini *mini)
 {
-	t_token	*tmp;
-
-	tmp = mini->token;
-	mini->is_pipe = FALSE;
-	mini->pipe_num = 0;
-	while (tmp && tmp->next)
-	{
-		if (tmp->type == PIPE)
-		{
-			mini->is_pipe = TRUE;
-			mini->pipe_num++;
-		}
-		tmp = tmp->next;
-	}
-	if (mini->token->cmd && ft_strmincmp(mini->token->cmd[0], "exit", 4) == 0)
+	if (!mini->token->cmd)
+		return ;
+	if (ft_strmincmp(mini->token->cmd[0], "exit", 4) == 0)
 		exit_builtin(mini, mini->token->cmd);
-	else if (mini->token->cmd && mini->is_pipe)
+	else if (mini->is_pipe)
 		mini->ret = minipipe(mini);
-	else if (mini->token->cmd && is_builtin(mini->token->cmd[0])
-		&& !mini->is_pipe)
+	else if (is_builtin(mini->token->cmd[0]))
 		mini->ret = exec_builtin(mini, mini->token->cmd);
-	else if (mini->token->cmd)
-	{
+	else
 		mini->ret = exec_bin(mini, mini->token->cmd);
-	}
 }
