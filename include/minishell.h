@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 17:10:09 by cbopp             #+#    #+#             */
-/*   Updated: 2025/02/18 18:23:46 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/02/18 20:34:28 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ typedef enum e_type
 	RDIT		= 4, // Redirection
 	FILES		= 5,
 	HERE_DOC	= 6,
-	LIMITER		= 7
+	LIMITER		= 7,
 }	t_type;
 
 /*------------------------------- STRUCTURES ---------------------------------*/
@@ -69,6 +69,7 @@ typedef struct s_token
 {
 	char			**cmd;
 	t_type			type;
+	t_bool			expand;
 	struct s_token	*next;
 }	t_token;
 
