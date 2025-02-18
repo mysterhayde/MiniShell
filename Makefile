@@ -18,7 +18,7 @@ MAIN_SRC =	main.c \
 			show_error.c
 SRC = $(addprefix $(SRC_DIR), $(MAIN_SRC))
 
-INIT_SRC = init.c
+INIT_SRC = init.c history.c
 INIT_DIR = src/init/
 INIT = $(addprefix $(INIT_DIR), $(INIT_SRC))
 

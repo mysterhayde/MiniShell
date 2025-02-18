@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 17:10:09 by cbopp             #+#    #+#             */
-/*   Updated: 2025/02/18 09:38:13 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/02/18 10:57:07 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,6 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../libft/libft.h"
-
-typedef struct s_children
-{
-	pid_t				pid;
-	int					wstatus;
-	struct t_children	*next;
-}	t_children;
 
 /*---------------------------------- ENUM ------------------------------------*/
 
@@ -82,13 +75,15 @@ typedef struct s_mini
 	t_token		*backup;
 	int			exit;
 	int			ret;
-	t_children	*children;
 }	t_mini;
 
 /*---------------------------------- INIT ------------------------------------*/
 
 void	getcurpath(t_mini *mini);
 void	setupenv(t_mini *mini);
+void	init_readline_history(void);
+void	add_to_history(const char *command);
+void	cleanup_history(void);
 
 /*--------------------------------- Builtins --------------------------------*/
 
