@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_entry.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
+/*   By: hayden <hayden@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 11:51:45 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/02/17 16:13:44 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/02/19 18:52:03 by hayden           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ static char	**separate_args(char **split, char *str, int word)
 		word--;
 	}
 	split[++j] = NULL;
-	return (check_bash_syntax(split));
+	return ((split));
 }
 
 static int	count_words(char const *str, unsigned int i, unsigned int word)
