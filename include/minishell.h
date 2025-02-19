@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
+/*   By: hayden <hayden@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 17:10:09 by cbopp             #+#    #+#             */
-/*   Updated: 2025/02/18 20:34:28 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/02/19 18:54:40 by hayden           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,6 @@ int		is_separator(char c);
 int		is_operator(t_mini *mini, char *str);
 
 char	**split_args(char *str);
-char	**check_bash_syntax(char **split);
 
 void	free_token_list(t_mini *mini);
 void	parsing(char *str, t_mini *mini);

@@ -3,14 +3,42 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
+/*   By: hayden <hayden@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 13:48:06 by cbopp             #+#    #+#             */
-/*   Updated: 2025/02/18 20:38:55 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/02/19 20:01:28 by hayden           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+static char *expand(char *str)
+{
+	str = NULL;
+	(void)str;
+	return ("Variable expanded");
+}
+
+static void	check_expand(char **cmd)
+{
+	int	i;
+	int	j;
+
+	j = 0;
+	while (cmd[j])
+	{
+		i = 0;
+		while (cmd[j][i])
+		{
+			if (cmd[j][i] == '\'')
+				break ;
+			if (cmd[j][i] == '$')
+				cmd[j] = expand(cmd[j]);
+			i++;
+		}
+		j++;
+	}
+}
 
 /**
  * @brief Calls of expansion of argument(s) and then manages 
@@ -24,6 +52,7 @@ void	execute(t_mini *mini)
 {
 	if (!mini->token->cmd)
 		return ;
+	check_expand(mini->token->cmd);
 	if (ft_strmincmp(mini->token->cmd[0], "exit", 4) == 0)
 		exit_builtin(mini, mini->token->cmd);
 	else if (mini->is_pipe)
