@@ -3,55 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   split_entry.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hayden <hayden@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 11:51:45 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/02/19 18:52:03 by hayden           ###   ########.fr       */
+/*   Updated: 2025/02/20 11:34:13 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static unsigned int	find_next_quote(char *str, int *i, char quote)
+static unsigned int	next_word_len(char *str, int i)
 {
-	int	len;
-
-	len = 0;
-	(*i)++;
-	len++;
-	while (str[*i] && str[*i] != quote)
-	{
-		(*i)++;
-		len++;
-	}
-	(*i)++;
-	len++;
-	return (len);
-}
-
-static unsigned int	next_word_len(char *str)
-{
-	int	i;
-	int	word_len;
-
-	i = 0;
-	word_len = 0;
 	while (str[i] && !is_separator(str[i]))
 	{
 		if (str[i] == '\'')
 		{
-			word_len += find_next_quote(str, &i, '\'');
-			continue ;
+			while (str[++i] && str[i] != '\'')
+				;
 		}
 		if (str[i] == '\"')
 		{
-			word_len += find_next_quote(str, &i, '\"');
-			continue ;
+			while (str[++i] && str[i] != '\"')
+				;
 		}
 		i++;
-		word_len++;
 	}
-	return (word_len);
+	printf("i		%d\n", i);
+	return (i);
 }
 
 static char	**separate_args(char **split, char *str, int word)
@@ -65,7 +43,7 @@ static char	**separate_args(char **split, char *str, int word)
 	{
 		i = 0;
 		str = ft_strtrim(str, " \n\t");
-		word_len = next_word_len(str);
+		word_len = next_word_len(str, 0);
 		split[++j] = malloc(sizeof(char) * (word_len + 1));
 		if (!split[j])
 			return (NULL);
@@ -85,11 +63,8 @@ static int	count_words(char const *str, unsigned int i, unsigned int word)
 {
 	while (str[i])
 	{
-		if (is_separator(str[i]))
-		{
+		while (str[i] && is_separator(str[i]))
 			i++;
-			continue ;
-		}
 		while (str[i] && !is_separator(str[i]))
 		{
 			if (str[i] == '\'')
@@ -103,6 +78,7 @@ static int	count_words(char const *str, unsigned int i, unsigned int word)
 		}
 		word++;
 	}
+	printf("words	%d\n", word);
 	return (word);
 }
 
