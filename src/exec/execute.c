@@ -3,41 +3,48 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hayden <hayden@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 13:48:06 by cbopp             #+#    #+#             */
-/*   Updated: 2025/02/19 20:01:28 by hayden           ###   ########.fr       */
+/*   Updated: 2025/02/20 13:28:25 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static char *expand(char *str)
+static char	*expand(char *str)
 {
 	str = NULL;
 	(void)str;
 	return ("Variable expanded");
 }
 
-static void	check_expand(char **cmd)
+char	**create_cmd_tab(t_token *token, t_token *backup)
 {
-	int	i;
-	int	j;
+	int		i;
+	int		word;
+	char	**tab;
 
-	j = 0;
-	while (cmd[j])
+	i = 0;
+	word = 0;
+	while (token && (token->type == CMD || token->type == ARG))
 	{
-		i = 0;
-		while (cmd[j][i])
-		{
-			if (cmd[j][i] == '\'')
-				break ;
-			if (cmd[j][i] == '$')
-				cmd[j] = expand(cmd[j]);
-			i++;
-		}
-		j++;
+		word++;
+		token = token->next;
 	}
+	token = backup;
+	tab = malloc(sizeof(char *) * (word + 1));
+	if (!tab)
+		return (NULL);
+	while (token && (token->type == CMD || token->type == ARG))
+	{
+		tab[i++] = ft_strdup(token->str);
+		if (!tab[i - 1])
+			return (NULL);
+		token = token->next;
+	}
+	tab[i] = NULL;
+	return (tab);
 }
 
 /**
@@ -50,15 +57,20 @@ static void	check_expand(char **cmd)
  */
 void	execute(t_mini *mini)
 {
-	if (!mini->token->cmd)
+	char	**cmd;
+
+	cmd = create_cmd_tab(mini->token, mini->backup);
+	for(int j = 0; cmd[j]; j++)
+		printf("TAB	%s\n", cmd[j]);
+
+	if (!mini->token || !mini->token->str)
 		return ;
-	check_expand(mini->token->cmd);
-	if (ft_strmincmp(mini->token->cmd[0], "exit", 4) == 0)
-		exit_builtin(mini, mini->token->cmd);
+	if (ft_strmincmp(cmd[0], "exit", 4) == 0)
+		exit_builtin(mini, cmd);
 	else if (mini->is_pipe)
 		mini->ret = minipipe(mini);
-	else if (is_builtin(mini->token->cmd[0]))
-		mini->ret = exec_builtin(mini, mini->token->cmd);
+	else if (is_builtin(cmd[0]))
+		mini->ret = exec_builtin(mini, cmd);
 	else
-		mini->ret = exec_bin(mini, mini->token->cmd);
+		mini->ret = exec_bin(mini, cmd);
 }
