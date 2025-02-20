@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
+/*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 15:04:03 by cbopp             #+#    #+#             */
-/*   Updated: 2025/02/18 18:38:37 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/02/20 14:24:51 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,12 @@ int	check_entry(char *entry)
 	return (0);
 }
 
-static void	process_input(t_mini *mini, char *entry)
+static void	process_input(t_mini *mini, char *entry, char **envp)
 {
 	if (entry && *entry)
 	{
 		parsing(entry, mini);
-		execute(mini);
+		execute(mini, envp);
 		free_token_list(mini);
 	}
 	free(entry);
@@ -55,7 +55,7 @@ int	init(t_mini *mini, char **envp)
 	return (0);
 }
 
-static void	shell_loop(t_mini *mini)
+static void	shell_loop(t_mini *mini, char **envp)
 {
 	char	*entry;
 	char	*prompt;
@@ -74,7 +74,7 @@ static void	shell_loop(t_mini *mini)
 			break ;
 		if (ret == 2)
 			continue ;
-		process_input(mini, entry);
+		process_input(mini, entry, envp);
 	}
 }
 
@@ -85,7 +85,7 @@ int	main(int argc, char **argv, char **envp)
 	(void)argc;
 	(void)argv;
 	init(&mini, envp);
-	shell_loop(&mini);
+	shell_loop(&mini, envp);
 	cleanup_history();
 	return (free(mini.user), mini.exit);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
+/*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 16:50:34 by cbopp             #+#    #+#             */
-/*   Updated: 2025/02/18 17:24:02 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/02/20 14:01:51 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,14 +41,14 @@ void	close_all_pipes(int pipe_count, int *pipe_fds)
 		close(pipe_fds[i++]);
 }
 
-int	run_pipe_commands(t_mini *mini, t_pipe *p)
+int	run_pipe_commands(t_mini *mini, t_pipe *p, char **cmd)
 {
 	int	i;
 
 	i = 0;
 	while (i <= mini->pipe_num)
 	{
-		p->pids[i] = exec_pipe_cmd(mini, i, p->pipe_fds);
+		p->pids[i] = exec_pipe_cmd(mini, i, p->pipe_fds, cmd);
 		if (p->pids[i] == -1)
 		{
 			close_all_pipes(mini->pipe_num, p->pipe_fds);
