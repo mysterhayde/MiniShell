@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hayden <hayden@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 10:00:47 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/02/19 18:53:34 by hayden           ###   ########.fr       */
+/*   Updated: 2025/02/20 10:38:31 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void	allocate_tokens(char *str, t_mini *mini)
 		add_last_token(str, mini, HERE_DOC);
 	else if (mini->token->type == HERE_DOC)
 		add_last_token(str, mini, LIMITER);
-	else if (mini->token->type == CMD)
+	else if (mini->token->type == CMD || mini->token->type == ARG)
 		add_last_token(str, mini, ARG);
 	else
 		add_last_token(str, mini, CMD);
@@ -38,44 +38,43 @@ static void	print_tokens(t_token *token)			// Debug function
 	{
 		if (token->type == CMD)
 		{
-			int i = 0;
-			printf("%s	", token->cmd[i]);
+			printf("%s	", token->str);
 			printf(COLOR_GREEN"TYPE:	CMD");
 			printf(COLOR_RESET"\n");
-			while (token->cmd[++i])
-			{
-				printf("%s	", token->cmd[i]);
-				printf(COLOR_GREEN_ULTRA"TYPE:	ARG");
-				printf(COLOR_RESET"\n");
-			}
+		}
+		else if (token->type == ARG)
+		{
+			printf("%s	", token->str);
+			printf(COLOR_GREEN"TYPE:	ARG");
+			printf(COLOR_RESET"\n");
 		}
 		else if (token->type == PIPE)
 		{
-			printf("%s	", token->cmd[0]);
+			printf("%s	", token->str);
 			printf(COLOR_RED"TYPE:	PIPE");
 			printf(COLOR_RESET"\n");
 		}
 		else if (token->type == RDIT)
 		{
-			printf("%s	", token->cmd[0]);
+			printf("%s	", token->str);
 			printf(COLOR_BLUE"TYPE:	REDIRECTION");
 			printf(COLOR_RESET"\n");
 		}
 		else if (token->type == FILES)
 		{
-			printf("%s	", token->cmd[0]);
+			printf("%s	", token->str);
 			printf(COLOR_PURPLE"TYPE:	FILE");
 			printf(COLOR_RESET"\n");
 		}
 		else if (token->type == HERE_DOC)
 		{
-			printf("%s	", token->cmd[0]);
+			printf("%s	", token->str);
 			printf(COLOR_CYAN"TYPE:	HERE_DOC");
 			printf(COLOR_RESET"\n");
 		}
 		else if (token->type == LIMITER)
 		{
-			printf("%s	", token->cmd[0]);
+			printf("%s	", token->str);
 			printf(COLOR_CYAN"TYPE:	LIMITER");
 			printf(COLOR_RESET"\n");
 		}
