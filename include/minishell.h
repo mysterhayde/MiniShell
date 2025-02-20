@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 17:10:09 by cbopp             #+#    #+#             */
-/*   Updated: 2025/02/20 11:54:06 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/02/20 16:49:28 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,15 +115,15 @@ int		unset(t_mini *mini, char **cmd);
 int		exit_builtin(t_mini *mini, char **cmd);
 
 /*--------------------------------- Execute ---------------------------------*/
-void	execute(t_mini *mini);
+void	execute(t_mini *mini, char **envp);
 int		is_builtin(char *cmd);
 int		exec_builtin(t_mini *mini, char **cmd);
 int		exec_bin(t_mini *mini, char **cmd);
-int		minipipe(t_mini *mini);
+int		minipipe(t_mini *mini, char **cmd);
 void	find_cmd(t_mini *mini);
-int		exec_pipe_cmd(t_mini *mini, int i, int *pipe_fds);
+int		exec_pipe_cmd(t_mini *mini, int i, int *pipe_fds, char **cmd);
 int		wait_pipe_children(t_mini *mini, t_pipe *p);
-int		run_pipe_commands(t_mini *mini, t_pipe *p);
+int		run_pipe_commands(t_mini *mini, t_pipe *p, char **cmd);
 void	close_all_pipes(int pipe_count, int *pipe_fds);
 int		create_pipes(int pipe_count, int **pipe_fds);
 int		wait_for_children(t_mini *mini, pid_t *pids);
@@ -135,6 +135,8 @@ char	*find_path(char *cmd, char **envp);
 
 int		is_separator(char c);
 int		is_operator(t_mini *mini, char *str);
+
+size_t	ft_strlen_cleared(const char *str, char **envp);
 
 char	**split_args(char *str);
 
