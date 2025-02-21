@@ -6,13 +6,13 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 17:28:02 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/02/17 16:04:40 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/02/21 14:28:28 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static char	*clear_quote(char *str, char quote, int *len)
+static char	*clear_quote(char *str, char quote, int *len) //function non used
 {
 	int		j;
 	int		i;
@@ -37,7 +37,7 @@ static char	*clear_quote(char *str, char quote, int *len)
 	return (free(str), trimmed);
 }
 
-char	**check_bash_syntax(char **split)
+char	**check_bash_syntax(char **split) //function non used
 {
 	int		j;
 	int		i;

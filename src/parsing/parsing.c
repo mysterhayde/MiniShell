@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 10:00:47 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/02/21 13:09:14 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/02/21 14:25:09 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static void	print_tokens(t_token *token)			// Debug function
 		else if (token->type == ARG)
 		{
 			printf("%s	", token->str);
-			printf(COLOR_GREEN"TYPE:	ARG");
+			printf(COLOR_GREEN_ULTRA"TYPE:	ARG");
 			printf(COLOR_RESET"\n");
 		}
 		else if (token->type == PIPE)
@@ -76,6 +76,18 @@ static void	print_tokens(t_token *token)			// Debug function
 			printf(COLOR_CYAN"TYPE:	LIMITER");
 			printf(COLOR_RESET"\n");
 		}
+		else if (token->type == AND)
+		{
+			printf("%s	", token->str);
+			printf(COLOR_RED"TYPE:	AND");
+			printf(COLOR_RESET"\n");
+		}
+		else if (token->type == OR)
+		{
+			printf("%s	", token->str);
+			printf(COLOR_RED"TYPE:	OR");
+			printf(COLOR_RESET"\n");
+		}
 		token = token->next;
 	}
 }
@@ -88,24 +100,20 @@ static void	print_tokens(t_token *token)			// Debug function
  */
 void	parsing(char *str, t_mini *mini)
 {
-	int		i;
-	char	**tab;
+	int		len;
+	char	*next_token;
 
-	i = 0;
 	mini->pipe_num = 0;
 	mini->is_pipe = FALSE;
-	tab = split_args(str);
-	if (tab == NULL)
+	next_token = str;
+	while (*next_token)
 	{
-		show_error("Split args failed");
-		return ;
+		next_token = ft_strtrim(next_token, " \n\t");
+		allocate_tokens(find_next_token(next_token, &len), mini);
+		printf("%d\n", len);
+		next_token += len;
 	}
-	while (tab[i])
-	{
-		allocate_tokens(tab[i], mini);
-		i++;
-	}
-	//free_tab(tab);  //already freed ??
+	//free(str); //freed in main
 	print_tokens(mini->backup); // Debug
 	mini->token = mini->backup;
 }
