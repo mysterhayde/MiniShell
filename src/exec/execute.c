@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 13:48:06 by cbopp             #+#    #+#             */
-/*   Updated: 2025/02/21 10:50:54 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/02/21 11:20:27 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,9 @@
 
 /**
  * @brief expand variables by searching in the env
- * @param char* the variable you want expand
- * @param char** an array with environment variables
+ * @param str the variable you want expand
+ * @param envp an array with environment variables
+ * @details give a string containing only the variable to be expanded
  */
 static char	*expand(char *str, char **envp)
 {
@@ -25,9 +26,11 @@ static char	*expand(char *str, char **envp)
 	char	*variable;
 	char	*expanded;
 
-	str++;
 	i = 0;
+	j = 0;
+	str++;
 	variable = ft_strjoin(str, "=");
+	free (str);
 	if (!variable)
 		return (NULL);
 	len = ft_strlen(variable);
@@ -38,13 +41,14 @@ static char	*expand(char *str, char **envp)
 	expanded = malloc(sizeof(char) * (ft_strlen(envp[i]) - len + 1));
 	if (!expanded)
 		return (NULL);
-	j = 0;
 	while (envp[i][len])
 		expanded[j++] = envp[i][len++];
 	expanded[j] = '\0';
-	return (expanded);
+	return (free(variable), expanded);
 }
-
+/**
+ * @brief remove quotation marks if necessary and expand variables
+ */
 char *clear_str(char *str, char **envp)
 {
 	char *test = expand(str, envp);

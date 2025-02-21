@@ -6,11 +6,18 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 13:13:16 by hdougoud          #+#    #+#             */
-/*   Updated: 2024/11/27 10:56:32 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/02/21 11:19:00 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft.h"
+
+/**
+ * @brief search for the first occurrence of needle in haysatck
+ * @param haystack the string to search
+ * @param needle the substring to find
+ * @param len The maximum number of characters to be examined in haystack
+ */
 
 char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
 {

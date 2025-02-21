@@ -6,10 +6,13 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 20:25:33 by hdougoud          #+#    #+#             */
-/*   Updated: 2024/12/02 16:12:57 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/02/21 11:07:29 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+/**
+ * @brief transforms a string into an long
+ */
 long	ft_atol(const char *str)
 {
 	int		i;
