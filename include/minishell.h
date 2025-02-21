@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 17:10:09 by cbopp             #+#    #+#             */
-/*   Updated: 2025/02/21 13:06:06 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/02/21 16:05:33 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,7 @@ int		create_pipes(int pipe_count, int **pipe_fds);
 int		wait_for_children(t_mini *mini, pid_t *pids);
 
 /*---------------------------------- Path -----------------------------------*/
+
 char	*find_path(char *cmd, char **envp);
 
 /*--------------------------------- Parsing ---------------------------------*/
@@ -138,13 +139,15 @@ char	*find_path(char *cmd, char **envp);
 int		is_separator(char c);
 int		is_operator(t_mini *mini, char *str);
 
-size_t	ft_strlen_cleared(const char *str, char **envp);
-
-char	**split_args(char *str);
+char	*find_next_token(char *str, int *i);
 
 void	free_token_list(t_mini *mini);
 void	parsing(char *str, t_mini *mini);
 void	add_last_token(char *str, t_mini *mini, int type);
+
+/*------------------------------- Redirection -------------------------------*/
+
+void	here_doc(int fd, char *limiter);
 
 /*---------------------------------- Error ----------------------------------*/
 

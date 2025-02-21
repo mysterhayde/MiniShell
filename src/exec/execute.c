@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 13:48:06 by cbopp             #+#    #+#             */
-/*   Updated: 2025/02/21 11:20:27 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/02/21 16:15:01 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,8 @@ static char	*expand(char *str, char **envp)
 
 	i = 0;
 	j = 0;
-	str++;
-	variable = ft_strjoin(str, "=");
-	free (str);
+	variable = ft_strjoin(str + 1, "=");
+
 	if (!variable)
 		return (NULL);
 	len = ft_strlen(variable);
@@ -51,11 +50,12 @@ static char	*expand(char *str, char **envp)
  */
 char *clear_str(char *str, char **envp)
 {
-	char *test = expand(str, envp);
+	char	*test = expand(str, envp);
+	
 	return (test);
 }
 
-char	**create_cmd_tab(t_token *token, t_token *backup, char **envp)
+char	**create_cmd_tab(t_token **token, t_token *backup, char **envp)
 {
 	int		i;
 	int		word;
@@ -63,24 +63,22 @@ char	**create_cmd_tab(t_token *token, t_token *backup, char **envp)
 
 	i = 0;
 	word = 0;
-	while (token && (token->type == CMD || token->type == ARG))
+	while (*token && ((*token)->type == CMD || (*token)->type == ARG))
 	{
 		word++;
-		token = token->next;
+		*token = (*token)->next;
 	}
-	token = backup;
+	*token = backup;
 	tab = malloc(sizeof(char *) * (word + 1));
 	if (!tab)
 		return (NULL);
-	while (token && (token->type == CMD || token->type == ARG))
+	while (*token && ((*token)->type == CMD || (*token)->type == ARG))
 	{
-		tab[i] = ft_strdup(clear_str(token->str, envp));
+		tab[i] = ((*token)->str);
 		if (!tab[i++])
 			return (NULL);
-		token = token->next;
-		//TODO : free and delete old nodes
+		*token = (*token)->next;
 	}
-	tab[i] = NULL;
 	return (tab);
 }
 
@@ -94,14 +92,20 @@ char	**create_cmd_tab(t_token *token, t_token *backup, char **envp)
  */
 void	execute(t_mini *mini, char **envp)
 {
+
 	char	**cmd;
-
-	cmd = create_cmd_tab(mini->token, mini->backup, envp);
-	for(int j = 0; cmd[j]; j++)
-		printf("TAB	%s\n", cmd[j]);
-
+	
 	if (!mini->token || !mini->token->str)
 		return ;
+
+	cmd = create_cmd_tab(&mini->token, mini->backup, envp);	
+	for(int j = 0; cmd[j]; j++)									//debug
+		printf("TAB	%s\n", cmd[j]);								//debug
+
+	if (mini->token->type == HERE_DOC)							//debug
+		here_doc(STDOUT_FILENO, mini->token->next->str);		//debug
+
+
 	if (ft_strmincmp(cmd[0], "exit", 4) == 0)
 		exit_builtin(mini, cmd);
 	else if (mini->is_pipe)
