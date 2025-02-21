@@ -6,10 +6,14 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 14:15:02 by hdougoud          #+#    #+#             */
-/*   Updated: 2024/10/16 11:33:07 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/02/21 11:07:13 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+
+/**
+ * @brief transforms a string into an integer
+ */
 int	ft_atoi(const char *str)
 {
 	int	i;
