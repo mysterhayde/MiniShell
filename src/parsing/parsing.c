@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 10:00:47 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/02/21 14:25:09 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/02/21 16:07:26 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,11 @@
 
 static void	allocate_tokens(char *str, t_mini *mini)
 {
-	if (!mini->token)
-		add_last_token(str, mini, CMD);
-	else if (is_operator(mini, str) != 0)
+
+	if (is_operator(mini, str) != 0)
 		add_last_token(str, mini, is_operator(mini,str));
+	else if (!mini->token)
+		add_last_token(str, mini, CMD);
 	else if (mini->token->type == RDIT)
 		add_last_token(str, mini, FILES);
 	else if (is_operator(mini, str) == HERE_DOC)
