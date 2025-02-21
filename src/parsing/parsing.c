@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 10:00:47 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/02/17 16:24:37 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/02/21 08:15:37 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,10 +99,7 @@ void	parsing(char *str, t_mini *mini)
 	mini->is_pipe = FALSE;
 	tab = split_args(str);
 	if (tab == NULL)
-	{
-		show_error("Split args failed");
-		return ;
-	}
+		return (show_err_msg("malloc", "memory allocation failed"));
 	while (tab[i])
 	{
 		allocate_tokens(tab[i], mini);

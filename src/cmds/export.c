@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 15:03:44 by cbopp             #+#    #+#             */
-/*   Updated: 2025/02/18 18:40:06 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/02/21 07:57:25 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,15 +90,12 @@ static int	handle_export_arg(char	***env_ptr, char *arg)
 	char	**new_env;
 
 	if (!is_valid_identifier(arg))
-	{
-		ft_printf("export: '%s': not a valid identifier\n", arg);
-		return (0);
-	}
+		return (show_err_return("export", ERR_NOVALID, ERR_BUILTIN));
 	if (!ft_strchr(arg, '='))
 		return (0);
 	new_env = update_env_var(*env_ptr, arg, arg);
 	if (!new_env)
-		return (1);
+		return (show_err_return("export", ERR_MALLOC, ERR_GENERAL));
 	if (new_env != *env_ptr)
 	{
 		ft_free_chartable(*env_ptr);
@@ -111,17 +108,22 @@ int	export(t_mini *mini, char **cmd)
 {
 	char	**tempenv;
 	int		i;
+	int		ret;
 
 	if (!cmd[1])
 		return (print_export_list(mini->envp));
 	tempenv = copy_env(mini->envp);
 	if (!tempenv)
-		return (1);
+		return (show_err_return("export", ERR_MALLOC, ERR_GENERAL));
 	i = 1;
 	while (cmd[i])
 	{
-		if (handle_export_arg(&tempenv, cmd[i]) != 0)
-			return (ft_free_chartable(tempenv), 1);
+		ret = handle_export_arg(&tempenv, cmd[i]);
+		if (ret != 0)
+		{
+			ft_free_chartable(tempenv);
+			return (ret);
+		}
 		i++;
 	}
 	ft_free_chartable(mini->envp);

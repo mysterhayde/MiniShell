@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 09:39:58 by cbopp             #+#    #+#             */
-/*   Updated: 2025/02/18 18:39:20 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/02/21 08:01:17 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,7 @@ static int	handle_unset_arg(t_mini *mini, char *arg)
 	char	**new_env;
 
 	if (!is_valid_identifier(arg))
-	{
-		ft_printf("unset: '%s': not a vlid identifier\n", arg);
-		return (0);
-	}
+		return (show_err_return("unset", ERR_NOVALID, ERR_BUILTIN));
 	i = 0;
 	while (mini->envp[i])
 	{
@@ -58,7 +55,7 @@ static int	handle_unset_arg(t_mini *mini, char *arg)
 		{
 			new_env = remove_env_var(mini->envp, i);
 			if (!new_env)
-				return (1);
+				return (show_err_return("unset", ERR_MALLOC, ERR_GENERAL));
 			ft_free_chartable(mini->envp);
 			mini->envp = new_env;
 			break ;

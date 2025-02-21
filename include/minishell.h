@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 17:10:09 by cbopp             #+#    #+#             */
-/*   Updated: 2025/02/18 20:34:28 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/02/21 08:23:27 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,13 @@
 # include <readline/history.h>
 # include "../libft/libft.h"
 
+# define ERR_MALLOC		"memory allocation failed"
+# define ERR_PERMISSION	"permission denied"
+# define ERR_TOOMANY	"too many arguments"
+# define ERR_NOVALID	"not a valid identifier"
+# define ERR_NOTNUMERIC	"numeric argument required"
+# define ERR_NODIR		"no such file or directory"
+
 /*---------------------------------- ENUM ------------------------------------*/
 
 typedef enum e_bool
@@ -35,6 +42,25 @@ typedef enum e_bool
 	TRUE = 1,
 	FALSE = 0
 }	t_bool;
+
+/**
+ * @brief Error codes
+ * @enum ERR_GENERAL	= 1, General errors
+ * @enum ERR_BUILTIN	= 2, Builtin error (misuse of shell builtins)
+ * @enum ERR_EXEC		= 126, Command invoked cannot execute
+ * @enum ERR_NOTFOUND	= 127, Command not found
+ * @enum ERR_SIGBASE	= 128, Fatal error signal base
+ * @enum ERR_SYNTAX		= 258, Syntax error
+ */
+typedef enum e_errorcode
+{
+	ERR_GENERAL		= 1,
+	ERR_BUILTIN		= 2,
+	ERR_EXEC		= 126,
+	ERR_NOTFOUND	= 127,
+	ERR_SIGBASE		= 128,
+	ERR_SYNTAX		= 258
+}	t_errorcode;
 
 /**
  * @brief Type of token
@@ -145,6 +171,9 @@ void	add_last_token(char *str, t_mini *mini, int type);
 
 /*---------------------------------- Error ----------------------------------*/
 
-void	show_error(char *str);
+void	show_err_msg(char *cmd, char *error);
+void	show_error_exit(char *cmd, char *error, int code);
+int		show_err_return(char *cmd, char *err, int code);
+void	show_cmd_not_found(char *cmd);
 
 #endif
