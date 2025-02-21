@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 13:48:06 by cbopp             #+#    #+#             */
-/*   Updated: 2025/02/21 16:15:01 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/02/21 16:39:03 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,11 @@ static char	*expand(char *str, char **envp)
  */
 char *clear_str(char *str, char **envp)
 {
-	char	*test = expand(str, envp);
+	char	*test;
 	
-	return (test);
+	if (str[0] == '$')
+		return (test = expand(str, envp));
+	return (str);
 }
 
 char	**create_cmd_tab(t_token **token, t_token *backup, char **envp)
@@ -74,11 +76,12 @@ char	**create_cmd_tab(t_token **token, t_token *backup, char **envp)
 		return (NULL);
 	while (*token && ((*token)->type == CMD || (*token)->type == ARG))
 	{
-		tab[i] = ((*token)->str);
+		tab[i] = (clear_str((*token)->str, envp));
 		if (!tab[i++])
 			return (NULL);
 		*token = (*token)->next;
 	}
+	tab[i] = NULL;
 	return (tab);
 }
 
@@ -97,13 +100,13 @@ void	execute(t_mini *mini, char **envp)
 	
 	if (!mini->token || !mini->token->str)
 		return ;
-
-	cmd = create_cmd_tab(&mini->token, mini->backup, envp);	
+	cmd = create_cmd_tab(&mini->token, mini->backup, envp);
 	for(int j = 0; cmd[j]; j++)									//debug
 		printf("TAB	%s\n", cmd[j]);								//debug
 
-	if (mini->token->type == HERE_DOC)							//debug
-		here_doc(STDOUT_FILENO, mini->token->next->str);		//debug
+	if (mini->token)											//debug
+		if (mini->token->type == HERE_DOC)						//debug
+			here_doc(STDOUT_FILENO, mini->token->next->str);	//debug
 
 
 	if (ft_strmincmp(cmd[0], "exit", 4) == 0)
