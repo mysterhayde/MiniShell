@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 13:48:12 by cbopp             #+#    #+#             */
-/*   Updated: 2025/02/18 17:21:01 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/02/21 08:55:27 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,10 @@ int	exec_pipe_cmd(t_mini *mini, int i, int *pipe_fds)
 		handle_pipe_child(i, mini, pipe_fds);
 		if (is_builtin(mini->token->cmd[0]))
 			exit(exec_builtin(mini, mini->token->cmd));
-		exec_bin(mini, mini->token->cmd);
+		else if (is_builtin(mini->token->cmd[0]))
+			exit(exec_builtin(mini, mini->token->cmd));
+		else
+			exec_bin(mini, mini->token->cmd);
 		exit(1);
 	}
 	if (i > 0)
@@ -59,6 +62,8 @@ int	minipipe(t_mini *mini)
 {
 	t_pipe	p;
 
+	if (ft_strmincmp(mini->token->cmd[0], "exit", 4) == 0)
+		return (mini->exit = 1, exit_builtin(mini, mini->token->cmd));
 	if (!create_pipes(mini->pipe_num, &p.pipe_fds))
 		return (1);
 	p.pids = malloc(sizeof(pid_t) * (mini->pipe_num + 1));
