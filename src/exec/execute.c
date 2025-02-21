@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 13:48:06 by cbopp             #+#    #+#             */
-/*   Updated: 2025/02/18 20:38:55 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/02/21 08:42:30 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@
  */
 void	execute(t_mini *mini)
 {
-	if (!mini->token->cmd)
+	if (!mini->token || !mini->token->cmd)
 		return ;
 	if (ft_strmincmp(mini->token->cmd[0], "exit", 4) == 0)
-		exit_builtin(mini, mini->token->cmd);
+		mini->ret = exit_builtin(mini, mini->token->cmd);
 	else if (mini->is_pipe)
 		mini->ret = minipipe(mini);
 	else if (is_builtin(mini->token->cmd[0]))
