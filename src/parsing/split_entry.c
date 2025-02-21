@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 11:51:45 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/02/21 15:09:21 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/02/21 16:40:29 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ static unsigned int	word_len(char *str)
 		}
 		i++;
 	}
-	printf(COLOR_PURPLE"NEXT_WORD_LEN 	%d\n"COLOR_RESET, i);
 	return (i);
 }
 

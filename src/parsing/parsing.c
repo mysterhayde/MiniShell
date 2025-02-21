@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 10:00:47 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/02/21 16:07:26 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/02/21 16:40:41 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,6 @@ void	parsing(char *str, t_mini *mini)
 	{
 		next_token = ft_strtrim(next_token, " \n\t");
 		allocate_tokens(find_next_token(next_token, &len), mini);
-		printf("%d\n", len);
 		next_token += len;
 	}
 	//free(str); //freed in main
