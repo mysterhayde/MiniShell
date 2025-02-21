@@ -6,26 +6,49 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 13:48:06 by cbopp             #+#    #+#             */
-/*   Updated: 2025/02/20 16:52:46 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/02/21 10:50:54 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
+/**
+ * @brief expand variables by searching in the env
+ * @param char* the variable you want expand
+ * @param char** an array with environment variables
+ */
 static char	*expand(char *str, char **envp)
 {
-	str = NULL;
-	(void)envp;
- 	(void)str;
-	return ("Variable expanded");
+	int		i;
+	int		j;
+	int		len;
+	char	*variable;
+	char	*expanded;
+
+	str++;
+	i = 0;
+	variable = ft_strjoin(str, "=");
+	if (!variable)
+		return (NULL);
+	len = ft_strlen(variable);
+	while (ft_strncmp(variable, envp[i], len))
+		i++;
+	if (!envp[i])
+		return (NULL);
+	expanded = malloc(sizeof(char) * (ft_strlen(envp[i]) - len + 1));
+	if (!expanded)
+		return (NULL);
+	j = 0;
+	while (envp[i][len])
+		expanded[j++] = envp[i][len++];
+	expanded[j] = '\0';
+	return (expanded);
 }
 
 char *clear_str(char *str, char **envp)
 {
-	char *str2 = expand(str, envp);
-	(void)str2;
-	printf("%ld\n", ft_strlen_cleared(str, envp));
-	return (str);
+	char *test = expand(str, envp);
+	return (test);
 }
 
 char	**create_cmd_tab(t_token *token, t_token *backup, char **envp)
@@ -47,7 +70,7 @@ char	**create_cmd_tab(t_token *token, t_token *backup, char **envp)
 		return (NULL);
 	while (token && (token->type == CMD || token->type == ARG))
 	{
-		tab[i] = ft_strdup(clear_str(tab[i], envp));
+		tab[i] = ft_strdup(clear_str(token->str, envp));
 		if (!tab[i++])
 			return (NULL);
 		token = token->next;
