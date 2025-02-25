@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 16:11:15 by cbopp             #+#    #+#             */
-/*   Updated: 2025/02/25 16:24:14 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/02/25 19:03:33 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,12 @@ int	exec_redirections(t_mini *mini, t_token *token)
 	if (apply_redir(token))
 		return (restore_std_fds(saved_fd), 1);
 	cmd_token = skip_redirections(token);
+	restore_std_fds(saved_fd);
 	if (!cmd_token)
-		return (restore_std_fds(saved_fd), 0);
+		return (0);
 	if (is_builtin(cmd_token->cmd[0]))
 		ret = exec_builtin(mini, cmd_token->cmd);
 	else
 		ret = exec_bin(mini, cmd_token->cmd);
-	restore_std_fds(saved_fd);
 	return (ret);
 }
