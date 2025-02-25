@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 09:35:44 by cbopp             #+#    #+#             */
-/*   Updated: 2025/02/18 09:54:54 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/02/25 18:21:57 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	find_cmd(t_mini *mini)
 	if (!mini->token || !mini->token->next)
 		return ;
 	mini->token = mini->token->next;
-	while (mini->token && mini->token->type != 1)
+	while (mini->token && mini->token->type != CMD)
 	{
 		if (!mini->token->next)
 			break ;

@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 17:10:09 by cbopp             #+#    #+#             */
-/*   Updated: 2025/02/25 16:56:48 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/02/25 17:43:06 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,6 +179,7 @@ void	restore_std_fds(int saved_fd[2]);
 int		apply_redir(t_token *token);
 t_token	*skip_redirections(t_token *token);
 int		exec_redirections(t_mini *mini, t_token *token);
+int		process_single_redir(t_token *current);
 t_token	*create_command_sublist(t_token *start, t_token *end);
 t_token	*find_next_logical_op(t_token *token);
 int		exec_logical_ops(t_mini *mini, t_token *token);
