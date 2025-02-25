@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 17:10:09 by cbopp             #+#    #+#             */
-/*   Updated: 2025/02/25 13:12:47 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/02/25 16:56:48 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,8 @@ typedef enum e_type
 	FILES		= 5,
 	HERE_DOC	= 6,
 	LIMITER		= 7,
+	AND_OP		= 8, // &&
+	OR_OP		= 9, // ||
 }	t_type;
 
 /*------------------------------- STRUCTURES ---------------------------------*/
@@ -140,12 +142,12 @@ char	*get_prompt(t_mini *mini);
 /*--------------------------------- Builtins --------------------------------*/
 
 int		pwd(t_mini *mini);
-int	cd(t_mini *mini, char **cmd);
+int		cd(t_mini *mini, char **cmd);
 int		env(t_mini *mini);
 int		match_var_name(const char *env_var, const char *var_name);
 int		export(t_mini *mini, char **cmd);
 char	**add_env_var(char **envp, char *new_var);
-int	print_export_list(char	**envp);
+int		print_export_list(char	**envp);
 char	**update_env_var(char **envp, char *var_name, char *new_var);
 char	**copy_env(char **env);
 size_t	get_env_size(char **env);
@@ -168,6 +170,20 @@ void	close_all_pipes(int pipe_count, int *pipe_fds);
 int		create_pipes(int pipe_count, int **pipe_fds);
 int		wait_for_children(t_mini *mini, pid_t *pids);
 
+/*---------------------------------- Redir ----------------------------------*/
+int		open_file_input(char *filename);
+int		open_file_output(char *filename);
+int		open_file_append(char *filename);
+void	save_std_fds(int saved_fd[2]);
+void	restore_std_fds(int saved_fd[2]);
+int		apply_redir(t_token *token);
+t_token	*skip_redirections(t_token *token);
+int		exec_redirections(t_mini *mini, t_token *token);
+t_token	*create_command_sublist(t_token *start, t_token *end);
+t_token	*find_next_logical_op(t_token *token);
+int		exec_logical_ops(t_mini *mini, t_token *token);
+t_token	*copy_token(t_token *token);
+
 /*---------------------------------- Path -----------------------------------*/
 char	*find_path(char *cmd, char **envp);
 
@@ -179,6 +195,7 @@ int		is_operator(t_mini *mini, char *str);
 char	**split_args(char *str);
 char	**check_bash_syntax(char **split);
 
+void	free_tokens(t_token *token);
 void	free_token_list(t_mini *mini);
 void	parsing(char *str, t_mini *mini);
 void	add_last_token(char *str, t_mini *mini, int type);
