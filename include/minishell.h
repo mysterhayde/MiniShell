@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 17:10:09 by cbopp             #+#    #+#             */
-/*   Updated: 2025/02/21 08:31:32 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/02/25 12:37:59 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <dirent.h>
 # include <string.h>
 # include <errno.h>
+# include <limits.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../libft/libft.h"
@@ -35,6 +36,9 @@
 # define ERR_NOTNUMERIC	"numeric argument required"
 # define ERR_NODIR		"no such file or directory"
 
+# ifndef PATH_MAX
+#  define PATH_MAX 4096
+# endif
 /*---------------------------------- ENUM ------------------------------------*/
 
 typedef enum e_bool
@@ -129,10 +133,13 @@ char	*get_prompt(t_mini *mini);
 /*--------------------------------- Builtins --------------------------------*/
 
 int		pwd(t_mini *mini);
-int		cd(const char *path);
+int	cd(t_mini *mini, char **cmd);
 int		env(t_mini *mini);
 int		match_var_name(const char *env_var, const char *var_name);
 int		export(t_mini *mini, char **cmd);
+char	**add_env_var(char **envp, char *new_var);
+int	print_export_list(char	**envp);
+char	**update_env_var(char **envp, char *var_name, char *new_var);
 char	**copy_env(char **env);
 size_t	get_env_size(char **env);
 t_bool	is_valid_identifier(char *str);
