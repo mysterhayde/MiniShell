@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 15:04:03 by cbopp             #+#    #+#             */
-/*   Updated: 2025/02/18 18:38:37 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/02/25 13:18:56 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,5 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	init(&mini, envp);
 	shell_loop(&mini);
-	cleanup_history();
 	return (free(mini.user), mini.exit);
 }
