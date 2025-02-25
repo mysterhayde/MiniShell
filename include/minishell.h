@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 17:10:09 by cbopp             #+#    #+#             */
-/*   Updated: 2025/02/25 12:37:59 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/02/25 13:12:47 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # include <string.h>
 # include <errno.h>
 # include <limits.h>
+# include <fcntl.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../libft/libft.h"
@@ -39,6 +40,9 @@
 # ifndef PATH_MAX
 #  define PATH_MAX 4096
 # endif
+
+# define HISTORY_FILE ".history"
+
 /*---------------------------------- ENUM ------------------------------------*/
 
 typedef enum e_bool
@@ -124,6 +128,9 @@ void	getcurpath(t_mini *mini);
 void	setupenv(t_mini *mini);
 void	init_readline_history(void);
 void	add_to_history(const char *command);
+char	*get_history_file_path(void);
+void	save_history_to_file(void);
+void	load_history_from_file(void);
 void	cleanup_history(void);
 int		setup_signal_handlers(void);
 void	reset_signals_for_child(void);
