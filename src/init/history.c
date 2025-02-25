@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 10:45:11 by cbopp             #+#    #+#             */
-/*   Updated: 2025/02/25 13:19:48 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/02/25 13:29:47 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,15 @@ void	init_readline_history(void)
 
 void	add_to_history(const char *command)
 {
+	HIST_ENTRY	*last_entry;
+
 	if (command && *command && command[0] != ' ')
-		add_history(command);
+	{
+		last_entry = history_get(history_length);
+		if (!last_entry || ft_strmincmp(last_entry->line, command,
+				ft_strlen(command)) != 0)
+			add_history(command);
+	}
 }
 
 void	cleanup_history(void)
