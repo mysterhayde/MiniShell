@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 15:03:34 by cbopp             #+#    #+#             */
-/*   Updated: 2025/02/25 12:49:15 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/02/25 19:34:04 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static int	update_pwd_vars(t_mini *mini, char *old_dir)
 	char	current_dir[PATH_MAX];
 	char	*new_var;
 
-	new_var = ft_strjoin("OLDWPWD=", old_dir);
+	new_var = ft_strjoin("OLDPWD=", old_dir);
 	if (!new_var)
 		return (show_err_return("cd", ERR_MALLOC, ERR_GENERAL));
 	mini->envp = update_env_var(mini->envp, "OLDPWD", new_var);
@@ -62,29 +62,51 @@ static int	update_pwd_vars(t_mini *mini, char *old_dir)
 }
 
 /**
- * @brief cd that updates PWD env and "-" option
- * @param constchar *path
- * @returns 0 on success, 1 on fail
- * @warning DOES NOT WORK WITH ABSOLUTE PATH
+ * @brief Handles path setup for cd command
+ * @param mini shell state
+ * @param cmd command arguments
+ * @param current_dir current directory
+ * @return path to change to or NULL on error
  */
-int	cd(t_mini *mini, char **cmd)
+static char	*setup_cd_path(t_mini *mini, char **cmd)
 {
-	char	current_dir[PATH_MAX];
 	char	*path;
 	int		ret;
 
-	if (getcwd(current_dir, PATH_MAX) == NULL)
-		return (show_err_return("cd", strerror(errno), ERR_GENERAL));
 	path = cmd[1];
 	if (path && ft_strmincmp(path, "-", 1) == 0)
 	{
 		ret = change_to_oldpwd(&path, mini->envp);
 		if (ret != 0)
-			return (ret);
+			return (NULL);
 	}
 	if (!path)
-		if (!set(path, get_env_value(mini->envp, "HOME")))
-			return (show_err_return ("cd", "HOME not set", ERR_GENERAL));
+	{
+		path = get_env_value(mini->envp, "HOME");
+		if (!path)
+		{
+			show_err_return("cd", "HOME not set", ERR_GENERAL);
+			return (NULL);
+		}
+	}
+	return (path);
+}
+
+/**
+ * @brief cd that updates PWD env and "-" option
+ * @param constchar *path
+ * @returns 0 on success, 1 on fail
+ */
+int	cd(t_mini *mini, char **cmd)
+{
+	char	current_dir[PATH_MAX];
+	char	*path;
+
+	if (getcwd(current_dir, PATH_MAX) == NULL)
+		return (show_err_return("cd", strerror(errno), ERR_GENERAL));
+	path = setup_cd_path(mini, cmd);
+	if (!path)
+		return (ERR_GENERAL);
 	if (access(path, F_OK) == -1)
 		return (show_err_return("cd", ERR_NODIR, ERR_GENERAL));
 	if (access(path, X_OK) == -1)
