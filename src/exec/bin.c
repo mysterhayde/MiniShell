@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 13:48:58 by cbopp             #+#    #+#             */
-/*   Updated: 2025/02/26 13:24:39 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/02/26 17:35:58 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static int	handle_parent(char *path, pid_t pid)
 
 	free(path);
 	if (waitpid(pid, &status, 0) == -1)
-		return (show_err_return("waitpid", "Wait failed", 1));
+		return (show_err_return("waitpid", "Wait failed", ERR_GENERAL));
 	setup_signal_handlers();
 	if (WIFSIGNALED(status))
 	{
@@ -73,11 +73,10 @@ int	exec_bin(t_mini *mini, char **cmd)
 
 	path = find_path(cmd[0], mini->envp);
 	if (!path)
-	{
-		return (show_cmd_not_found(cmd[0]), ERR_NOTFOUND);
-	}
+		return (show_cmd_not_found(cmd[0]), 0);
 	if (!mini->is_pipe)
 		return (execute_direct(path, cmd, mini));
 	child_process(path, cmd, mini);
+	free(path);
 	return (0);
 }
