@@ -3,15 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
+/*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 10:54:33 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/01/29 15:13:19 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/02/21 11:22:11 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft.h"
 
+/**
+ * @brief compares s1 with s2 on n characters
+ * @return returns 0 if the 2 strings are identical, otherwise
+ * returns the deifference of the 2 strings
+ */
 int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
 	unsigned int	i;

@@ -1,35 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_calloc.c                                        :+:      :+:    :+:   */
+/*   check_string.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/03 16:21:41 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/02/21 11:09:34 by hdougoud         ###   ########.fr       */
+/*   Created: 2025/02/26 10:07:28 by hdougoud          #+#    #+#             */
+/*   Updated: 2025/02/26 11:49:26 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libft.h"
+#include "../../include/minishell.h"
 
-/**
- * @brief malloc a pointer by setting everything to zero
- * @param size_t sizeof
- * @param size_t the quantity you want malloc
- */
-
-void	*ft_calloc(size_t count, size_t size)
+static char *clear_string(char *str, char **envp)
 {
-	void	*ptr;
-
-	ptr = malloc(count * size);
-	if (ptr == 0)
-		return (NULL);
-	ft_bzero(ptr, count * size);
-	return (ptr);
+	if (envp)
+		return (str);
+	return (str);
 }
 
-//int main(void)
-//{
-//	ft_calloc(2, 2);
-//}
+char *check_string(char *str, char **envp)
+{
+	if (envp)
+		return (str);
+	return (clear_string);
+}
