@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 17:10:09 by cbopp             #+#    #+#             */
-/*   Updated: 2025/02/25 17:43:06 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/02/26 12:16:32 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,6 +186,7 @@ int		exec_logical_ops(t_mini *mini, t_token *token);
 t_token	*copy_token(t_token *token);
 
 /*---------------------------------- Path -----------------------------------*/
+
 char	*find_path(char *cmd, char **envp);
 
 /*--------------------------------- Parsing ---------------------------------*/
@@ -193,13 +194,16 @@ char	*find_path(char *cmd, char **envp);
 int		is_separator(char c);
 int		is_operator(t_mini *mini, char *str);
 
-char	**split_args(char *str);
-char	**check_bash_syntax(char **split);
+char	*find_next_token(char *str, int *i);
 
 void	free_tokens(t_token *token);
 void	free_token_list(t_mini *mini);
 void	parsing(char *str, t_mini *mini);
 void	add_last_token(char *str, t_mini *mini, int type);
+
+/*------------------------------- Redirection -------------------------------*/
+
+void	here_doc(int fd, char *limiter);
 
 /*---------------------------------- Error ----------------------------------*/
 
