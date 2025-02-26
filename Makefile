@@ -31,7 +31,7 @@ EXEC_DIR = src/exec/
 EXEC = $(addprefix $(EXEC_DIR), $(EXEC_SRC))
 
 
-PARS_SRC = parsing.c parsing_utils.c split_entry.c bash_syntax.c tokens.c
+PARS_SRC = parsing.c parsing_utils.c split_entry.c bash_syntax.c tokens.c clear_string.c
 PARS_DIR = src/parsing/
 PARS = $(addprefix $(PARS_DIR), $(PARS_SRC))
 
