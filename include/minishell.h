@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 17:10:09 by cbopp             #+#    #+#             */
-/*   Updated: 2025/02/26 12:16:32 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/02/26 16:55:22 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,10 +203,11 @@ void	add_last_token(char *str, t_mini *mini, int type);
 
 /*------------------------------- Redirection -------------------------------*/
 
-void	here_doc(int fd, char *limiter);
+int		here_doc(char *limiter);
 
 /*---------------------------------- Error ----------------------------------*/
 
+void	free_all(t_mini *mini);
 void	show_err_msg(char *cmd, char *error);
 void	show_error_exit(char *cmd, char *error, int code);
 int		show_err_return(char *cmd, char *err, int code);

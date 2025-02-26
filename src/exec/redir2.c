@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:55:42 by cbopp             #+#    #+#             */
-/*   Updated: 2025/02/25 16:23:58 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/02/26 14:17:54 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,11 +70,14 @@ int	process_single_redir(t_token *current)
 		fd = open_file_output(current->next->cmd[0]);
 	else if (ft_strmincmp(current->cmd[0], ">>", 2) == 0)
 		fd = open_file_append(current->next->cmd[0]);
+	else if (current->type == HERE_DOC)
+		fd = here_doc(current->next->cmd[0]);
 	else
 		return (1);
 	if (fd == -1)
 		return (1);
-	if (ft_strmincmp(current->cmd[0], "<", 1) == 0)
+	if (ft_strmincmp(current->cmd[0], "<", 1) == 0
+		|| current->type == HERE_DOC)
 		dup2(fd, STDIN_FILENO);
 	else
 		dup2(fd, STDOUT_FILENO);
@@ -94,7 +97,8 @@ int	apply_redir(t_token *token)
 	current = token;
 	while (current)
 	{
-		if (current->type == RDIT && current->next
+		if ((current->type == RDIT || current->type == HERE_DOC)
+			&& current->next
 			&& current->next->type == FILES)
 		{
 			if (process_single_redir(current))
