@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 15:04:03 by cbopp             #+#    #+#             */
-/*   Updated: 2025/02/20 14:24:51 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/02/26 11:53:38 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,12 @@ int	check_entry(char *entry)
 	return (0);
 }
 
-static void	process_input(t_mini *mini, char *entry, char **envp)
+static void	process_input(t_mini *mini, char *entry)
 {
 	if (entry && *entry)
 	{
 		parsing(entry, mini);
-		execute(mini, envp);
+		execute(mini);
 		free_token_list(mini);
 	}
 	free(entry);
@@ -55,7 +55,7 @@ int	init(t_mini *mini, char **envp)
 	return (0);
 }
 
-static void	shell_loop(t_mini *mini, char **envp)
+static void	shell_loop(t_mini *mini)
 {
 	char	*entry;
 	char	*prompt;
@@ -74,7 +74,7 @@ static void	shell_loop(t_mini *mini, char **envp)
 			break ;
 		if (ret == 2)
 			continue ;
-		process_input(mini, entry, envp);
+		process_input(mini, entry);
 	}
 }
 
@@ -85,7 +85,7 @@ int	main(int argc, char **argv, char **envp)
 	(void)argc;
 	(void)argv;
 	init(&mini, envp);
-	shell_loop(&mini, envp);
+	shell_loop(&mini);
 	cleanup_history();
 	return (free(mini.user), mini.exit);
 }
