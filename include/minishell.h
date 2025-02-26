@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 17:10:09 by cbopp             #+#    #+#             */
-/*   Updated: 2025/02/21 16:05:33 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/02/26 11:53:48 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ typedef struct s_pipe
 
 typedef struct s_token
 {
-	char			*str;
+	char			**cmd;
 	t_type			type;
 	t_bool			expand;
 	struct s_token	*next;
@@ -117,7 +117,7 @@ int		unset(t_mini *mini, char **cmd);
 int		exit_builtin(t_mini *mini, char **cmd);
 
 /*--------------------------------- Execute ---------------------------------*/
-void	execute(t_mini *mini, char **envp);
+void	execute(t_mini *mini);
 int		is_builtin(char *cmd);
 int		exec_builtin(t_mini *mini, char **cmd);
 int		exec_bin(t_mini *mini, char **cmd);
