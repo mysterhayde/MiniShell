@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 14:00:12 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/02/26 11:48:44 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/02/26 15:33:07 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,8 @@ static t_token	*new_token(char *str, int type)
 		(show_error("Malloc new token failed"));
 		return (NULL);
 	}
+	if (type == LIMITER)
+		str = clean_quote(str);
 	new->cmd[0] = str;
 	new->cmd[1] = NULL;
 	new->type = type;
