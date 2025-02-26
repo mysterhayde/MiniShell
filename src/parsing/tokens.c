@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 14:00:12 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/02/26 15:33:07 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/02/26 16:58:33 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ void	free_token_list(t_mini *mini)
 		free(mini->backup);
 		mini->backup = mini->token;
 	}
+	if (mini->token)
+		free(mini->token);
 	mini->token = NULL;
 	mini->backup = NULL;
 }
