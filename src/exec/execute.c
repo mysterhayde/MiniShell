@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 13:48:06 by cbopp             #+#    #+#             */
-/*   Updated: 2025/02/26 12:14:00 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/02/26 13:11:06 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	execute(t_mini *mini)
 	else if (has_logical_ops(mini->token))
 		mini->ret = exec_logical_ops(mini, mini->token);
 	else if (mini->is_pipe)
-		mini->ret = minipipe(mini, mini->token->cmd);
+		mini->ret = minipipe(mini);
 	else
 		mini->ret = exec_redirections(mini, mini->token);
 }
