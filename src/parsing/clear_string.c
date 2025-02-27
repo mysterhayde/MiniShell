@@ -5,69 +5,36 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/26 14:38:59 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/02/26 15:36:47 by hdougoud         ###   ########.fr       */
+/*   Created: 2025/02/27 16:40:34 by hdougoud          #+#    #+#             */
+/*   Updated: 2025/02/27 16:59:04 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static size_t	strlen_quote(char *str)
+int	check_string(t_mini *mini, t_token *cmd_token)
 {
-	int i;
-	int	quote;
+	int	i;
+	int	j;
+	int	ret;
 
-	i = 0;
-	quote = 0;
-	while(str[i])
-	{
-		if (str[i] == '\"')
-		{
-			i++;
-			while (str[i] != '\"')
-				i++;
-			quote += 2;
-		}
-		else if (str[i] == '\'')
-		{
-			i++;
-			while (str[i] != '\"')
-				i++;
-			quote += 2;
-		}
-		i++;
-	}
-	printf("%d\n", i - quote);
-	printf("%d\n", quote);
-	printf("%d\n", i);
-	return (i - quote);
-}
-
-char	*clean_quote(char *str)
-{
-	char	*cleaned;
-	char	quote;
-	int		i;
-	int		j;
-
-	i = 0;
 	j = 0;
-	quote = 0;
-	cleaned = malloc(sizeof(char) * (strlen_quote(str) + 1));
-	if (!cleaned)
-		return (NULL); //print error
-	while (str[i])
+	while (cmd_token->cmd[j])
 	{
-		if (quote == 0 && (str[i] == '\"' || str[i] == '\''))
-			quote = str[i++];
-		if (str[i] == quote)
-		{
-			quote = 0;
-			i++;
-		}
-		cleaned[j++] = str[i++];
+		i = 0;
+		while (cmd_token->cmd[j][i])
+			if (cmd_token->cmd[j][i++] == '$')
+				cmd_token->cmd[j] = expand_string(cmd_token->cmd[j], mini->envp);
+		i = 0;
+		while (cmd_token->cmd[j][i])
+			if (cmd_token->cmd[j][i++] == '\"' || cmd_token->cmd[j][i++] == '\'')
+				cmd_token->cmd[j] = clean_quote(cmd_token->cmd[j]);
+		j++;
 	}
-	cleaned[j] = '\0';
-	printf("%s\n", cleaned);
-	return (cleaned);
+	
+	if (is_builtin(cmd_token->cmd[0]))
+		ret = exec_builtin(mini, cmd_token->cmd);
+	else
+		ret = exec_bin(mini, cmd_token->cmd);
+	return (ret);
 }

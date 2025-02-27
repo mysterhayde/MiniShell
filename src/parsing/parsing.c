@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 10:00:47 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/02/27 10:16:34 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/02/27 17:02:43 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,6 @@ void	parsing(char *str, t_mini *mini)
 		allocate_tokens(find_next_token(next_token, &len), mini);
 		next_token += len;
 	}
-	//free(str); //freed in main
-	// print_tokens(mini->backup); // Debug
+	//print_tokens(mini->backup); // Debug
 	mini->token = mini->backup;
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
+/*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 13:48:12 by cbopp             #+#    #+#             */
-/*   Updated: 2025/02/26 13:11:24 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/02/27 17:08:26 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,10 +96,7 @@ int	exec_pipe_cmd(t_mini *mini, int i, int *pipe_fds)
 		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
 		handle_pipe_child(i, mini, pipe_fds);
-		if (is_builtin(mini->token->cmd[0]))
-			exit(exec_builtin(mini, mini->token->cmd));
-		else
-			exec_bin(mini, mini->token->cmd);
+		check_string(mini, mini->token);	
 		exit(1);
 	}
 	if (i > 0)

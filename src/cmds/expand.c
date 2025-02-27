@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 10:09:51 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/02/26 10:32:39 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/02/27 17:09:47 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,16 +26,19 @@ char	*expand(char *str, char **envp)
 	char	*variable;
 	char	*expanded;
 
-	i = 0;
+	i = -1;
 	j = 0;
+	if (!envp)
+		return (NULL);
 	variable = ft_strjoin(str + 1, "=");
 	if (!variable)
 		return (NULL);
 	len = ft_strlen(variable);
-	while (ft_strncmp(variable, envp[i], len))
-		i++;
+	while (envp[++i])
+		if (ft_strmincmp(variable, envp[i], len) == 0)
+				break ;
 	if (!envp[i])
-		return (NULL);
+		return ("");
 	expanded = malloc(sizeof(char) * (ft_strlen(envp[i]) - len + 1));
 	if (!expanded)
 		return (NULL);

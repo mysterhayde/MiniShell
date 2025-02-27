@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_redir.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
+/*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 16:11:15 by cbopp             #+#    #+#             */
-/*   Updated: 2025/02/26 12:10:13 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/02/27 17:08:04 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,7 @@ int	exec_redirections(t_mini *mini, t_token *token)
 	cmd_token = skip_redirections(token);
 	if (!cmd_token)
 		return (restore_std_fds(saved_fd), 0);
-	if (is_builtin(cmd_token->cmd[0]))
-		ret = exec_builtin(mini, cmd_token->cmd);
-	else
-		ret = exec_bin(mini, cmd_token->cmd);
+	ret = check_string(mini, mini->token);
 	restore_std_fds(saved_fd);
 	return (ret);
 }
