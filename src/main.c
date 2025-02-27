@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 15:04:03 by cbopp             #+#    #+#             */
-/*   Updated: 2025/02/26 11:53:38 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/02/26 17:56:01 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ static void	process_input(t_mini *mini, char *entry)
 	if (entry && *entry)
 	{
 		parsing(entry, mini);
+		// execve(mini->token->cmd[0], mini->token->cmd, mini->envp);
 		execute(mini);
 		free_token_list(mini);
 	}
@@ -39,20 +40,22 @@ static void	process_input(t_mini *mini, char *entry)
  * @param t_mini *mini
  * @param char **envp
  */
-int	init(t_mini *mini, char **envp)
+void	init(t_mini *mini, char **envp)
 {
 	mini->exit = 0;
 	mini->token = NULL;
 	mini->backup = NULL;
 	mini->envp = copy_env(envp);
 	init_readline_history();
-	if (!mini->envp)
-		return (mini->envp = NULL,
-			mini->exit = 1, 0);
 	if (!setup_signal_handlers())
 		mini->exit = 1;
+	if (!mini->envp)
+	{
+		mini->envp = NULL;
+		return ;
+	}
 	setupenv(mini);
-	return (0);
+
 }
 
 static void	shell_loop(t_mini *mini)
@@ -86,6 +89,6 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	init(&mini, envp);
 	shell_loop(&mini);
-	cleanup_history();
-	return (free(mini.user), mini.exit);
+	free_all(&mini);
+	return (0);
 }

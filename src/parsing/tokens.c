@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 14:00:12 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/02/26 16:58:33 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/02/27 10:16:19 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	free_token_list(t_mini *mini)
 	mini->backup = NULL;
 }
 
-static char	**increase_tab(char **tab, char *str)  //TODO: protect mallocs and check possible leaks
+static char	**increase_tab(char **tab, char *str) //TODO: protect mallocs and check possible leaks
 {
 	int		i;
 	char	**new_tab;
@@ -45,7 +45,7 @@ static char	**increase_tab(char **tab, char *str)  //TODO: protect mallocs and 
 		i++;
 	new_tab = malloc(sizeof(char *) * (i + 2));
 	if (!new_tab)
-		return (NULL);
+		return (show_err_msg("malloc", "memory allocation failed"), NULL);
 	i = 0;
 	while (tab[i])
 	{
@@ -73,18 +73,10 @@ static t_token	*new_token(char *str, int type)
 
 	new = malloc(sizeof(t_token));
 	if (!new)
-	{
-		show_error("Malloc token failed");
-		exit(EXIT_FAILURE);
-	}
+		show_error_exit("malloc", "memory allocation failed", 1);
 	new->cmd = malloc(sizeof(char *) * 2);
 	if (!new->cmd)
-	{
-		(show_error("Malloc new token failed"));
 		return (NULL);
-	}
-	if (type == LIMITER)
-		str = clean_quote(str);
 	new->cmd[0] = str;
 	new->cmd[1] = NULL;
 	new->type = type;
@@ -96,16 +88,10 @@ static void	create_first_node(t_mini *mini, char *str, int type)
 {
 	mini->backup = malloc(sizeof(t_token));
 	if (!mini->backup)
-	{
-		show_error("Malloc backup failed");
-		exit(EXIT_FAILURE);
-	}
+		show_error_exit("malloc", "memory allocation failed", 1);
 	mini->token = new_token(str, type);
 	if (!mini->token)
-	{
-		show_error("Malloc backup failed");
-		exit(EXIT_FAILURE);
-	}
+		show_error_exit("malloc", "memory allocation failed", 1);
 	mini->backup = mini->token;
 }
 

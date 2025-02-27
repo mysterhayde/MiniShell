@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 15:03:28 by cbopp             #+#    #+#             */
-/*   Updated: 2025/02/05 15:03:28 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/02/26 18:00:14 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,13 @@ char	*find_path(char *cmd, char **envp)
 	int		i;
 
 	i = 0;
+	paths = NULL;
 	while (envp[i] && ft_strnstr(envp[i], "PATH=", 5) == 0)
 		i++;
-	paths = ft_split(envp[i] + 5, ':');
+	if (!envp[i])
+		return (NULL);
+	if (!set(paths, ft_split(envp[i] + 5, ':')))
+		return (NULL);
 	i = 0;
 	while (paths[i])
 	{
@@ -52,10 +56,7 @@ char	*find_path(char *cmd, char **envp)
 		if (!path)
 			break ;
 		if (access(path, F_OK | X_OK) == 0)
-		{
-			free_paths(paths);
-			return (path);
-		}
+			return (free_paths(paths), path);
 		free(path);
 		i++;
 	}

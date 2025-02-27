@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_entry.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 11:51:45 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/02/21 16:40:29 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/02/26 12:15:08 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ char *find_next_token(char *str, int *len)
 	*len = word_len(str);
 	splited = malloc(sizeof(char) * (*len + 1));
 	if (!splited)
-		show_error("Malloc splited failed");
+		show_err_msg("malloc", "malloc allocation failed");
 	while (i < *len)
 	{
 		splited[i] = str[i];
