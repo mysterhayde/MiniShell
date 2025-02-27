@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 15:04:03 by cbopp             #+#    #+#             */
-/*   Updated: 2025/02/26 17:56:01 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/02/27 14:22:25 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,7 @@ void	init(t_mini *mini, char **envp)
 	if (!setup_signal_handlers())
 		mini->exit = 1;
 	if (!mini->envp)
-	{
-		mini->envp = NULL;
 		return ;
-	}
 	setupenv(mini);
 
 }
