@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 17:10:09 by cbopp             #+#    #+#             */
-/*   Updated: 2025/02/27 10:14:55 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/02/27 16:59:21 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,6 +155,7 @@ t_bool	is_valid_identifier(char *str);
 int		echo(char **cmd);
 int		unset(t_mini *mini, char **cmd);
 int		exit_builtin(t_mini *mini, char **cmd);
+char	*expand(char *str, char **envp);
 
 /*--------------------------------- Execute ---------------------------------*/
 void	execute(t_mini *mini);
@@ -197,12 +198,18 @@ int		is_operator(t_mini *mini, char *str);
 char	*clean_quote(char *str);
 char	*find_next_token(char *str, int *i);
 
-
-
 void	free_tokens(t_token *token);
 void	free_token_list(t_mini *mini);
 void	parsing(char *str, t_mini *mini);
 void	add_last_token(char *str, t_mini *mini, int type);
+
+
+int	check_string(t_mini *mini, t_token *cmd_token);
+size_t	expanded_size(char *str, char **envp);
+char	*expand_string(char *str, char **envp);
+
+
+void	modify_str(t_mini *mini);
 
 /*------------------------------- Redirection -------------------------------*/
 

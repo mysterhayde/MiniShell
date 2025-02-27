@@ -1,7 +1,7 @@
 NAME = minishell
 CC = cc
 RM = rm -rf
-FLAGS = -Werror -Wextra -Wall -g -fsanitize=leak
+FLAGS = -Werror -Wextra -Wall -g
 MAKE := make --no-print-directory
 
 #--------------------------------------LIBFT------------------------------------#
@@ -23,7 +23,7 @@ INIT_SRC = init.c history.c history_utils.c signal.c prompt_utils.c
 INIT_DIR = src/init/
 INIT = $(addprefix $(INIT_DIR), $(INIT_SRC))
 
-CMDS_SRC = pwd.c cd.c env.c echo.c exit.c unset.c export.c
+CMDS_SRC = pwd.c cd.c env.c echo.c exit.c unset.c export.c expand.c
 CMDS_DIR = src/cmds/
 CMDS = $(addprefix $(CMDS_DIR), $(CMDS_SRC))
 
@@ -33,7 +33,7 @@ EXEC_DIR = src/exec/
 EXEC = $(addprefix $(EXEC_DIR), $(EXEC_SRC))
 
 
-PARS_SRC = parsing.c parsing_utils.c split_entry.c bash_syntax.c tokens.c clear_string.c
+PARS_SRC = parsing.c parsing_utils.c split_entry.c bash_syntax.c tokens.c clear_string.c expand_string.c clear_quotes.c
 PARS_DIR = src/parsing/
 PARS = $(addprefix $(PARS_DIR), $(PARS_SRC))
 
