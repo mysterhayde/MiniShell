@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 15:03:54 by cbopp             #+#    #+#             */
-/*   Updated: 2025/02/18 10:13:14 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/02/26 17:14:58 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ static void	getuser(t_mini *mini)
 
 void	setupenv(t_mini *mini)
 {
-	getuser(mini);
+	if (mini->envp)
+		getuser(mini);
 	getcurpath(mini);
 }

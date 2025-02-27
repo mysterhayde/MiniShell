@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 15:03:41 by cbopp             #+#    #+#             */
-/*   Updated: 2025/02/11 12:46:07 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/02/21 08:41:34 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,18 +32,24 @@ int	exit_builtin(t_mini *mini, char **cmd)
 {
 	int	status;
 
-	ft_printf("exit\n");
+	if (!mini->is_pipe)
+		ft_printf("exit\n");
 	if (!cmd[1])
-		return (mini->exit = 1, 0);
+	{
+		mini->exit = 1;
+		return (0);
+	}
 	if (!is_numeric(cmd[1]))
 	{
-		ft_printf("exit: %s: numeric argument required\n", cmd[1]);
-		return (mini->exit = 1, 255);
+		show_err_msg("exit", ERR_NOTNUMERIC);
+		mini->exit = 1;
+		return (255);
 	}
 	if (cmd[2])
 	{
-		ft_printf("exit: too many arguments\n");
-		return (1);
+		if (!mini->is_pipe)
+			mini->exit = 0;
+		return (show_err_return("exit", ERR_TOOMANY, ERR_BUILTIN));
 	}
 	status = ft_atoi(cmd[1]) & 255;
 	mini->exit = 1;

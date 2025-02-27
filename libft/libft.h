@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 13:27:54 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/02/05 17:50:49 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/02/25 12:39:24 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,12 @@
 # include <stdlib.h>
 # include <stdarg.h>
 
-# define INT_MAX			2147483647
-# define INT_MIN 			-2147483648
+# ifndef INT_MAX
+#  define INT_MAX			2147483647
+# endif
+# ifndef INT_MIN
+#  define INT_MIN 			-2147483648
+# endif
 
 //-------------------------------- COLORS --------------------------------------
 

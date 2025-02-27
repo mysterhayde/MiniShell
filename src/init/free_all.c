@@ -1,28 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   redirection.c                                      :+:      :+:    :+:   */
+/*   free_all.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/21 15:34:38 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/02/21 16:14:26 by hdougoud         ###   ########.fr       */
+/*   Created: 2025/02/26 16:18:45 by cbopp             #+#    #+#             */
+/*   Updated: 2025/02/26 18:33:14 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	here_doc(int fd, char *limiter)
+void	free_all(t_mini *mini)
 {
-	char	*line;
-
-	while(1)
-	{
-		line = get_next_line(STDIN_FILENO);
-		if (!line)
-			return ;
-		if (!ft_strncmp(limiter, line, ft_strlen(line) - 1))
-			break;
-		ft_putstr_fd(line, fd);
-	}
+	if (mini->user)
+		free(mini->user);
+	if (mini->token || mini->backup)
+		free_token_list(mini);
 }

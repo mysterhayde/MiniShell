@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 14:24:41 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/02/21 13:06:15 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/02/26 12:14:42 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@ int	is_operator(t_mini *mini, char *str)
 	else if (ft_strmincmp(str, "<<", 2) == 0)
 		return (HERE_DOC);
 	else if ((ft_strmincmp(str, "&&", 2) == 0))
-		return (AND);
+		return (AND_OP);
 	else if ((ft_strmincmp(str, "||", 2) == 0))
-		return (OR);
+		return (OR_OP);
 	return (0);
 }
 

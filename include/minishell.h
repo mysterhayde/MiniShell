@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 17:10:09 by cbopp             #+#    #+#             */
-/*   Updated: 2025/02/26 16:49:57 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/02/27 10:14:55 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,24 @@
 # include <dirent.h>
 # include <string.h>
 # include <errno.h>
+# include <limits.h>
+# include <fcntl.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../libft/libft.h"
+
+# define ERR_MALLOC		"memory allocation failed"
+# define ERR_PERMISSION	"permission denied"
+# define ERR_TOOMANY	"too many arguments"
+# define ERR_NOVALID	"not a valid identifier"
+# define ERR_NOTNUMERIC	"numeric argument required"
+# define ERR_NODIR		"no such file or directory"
+
+# ifndef PATH_MAX
+#  define PATH_MAX 4096
+# endif
+
+# define HISTORY_FILE ".history"
 
 /*---------------------------------- ENUM ------------------------------------*/
 
@@ -35,6 +50,25 @@ typedef enum e_bool
 	TRUE = 1,
 	FALSE = 0
 }	t_bool;
+
+/**
+ * @brief Error codes
+ * @enum ERR_GENERAL	= 1, General errors
+ * @enum ERR_BUILTIN	= 2, Builtin error (misuse of shell builtins)
+ * @enum ERR_EXEC		= 126, Command invoked cannot execute
+ * @enum ERR_NOTFOUND	= 127, Command not found
+ * @enum ERR_SIGBASE	= 128, Fatal error signal base
+ * @enum ERR_SYNTAX		= 258, Syntax error
+ */
+typedef enum e_errorcode
+{
+	ERR_GENERAL		= 1,
+	ERR_BUILTIN		= 2,
+	ERR_EXEC		= 126,
+	ERR_NOTFOUND	= 127,
+	ERR_SIGBASE		= 128,
+	ERR_SYNTAX		= 258
+}	t_errorcode;
 
 /**
  * @brief Type of token
@@ -55,8 +89,8 @@ typedef enum e_type
 	FILES		= 5,
 	HERE_DOC	= 6,
 	LIMITER		= 7,
-	AND			= 8,
-	OR			= 9,
+	AND_OP		= 8, // &&
+	OR_OP		= 9, // ||
 }	t_type;
 
 /*------------------------------- STRUCTURES ---------------------------------*/
@@ -96,6 +130,9 @@ void	getcurpath(t_mini *mini);
 void	setupenv(t_mini *mini);
 void	init_readline_history(void);
 void	add_to_history(const char *command);
+char	*get_history_file_path(void);
+void	save_history_to_file(void);
+void	load_history_from_file(void);
 void	cleanup_history(void);
 int		setup_signal_handlers(void);
 void	reset_signals_for_child(void);
@@ -105,10 +142,13 @@ char	*get_prompt(t_mini *mini);
 /*--------------------------------- Builtins --------------------------------*/
 
 int		pwd(t_mini *mini);
-int		cd(const char *path);
+int		cd(t_mini *mini, char **cmd);
 int		env(t_mini *mini);
 int		match_var_name(const char *env_var, const char *var_name);
 int		export(t_mini *mini, char **cmd);
+char	**add_env_var(char **envp, char *new_var);
+int		print_export_list(char	**envp);
+char	**update_env_var(char **envp, char *var_name, char *new_var);
 char	**copy_env(char **env);
 size_t	get_env_size(char **env);
 t_bool	is_valid_identifier(char *str);
@@ -121,14 +161,29 @@ void	execute(t_mini *mini);
 int		is_builtin(char *cmd);
 int		exec_builtin(t_mini *mini, char **cmd);
 int		exec_bin(t_mini *mini, char **cmd);
-int		minipipe(t_mini *mini, char **cmd);
+int		minipipe(t_mini *mini);
 void	find_cmd(t_mini *mini);
-int		exec_pipe_cmd(t_mini *mini, int i, int *pipe_fds, char **cmd);
+int		exec_pipe_cmd(t_mini *mini, int i, int *pipe_fds);
 int		wait_pipe_children(t_mini *mini, t_pipe *p);
-int		run_pipe_commands(t_mini *mini, t_pipe *p, char **cmd);
+int		run_pipe_commands(t_mini *mini, t_pipe *p);
 void	close_all_pipes(int pipe_count, int *pipe_fds);
 int		create_pipes(int pipe_count, int **pipe_fds);
 int		wait_for_children(t_mini *mini, pid_t *pids);
+
+/*---------------------------------- Redir ----------------------------------*/
+int		open_file_input(char *filename);
+int		open_file_output(char *filename);
+int		open_file_append(char *filename);
+void	save_std_fds(int saved_fd[2]);
+void	restore_std_fds(int saved_fd[2]);
+int		apply_redir(t_token *token);
+t_token	*skip_redirections(t_token *token);
+int		exec_redirections(t_mini *mini, t_token *token);
+int		process_single_redir(t_token *current);
+t_token	*create_command_sublist(t_token *start, t_token *end);
+t_token	*find_next_logical_op(t_token *token);
+int		exec_logical_ops(t_mini *mini, t_token *token);
+t_token	*copy_token(t_token *token);
 
 /*---------------------------------- Path -----------------------------------*/
 
@@ -143,16 +198,22 @@ char	*clean_quote(char *str);
 char	*find_next_token(char *str, int *i);
 
 
+
+void	free_tokens(t_token *token);
 void	free_token_list(t_mini *mini);
 void	parsing(char *str, t_mini *mini);
 void	add_last_token(char *str, t_mini *mini, int type);
 
 /*------------------------------- Redirection -------------------------------*/
 
-void	here_doc(int fd, char *limiter);
+int		here_doc(char *limiter);
 
 /*---------------------------------- Error ----------------------------------*/
 
-void	show_error(char *str);
+void	free_all(t_mini *mini);
+void	show_err_msg(char *cmd, char *error);
+void	show_error_exit(char *cmd, char *error, int code);
+int		show_err_return(char *cmd, char *err, int code);
+void	show_cmd_not_found(char *cmd);
 
 #endif
