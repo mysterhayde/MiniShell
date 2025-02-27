@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 17:10:09 by cbopp             #+#    #+#             */
-/*   Updated: 2025/02/26 16:55:22 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/02/27 15:41:30 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,7 @@ extern int	g_signo;
 /*---------------------------------- INIT ------------------------------------*/
 
 void	getcurpath(t_mini *mini);
-void	setupenv(t_mini *mini);
+void	setupenv(t_mini *mini, char **envp);
 void	init_readline_history(void);
 void	add_to_history(const char *command);
 char	*get_history_file_path(void);
