@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 14:55:09 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/02/28 12:45:31 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/02/28 16:49:36 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,9 @@ char	*expand_string(char *str, char **envp)
 	j = 0;
 	if (!envp)
 		return (NULL);
-	while (str[i] && str[i] != '$')
+	while (str[i] && str[i] != '$') 
 		i++;
-	temp = malloc(sizeof(char) * (i + 1));
+	temp = malloc(sizeof(char) * (i + 1)); //use sub_str
 	if (!temp)
 		return (NULL);
 	i = 0;
