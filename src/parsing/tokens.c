@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 14:00:12 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/02/27 10:16:19 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/02/28 12:00:25 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,12 @@ static char	**increase_tab(char **tab, char *str) //TODO: protect mallocs and c
 	{
 		new_tab[i] = ft_strdup(tab[i]);
 		if (!new_tab[i])
-			return (NULL);
+			return (free_tab(new_tab),(NULL));
 		i++;
 	}
 	new_tab[i] = ft_strdup(str);
 	if (!new_tab[i])
-		return (NULL);
+		return (free_tab(new_tab), NULL);
 	new_tab[i + 1] = NULL;
 	return (free_tab(tab), new_tab);
 }

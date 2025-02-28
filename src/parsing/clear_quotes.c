@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   clear_string.c                                     :+:      :+:    :+:   */
+/*   clear_quotes.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 14:38:59 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/02/27 16:25:43 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/02/28 12:44:26 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,19 +40,15 @@ static size_t	strlen_quote(char *str)
 	return (i - quote);
 }
 
-char	*clean_quote(char *str)
+char	*remove_quote(char *str, char *cleaned)
 {
-	char	*cleaned;
-	char	quote;
 	int		i;
 	int		j;
+	char	quote;
 
 	i = 0;
 	j = 0;
 	quote = 0;
-	cleaned = malloc(sizeof(char) * (strlen_quote(str) + 1));
-	if (!cleaned)
-		return (NULL); //print error
 	while (str[i])
 	{
 		if (quote == 0 && (str[i] == '\"' || str[i] == '\''))
@@ -61,10 +57,23 @@ char	*clean_quote(char *str)
 		{
 			quote = 0;
 			i++;
+			continue ;
 		}
 		cleaned[j++] = str[i++];
 	}
 	cleaned[j] = '\0';
-	printf("%s\n", cleaned); //debug
+	return (free(str), cleaned);
+}
+
+char	*clean_quote(char *str)
+{
+	char	*cleaned;
+	int		len;
+
+	len = strlen_quote(str);
+	cleaned = malloc(sizeof(char) * (len + 1));
+	if (!cleaned)
+		return (NULL);
+	cleaned = remove_quote(str, cleaned);
 	return (cleaned);
 }
