@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 13:13:16 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/02/21 11:19:00 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/02/28 16:23:34 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@
  * @param haystack the string to search
  * @param needle the substring to find
  * @param len The maximum number of characters to be examined in haystack
+ * @return a pointer to the first occurrence found, otherwise finds NULL
  */
-
 char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
 {
 	unsigned int	i;
