@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 15:04:03 by cbopp             #+#    #+#             */
-/*   Updated: 2025/02/26 17:56:01 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/02/27 15:41:33 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,17 +45,11 @@ void	init(t_mini *mini, char **envp)
 	mini->exit = 0;
 	mini->token = NULL;
 	mini->backup = NULL;
-	mini->envp = copy_env(envp);
+	mini->envp = NULL;
 	init_readline_history();
 	if (!setup_signal_handlers())
 		mini->exit = 1;
-	if (!mini->envp)
-	{
-		mini->envp = NULL;
-		return ;
-	}
-	setupenv(mini);
-
+	setupenv(mini, envp);
 }
 
 static void	shell_loop(t_mini *mini)
