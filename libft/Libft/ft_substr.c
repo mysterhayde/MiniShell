@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 13:36:33 by hdougoud          #+#    #+#             */
-/*   Updated: 2024/11/27 10:56:39 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/02/28 16:42:59 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,14 @@ static unsigned int	ft_memorylen(char const *s, unsigned int start, size_t len)
 	return (len);
 }
 
+/**
+ * @brief Extracts a substring from a given string.
+ * @param s The input string.
+ * @param start The starting index in `s` from which to extract the substring.
+ * @param len The maximum number of characters to extract.
+ * @return A newly allocated string containing the extracted substring,
+ * or NULL if the allocation fails or if `s` is NULL. 
+ */
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
 	char			*str;

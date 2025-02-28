@@ -6,12 +6,20 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 13:38:22 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/02/27 15:49:24 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/02/28 16:42:41 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft.h"
 
+/**
+ * @brief Concatenates two strings into a newly allocated string.
+ * @param s1 the first string.
+ * @param s2 the second string.
+ * @return A newly allocated string containing the concatenation of `s1` and
+ *         `s2`, or NULL if the allocation fails or if `s1` or `s2` is NULL.
+ * @warning This function does not free S1 or S2 when in use.
+ */
 char	*ft_strjoin(char const *s1, char const *s2)
 {
 	char	*str;
