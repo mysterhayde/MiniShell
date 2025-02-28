@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 16:40:34 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/02/28 16:01:45 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/02/28 16:48:37 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,16 +36,11 @@ void	transform_string(t_mini *mini, t_token *cmd_token)
 					exit(EXIT_FAILURE); //TODO : free all and return prompt
 			}
 		}
-		i = 0;
-		while (cmd_token->cmd[j][i])
+		if (strchr(cmd_token->cmd[j], '\"') || strchr(cmd_token->cmd[j], '\''))
 		{
-			if (cmd_token->cmd[j][i] == '\"' || cmd_token->cmd[j][i] == '\'')
-			{
-				cmd_token->cmd[j] = clean_quote(cmd_token->cmd[j]);
-				if (!cmd_token->cmd[j])
-					exit(EXIT_FAILURE); //TODO : free all and return prompt
-			}
-			i++;
+			cmd_token->cmd[j] = clean_quote(cmd_token->cmd[j]);
+			if (!cmd_token->cmd[j])
+				exit(EXIT_FAILURE); //TODO : free all and return prompt
 		}
 		j++;
 	}
