@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 14:38:59 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/02/28 12:44:26 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/02/28 16:00:17 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static size_t	strlen_quote(char *str)
 		else if (str[i] == '\'')
 		{
 			i++;
-			while (str[i] != '\"')
+			while (str[i] != '\'')
 				i++;
 			quote += 2;
 		}
