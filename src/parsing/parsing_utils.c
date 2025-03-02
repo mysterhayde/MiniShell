@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
+/*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 14:24:41 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/02/26 12:14:42 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/02 22:51:31 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,4 @@ int	is_operator(t_mini *mini, char *str)
 	else if ((ft_strmincmp(str, "||", 2) == 0))
 		return (OR_OP);
 	return (0);
-}
-
-int	is_separator(char c)
-{
-	if (c == ' ' || c == '\t' || c == '\n')
-		return (1);
-	else
-		return (0);
 }
