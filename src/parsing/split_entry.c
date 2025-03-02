@@ -6,19 +6,39 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 11:51:45 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/02/28 15:22:26 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/02 23:57:23 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+
+static int	is_separator(char *str)
+{
+	if (str[0] == ' ' || str[0] == '\t' || str[0] == '\n')
+		return (1);
+	else if ((str[0] == '<' || str[0] == '>' || str[0] == '|')
+		&& (str[0] != str[1]))
+		return (1);
+	else if ((str[0] == '<' || str[0] == '>' || str[0] == '&' || str[0] == '|')
+		&& str[0] == str[1])
+		return (2);
+	return (0);
+}
 
 static unsigned int	word_len(char *str)
 {
 	int i;
 
 	i = 0;
-	while (str[i] && !is_separator(str[i]))
+	while (str[i])
 	{
+		if (is_separator(str + i))
+		{
+			if (i == 0)
+				return (is_separator(str));
+			break ;
+		}
 		if (str[i] == '\'')
 		{
 			while (str[++i] && str[i] != '\'')

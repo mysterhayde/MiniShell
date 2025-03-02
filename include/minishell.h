@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 17:10:09 by cbopp             #+#    #+#             */
-/*   Updated: 2025/02/28 10:41:28 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/02 22:53:43 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,7 +192,6 @@ char	*find_path(char *cmd, char **envp);
 
 /*--------------------------------- Parsing ---------------------------------*/
 
-int		is_separator(char c);
 int		is_operator(t_mini *mini, char *str);
 
 char	*clean_quote(char *str);
