@@ -6,15 +6,16 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 10:00:47 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/02/28 16:56:45 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/03 23:26:58 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static void	allocate_tokens(char *str, t_mini *mini)
+static char	*allocate_tokens(char *str, t_mini *mini)
 {
-
+	if (!str)
+		return (NULL);
 	if (is_operator(mini, str) != 0)
 		add_last_token(str, mini, is_operator(mini,str));
 	else if (!mini->token)
@@ -29,6 +30,7 @@ static void	allocate_tokens(char *str, t_mini *mini)
 		add_last_token(str, mini, ARG);
 	else
 		add_last_token(str, mini, CMD);
+	return (str);
 }
 
 static void	print_tokens(t_token *token)			// Debug function
@@ -110,7 +112,8 @@ void	parsing(char *str, t_mini *mini)
 	while (*next_token)
 	{
 		next_token = ft_strtrim(next_token, " \n\t");
-		allocate_tokens(find_next_token(next_token, &len), mini);
+		if (!allocate_tokens(find_next_token(next_token, &len), mini))
+			exit(EXIT_FAILURE); //TODO : free all and return prompt
 		next_token += len;
 	}
 	print_tokens(mini->backup); // Debug

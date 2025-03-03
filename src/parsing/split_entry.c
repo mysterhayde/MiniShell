@@ -6,12 +6,23 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 11:51:45 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/03/02 23:57:23 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/03 23:27:40 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
+static int	find_next_quote(char *str, char quote)
+{
+	int i;
+
+	i = 1;
+	while (str[i] && str[i] != quote)
+		i++;
+	if (str[i] == '\0')
+		return (-1);
+	return (i + 1);
+}
 
 static int	is_separator(char *str)
 {
@@ -29,6 +40,7 @@ static int	is_separator(char *str)
 static unsigned int	word_len(char *str)
 {
 	int i;
+	int quote;
 
 	i = 0;
 	while (str[i])
@@ -39,15 +51,13 @@ static unsigned int	word_len(char *str)
 				return (is_separator(str));
 			break ;
 		}
-		if (str[i] == '\'')
+		if (str[i] == '\'' || str[i] == '\"')
 		{
-			while (str[++i] && str[i] != '\'')
-				;
-		}
-		else if (str[i] == '\"')
-		{
-			while (str[++i] && str[i] != '\"')
-				;
+			quote = find_next_quote(str + i, str[i]);
+			if (quote == -1)
+				return (-1);
+			i += quote;
+			continue ;
 		}
 		i++;
 	}
@@ -65,9 +75,17 @@ char *find_next_token(char *str, int *len)
 
 	i = 0;
 	*len = word_len(str);
+	if (*len == -1)
+	{
+		show_err_msg("syntax error", "quote not closed");
+		return (NULL);
+	}
 	splited = malloc(sizeof(char) * (*len + 1));
 	if (!splited)
+	{
 		show_err_msg("malloc", "malloc allocation failed");
+		return (NULL);
+	}
 	while (i < *len)
 	{
 		splited[i] = str[i];
