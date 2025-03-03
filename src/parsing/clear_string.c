@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 16:40:34 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/03/03 12:20:59 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/03 23:08:57 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static char	*search_variable(char *str, char **envp)
 	int	i;
 
 	i = 0;
-	while (str[i]) //TODO : ADD_RECURSIVE_SEARCH_VARAIBLE
+	while (str[i])
 	{
 		i = 0;
 		while (str[i])
@@ -33,7 +33,7 @@ static char	*search_variable(char *str, char **envp)
 				str = expand_string(str, envp);
 				if (!str)
 					exit(EXIT_FAILURE); //TODO : free all and return prompt
-				return (str);
+				i = -1;
 			}
 			i++;
 		}
@@ -44,7 +44,7 @@ static char	*search_variable(char *str, char **envp)
 void	transform_string(t_token *current, char **envp)
 {
 	int j;
-	
+
 	j = 0;
 	while (current->cmd[j])
 	{
