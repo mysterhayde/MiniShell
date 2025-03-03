@@ -6,40 +6,53 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 16:40:34 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/02/28 16:48:37 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/03 12:20:59 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	transform_string(t_mini *mini, t_token *cmd_token)
+static char	*search_variable(char *str, char **envp)
 {
 	int	i;
-	int	j;
 
-	j = 0;
-	while (cmd_token->cmd[j])
+	i = 0;
+	while (str[i]) //TODO : ADD_RECURSIVE_SEARCH_VARAIBLE
 	{
 		i = 0;
-		while (cmd_token->cmd[j][i]) //USE string search
+		while (str[i])
 		{
-			if (cmd_token->cmd[j][i] == '\'')
+			if (str[i] == '\'')
 			{
-				while(cmd_token->cmd[j][++i] && cmd_token->cmd[j][i] != '\'')
+				while(str[++i] && str[i] != '\'')
 					;
 				i++;
 			}
-			if (cmd_token->cmd[j][i++] == '$')
+			if (str[i] == '$' && ft_isalnum(str[i + 1]))
 			{
-				cmd_token->cmd[j] = expand_string(cmd_token->cmd[j], mini->envp);
-				if (!cmd_token->cmd[j])
+				str = expand_string(str, envp);
+				if (!str)
 					exit(EXIT_FAILURE); //TODO : free all and return prompt
+				return (str);
 			}
+			i++;
 		}
-		if (strchr(cmd_token->cmd[j], '\"') || strchr(cmd_token->cmd[j], '\''))
+	}
+	return (str);
+}
+
+void	transform_string(t_token *current, char **envp)
+{
+	int j;
+	
+	j = 0;
+	while (current->cmd[j])
+	{
+		current->cmd[j] = search_variable(current->cmd[j], envp);
+		if (strchr(current->cmd[j], '\"') || strchr(current->cmd[j], '\''))
 		{
-			cmd_token->cmd[j] = clean_quote(cmd_token->cmd[j]);
-			if (!cmd_token->cmd[j])
+			current->cmd[j] = clean_quote(current->cmd[j]);
+			if (!current->cmd[j])
 				exit(EXIT_FAILURE); //TODO : free all and return prompt
 		}
 		j++;
@@ -50,7 +63,7 @@ int	check_string(t_mini *mini, t_token *cmd_token)
 {
 	int	ret;
 
-	transform_string(mini, cmd_token);
+	transform_string(cmd_token, mini->envp);
 	if (is_builtin(cmd_token->cmd[0]))
 		ret = exec_builtin(mini, cmd_token->cmd);
 	else
