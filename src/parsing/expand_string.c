@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 14:55:09 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/03/03 11:31:56 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/03 23:00:11 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ char	*expand_string(char *str, char **envp)
 	expanded =ft_strjoin(temp, isolate_variable(str + i, envp, &i));
 	if (!expanded)
 		return (NULL);
-	free(temp);
 	new_str = ft_strjoin(expanded, str + i);
+	free(temp);
+	free(expanded);
 	return (free(str), new_str);
 }
