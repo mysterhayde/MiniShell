@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 17:10:09 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/04 10:21:36 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/04 19:30:14 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,6 @@ typedef enum e_type
 }	t_type;
 
 /*------------------------------- STRUCTURES ---------------------------------*/
-
 typedef struct s_pipe
 {
 	int		*pipe_fds;
@@ -108,6 +107,16 @@ typedef struct s_token
 	t_bool			expand;
 	struct s_token	*next;
 }	t_token;
+
+/**
+ * @brief Structure to store state for token execution
+ */
+typedef struct s_state
+{
+	t_token	*original_token;
+	t_bool	original_is_pipe;
+	int		original_pipe_num;
+}	t_state;
 
 typedef struct s_mini
 {
@@ -138,6 +147,8 @@ int		setup_signal_handlers(void);
 void	reset_signals_for_child(void);
 int		check_signal_interrupt(void);
 char	*get_prompt(t_mini *mini);
+
+void	debug_print_tokens(char *prefix, t_token *token); //REMOVE
 
 /*--------------------------------- Builtins --------------------------------*/
 
@@ -184,6 +195,9 @@ int		process_single_redir(t_token *current);
 t_token	*create_command_sublist(t_token *start, t_token *end);
 t_token	*find_next_logical_op(t_token *token);
 int		exec_logical_ops(t_mini *mini, t_token *token);
+void	save_exec_state(t_mini *mini, t_state *state);
+void	restore_exec_state(t_mini *mini, t_state *state);
+int		exec_sublist(t_mini *mini, t_token *sublist);
 t_token	*copy_token(t_token *token);
 
 /*---------------------------------- Path -----------------------------------*/

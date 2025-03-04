@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 13:48:58 by cbopp             #+#    #+#             */
-/*   Updated: 2025/02/26 17:35:58 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/04 17:28:14 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int	exec_bin(t_mini *mini, char **cmd)
 
 	path = find_path(cmd[0], mini->envp);
 	if (!path)
-		return (show_cmd_not_found(cmd[0]), 0);
+		return (show_cmd_not_found(cmd[0]), 127);
 	if (!mini->is_pipe)
 		return (execute_direct(path, cmd, mini));
 	child_process(path, cmd, mini);
