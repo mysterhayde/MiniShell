@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 11:51:45 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/03/04 16:14:44 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/04 16:32:55 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ char	*find_next_token(char *str, int *len)
 {
 	int		i;
 	char	*splited;
-	char	*signe;
 
 	i = 0;
 	*len = word_len(str);
@@ -87,9 +86,5 @@ char	*find_next_token(char *str, int *len)
 		i++;
 	}
 	splited[i] = '\0';
-	if (str[i + 1] == ' ' && str[i + 2] == '#')
-	signe = ft_strtrim(str + i - 1, " \t\n");
-	if (signe[0] == '#')
-		*len = ft_strlen(str);
-	return (free(signe), splited);
+	return (splited);
 }
