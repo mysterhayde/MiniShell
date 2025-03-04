@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 10:00:47 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/03/04 11:48:02 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/04 14:44:39 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 static int	check_syntax(t_token *token)
 {
-	int last_type;
+	int	last_type;
 
 	last_type = 0;
 	while (token->next)
 	{
-		if (last_type == 0 &&
-			(token->type != CMD && token->type != RDIT && token->type != HERE_DOC))
+		if (last_type == 0 && (token->type != CMD
+				&& token->type != RDIT && token->type != HERE_DOC))
 			return (1);
 		if ((last_type == PIPE || last_type == OR_OP || last_type == AND_OP)
 			&& (token->type != CMD && token->type != RDIT))
@@ -29,7 +29,7 @@ static int	check_syntax(t_token *token)
 		token = token->next;
 	}
 	if (token->type != CMD && token->type != ARG && token->type != FILES
-			&& token->type != LIMITER)
+		&& token->type != LIMITER)
 		return (1);
 	return (0);
 }
@@ -39,7 +39,7 @@ static char	*allocate_tokens(char *str, t_mini *mini)
 	if (!str)
 		return (NULL);
 	if (is_operator(mini, str) != 0)
-		add_last_token(str, mini, is_operator(mini,str));
+		add_last_token(str, mini, is_operator(mini, str));
 	else if (!mini->token)
 		add_last_token(str, mini, CMD);
 	else if (mini->token->type == RDIT)
@@ -52,6 +52,8 @@ static char	*allocate_tokens(char *str, t_mini *mini)
 		add_last_token(str, mini, ARG);
 	else
 		add_last_token(str, mini, CMD);
+	if (!mini->token->cmd)
+		return (NULL);
 	return (str);
 }
 
@@ -141,9 +143,6 @@ int	parsing(char *str, t_mini *mini)
 	print_tokens(mini->backup); // Debug
 	mini->token = mini->backup;
 	if (check_syntax(mini->token))
-	{
-		show_err_msg("Syntax Error", "unexpected token");
-		return (EXIT_FAILURE);
-	}
+		return (show_err_msg("Syntax Error", "unexpected token"), EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }
