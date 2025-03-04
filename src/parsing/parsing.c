@@ -6,11 +6,33 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 10:00:47 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/03/03 23:26:58 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/04 11:48:02 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+static int	check_syntax(t_token *token)
+{
+	int last_type;
+
+	last_type = 0;
+	while (token->next)
+	{
+		if (last_type == 0 &&
+			(token->type != CMD && token->type != RDIT && token->type != HERE_DOC))
+			return (1);
+		if ((last_type == PIPE || last_type == OR_OP || last_type == AND_OP)
+			&& (token->type != CMD && token->type != RDIT))
+			return (1);
+		last_type = token->type;
+		token = token->next;
+	}
+	if (token->type != CMD && token->type != ARG && token->type != FILES
+			&& token->type != LIMITER)
+		return (1);
+	return (0);
+}
 
 static char	*allocate_tokens(char *str, t_mini *mini)
 {
@@ -101,7 +123,7 @@ static void	print_tokens(t_token *token)			// Debug function
  * @param char *str
  * @param t_mini *mini
  */
-void	parsing(char *str, t_mini *mini)
+int	parsing(char *str, t_mini *mini)
 {
 	int		len;
 	char	*next_token;
@@ -113,9 +135,15 @@ void	parsing(char *str, t_mini *mini)
 	{
 		next_token = ft_strtrim(next_token, " \n\t");
 		if (!allocate_tokens(find_next_token(next_token, &len), mini))
-			exit(EXIT_FAILURE); //TODO : free all and return prompt
+			return (EXIT_FAILURE);
 		next_token += len;
 	}
 	print_tokens(mini->backup); // Debug
 	mini->token = mini->backup;
+	if (check_syntax(mini->token))
+	{
+		show_err_msg("Syntax Error", "unexpected token");
+		return (EXIT_FAILURE);
+	}
+	return (EXIT_SUCCESS);
 }

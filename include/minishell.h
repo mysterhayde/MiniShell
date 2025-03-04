@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 17:10:09 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/02 22:53:43 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/04 10:21:36 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,18 +192,18 @@ char	*find_path(char *cmd, char **envp);
 
 /*--------------------------------- Parsing ---------------------------------*/
 
+int		parsing(char *str, t_mini *mini);
 int		is_operator(t_mini *mini, char *str);
+int		check_string(t_mini *mini, t_token *cmd_token);
 
 char	*clean_quote(char *str);
 char	*find_next_token(char *str, int *i);
 
 void	free_tokens(t_token *token);
 void	free_token_list(t_mini *mini);
-void	parsing(char *str, t_mini *mini);
 void	add_last_token(char *str, t_mini *mini, int type);
 
 
-int	check_string(t_mini *mini, t_token *cmd_token);
 size_t	expanded_size(char *str, char **envp);
 char	*expand_string(char *str, char **envp);
 

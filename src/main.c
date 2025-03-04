@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
+/*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 15:04:03 by cbopp             #+#    #+#             */
-/*   Updated: 2025/02/27 15:41:33 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/04 11:00:16 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,8 @@ static void	process_input(t_mini *mini, char *entry)
 {
 	if (entry && *entry)
 	{
-		parsing(entry, mini);
-		// execve(mini->token->cmd[0], mini->token->cmd, mini->envp);
-		execute(mini);
+		if (!parsing(entry, mini))
+			execute(mini);
 		free_token_list(mini);
 	}
 	free(entry);
