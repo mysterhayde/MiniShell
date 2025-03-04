@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 11:51:45 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/03/03 23:27:40 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/04 14:17:50 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	find_next_quote(char *str, char quote)
 {
-	int i;
+	int	i;
 
 	i = 1;
 	while (str[i] && str[i] != quote)
@@ -39,8 +39,8 @@ static int	is_separator(char *str)
 
 static unsigned int	word_len(char *str)
 {
-	int i;
-	int quote;
+	int	i;
+	int	quote;
 
 	i = 0;
 	while (str[i])
@@ -68,7 +68,7 @@ static unsigned int	word_len(char *str)
  * @brief separates words according to bash syntax
  * @param char *str
  */
-char *find_next_token(char *str, int *len)
+char	*find_next_token(char *str, int *len)
 {
 	int		i;
 	char	*splited;
@@ -76,16 +76,10 @@ char *find_next_token(char *str, int *len)
 	i = 0;
 	*len = word_len(str);
 	if (*len == -1)
-	{
-		show_err_msg("syntax error", "quote not closed");
-		return (NULL);
-	}
+		return (show_err_msg("syntax error", "quote not closed"), NULL);
 	splited = malloc(sizeof(char) * (*len + 1));
 	if (!splited)
-	{
-		show_err_msg("malloc", "malloc allocation failed");
-		return (NULL);
-	}
+		return (show_err_msg("malloc", "malloc allocation failed"), NULL);
 	while (i < *len)
 	{
 		splited[i] = str[i];

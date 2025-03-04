@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 14:55:09 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/03/03 23:00:11 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/04 14:13:04 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static char	*isolate_variable(char *str, char **envp, int *len)
 {
-	int 	i;
+	int		i;
 	char	*variable;
 	char	*expanded;
 
@@ -22,7 +22,7 @@ static char	*isolate_variable(char *str, char **envp, int *len)
 	if (!envp)
 		return (NULL);
 	if (str[i] == '$')
-		i++ ; 
+		i++ ;
 	while (ft_isalnum(str[i]))
 		i++;
 	variable = ft_substr(str, 0, i);
@@ -30,27 +30,27 @@ static char	*isolate_variable(char *str, char **envp, int *len)
 		return (NULL);
 	expanded = expand(variable, envp);
 	if (!expanded)
-		return(NULL);
+		return (NULL);
 	*(len) += i;
 	return (free(variable), expanded);
 }
 
 char	*expand_string(char *str, char **envp)
 {
-	int 	i;
+	int		i;
 	char	*temp;
 	char	*expanded;
 	char	*new_str;
-	
+
 	i = 0;
 	if (!envp)
 		return (NULL);
-	while (str[i] && str[i] != '$') 
+	while (str[i] && str[i] != '$')
 		i++;
 	temp = ft_substr(str, 0, i);
 	if (!temp)
 		return (NULL);
-	expanded =ft_strjoin(temp, isolate_variable(str + i, envp, &i));
+	expanded = ft_strjoin(temp, isolate_variable(str + i, envp, &i));
 	if (!expanded)
 		return (NULL);
 	new_str = ft_strjoin(expanded, str + i);

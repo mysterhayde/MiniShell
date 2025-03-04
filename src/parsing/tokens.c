@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 14:00:12 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/03/02 22:51:07 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/04 14:47:12 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	free_token_list(t_mini *mini)
 	mini->backup = NULL;
 }
 
-static char	**increase_tab(char **tab, char *str) //TODO: protect mallocs and check possible leaks
+static char	**increase_tab(char **tab, char *str)
 {
 	int		i;
 	char	**new_tab;
@@ -51,7 +51,7 @@ static char	**increase_tab(char **tab, char *str) //TODO: protect mallocs and c
 	{
 		new_tab[i] = ft_strdup(tab[i]);
 		if (!new_tab[i])
-			return (free_tab(new_tab),(NULL));
+			return (free_tab(new_tab), (NULL));
 		i++;
 	}
 	new_tab[i] = ft_strdup(str);
@@ -67,7 +67,7 @@ static char	**increase_tab(char **tab, char *str) //TODO: protect mallocs and c
  * @param int type
  * @return t_token node
  */
-static t_token	*new_token(char *str, int type)
+static t_token	*new_token(char *str, int type, t_mini *mini)
 {
 	t_token	*new;
 
@@ -81,6 +81,8 @@ static t_token	*new_token(char *str, int type)
 	new->cmd[1] = NULL;
 	new->type = type;
 	new->next = NULL;
+	if (type == PIPE)
+		mini->pipe_num++;
 	return (new);
 }
 
@@ -89,7 +91,7 @@ static void	create_first_node(t_mini *mini, char *str, int type)
 	mini->backup = malloc(sizeof(t_token));
 	if (!mini->backup)
 		show_error_exit("malloc", "memory allocation failed", 1);
-	mini->token = new_token(str, type);
+	mini->token = new_token(str, type, mini);
 	if (!mini->token)
 		show_error_exit("malloc", "memory allocation failed", 1);
 	mini->backup = mini->token;
@@ -115,6 +117,6 @@ void	add_last_token(char *str, t_mini *mini, int type)
 	}
 	while (mini->token->next)
 		mini->token = mini->token->next;
-	mini->token->next = new_token(str, type);
+	mini->token->next = new_token(str, type, mini);
 	mini->token = mini->token->next;
 }

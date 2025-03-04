@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 16:11:15 by cbopp             #+#    #+#             */
-/*   Updated: 2025/02/27 17:08:04 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/04 14:06:01 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	exec_redirections(t_mini *mini, t_token *token)
 	cmd_token = skip_redirections(token);
 	if (!cmd_token)
 		return (restore_std_fds(saved_fd), 0);
-	ret = check_string(mini, mini->token);
+	ret = check_string(mini, cmd_token);
 	restore_std_fds(saved_fd);
 	return (ret);
 }

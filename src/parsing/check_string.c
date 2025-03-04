@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   clear_string.c                                     :+:      :+:    :+:   */
+/*   check_string.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 16:40:34 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/03/03 23:08:57 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/04 14:26:19 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static char	*search_variable(char *str, char **envp)
 		{
 			if (str[i] == '\'')
 			{
-				while(str[++i] && str[i] != '\'')
+				while (str[++i] && str[i] != '\'')
 					;
 				i++;
 			}
@@ -43,7 +43,7 @@ static char	*search_variable(char *str, char **envp)
 
 void	transform_string(t_token *current, char **envp)
 {
-	int j;
+	int	j;
 
 	j = 0;
 	while (current->cmd[j])
