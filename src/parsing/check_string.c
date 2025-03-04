@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 16:40:34 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/03/04 14:26:19 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/04 15:51:47 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	transform_string(t_token *current, char **envp)
 	while (current->cmd[j])
 	{
 		current->cmd[j] = search_variable(current->cmd[j], envp);
-		if (strchr(current->cmd[j], '\"') || strchr(current->cmd[j], '\''))
+		if (ft_strchr(current->cmd[j], '\"') || ft_strchr(current->cmd[j], '\''))
 		{
 			current->cmd[j] = clean_quote(current->cmd[j]);
 			if (!current->cmd[j])
