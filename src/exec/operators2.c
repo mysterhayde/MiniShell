@@ -6,44 +6,92 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 16:29:10 by cbopp             #+#    #+#             */
-/*   Updated: 2025/02/25 16:59:25 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/04 19:25:56 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
 /**
- * @brief Executes a command with logical operators
- * @param mini shell state
- * @param token token containing the command
- * @return exit status
+ * @brief Count the number of pipe tokens in a token list
+ * @param token token list to count
+ * @return number of pipe tokens
  */
-int	exec_logical_ops(t_mini *mini, t_token *token)
+static int	count_pipes(t_token *token)
 {
-	t_token	*op;
-	t_token	*sublist;
-	int		ret;
+	t_token	*current;
+	int		count;
 
-	op = find_next_logical_op(token);
-	if (!op)
-		return (exec_redirections(mini, token));
-	sublist = create_command_sublist(token, op);
-	if (!sublist)
-		return (1);
-	ret = exec_redirections(mini, sublist);
-	free_tokens(sublist);
-	if (op->type == AND_OP)
+	count = 0;
+	current = token;
+	while (current)
 	{
-		if (ret == 0)
-			return (exec_logical_ops(mini, op->next));
-		return (ret);
+		if (current->type == PIPE)
+			count++;
+		current = current->next;
 	}
-	else if (op->type == OR_OP)
+	return (count);
+}
+
+/**
+ * @brief Creates a command sublist from start to (but not including) end
+ * This function creates a deep copy of the token list
+ * @param start starting token
+ * @param end ending token (not included)
+ * @return new token list
+ */
+t_token	*create_command_sublist(t_token *start, t_token *end)
+{
+	t_token	*current;
+	t_token	*sublist;
+	t_token	*new_token;
+	t_token	*last;
+
+	sublist = NULL;
+	last = NULL;
+	current = start;
+	while (current != end && current)
 	{
-		if (ret != 0)
-			return (exec_logical_ops(mini, op->next));
-		return (ret);
+		new_token = copy_token(current);
+		if (!new_token)
+			return (free_tokens(sublist), NULL);
+		if (!sublist)
+			sublist = new_token;
+		else
+			last->next = new_token;
+		last = new_token;
+		current = current->next;
 	}
+	return (sublist);
+}
+
+/**
+ * @brief Executes a command sublist
+ * @param mini shell state
+ * @param sublist token list to execute
+ * @return ocmmand execution status
+ */
+int	exec_sublist(t_mini *mini, t_token *sublist)
+{
+	t_state	state;
+	int		ret;
+	int		has_pipe;
+
+	save_exec_state(mini, &state);
+	mini->token = sublist;
+	has_pipe = count_pipes(sublist);
+	if (has_pipe > 0)
+	{
+		mini->is_pipe = TRUE;
+		mini->pipe_num = has_pipe;
+		ret = minipipe(mini);
+	}
+	else
+	{
+		mini->is_pipe = FALSE;
+		ret = exec_redirections(mini, sublist);
+	}
+	restore_exec_state(mini, &state);
 	return (ret);
 }
 
