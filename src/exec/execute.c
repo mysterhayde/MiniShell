@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 13:48:06 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/03 09:40:16 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/04 10:19:47 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,6 @@ void	execute(t_mini *mini)
 {
 	if (!mini->token || !mini->token->cmd)
 		return ;
-	if (mini->token->type != CMD && mini->token->type != RDIT && mini->token->type != HERE_DOC)
-	{
-		ft_putendl_fd("MyShell: syntax error", STDERR_FILENO);
-		return ;
-	}
 	if (ft_strmincmp(mini->token->cmd[0], "exit", 4) == 0)
 		mini->ret = exit_builtin(mini, mini->token->cmd);
 	else if (has_logical_ops(mini->token))
