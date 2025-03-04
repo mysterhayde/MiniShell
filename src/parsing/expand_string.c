@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 14:55:09 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/03/04 14:13:04 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/04 16:41:00 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,6 @@ static char	*isolate_variable(char *str, char **envp, int *len)
 	i = 1;
 	if (!envp)
 		return (NULL);
-	if (str[i] == '$')
-		i++ ;
 	while (ft_isalnum(str[i]))
 		i++;
 	variable = ft_substr(str, 0, i);

@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 16:40:34 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/03/04 15:51:47 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/04 16:57:49 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,23 +20,20 @@ static char	*search_variable(char *str, char **envp)
 	while (str[i])
 	{
 		i = 0;
-		while (str[i])
+		if (str[i] == '\'')
 		{
-			if (str[i] == '\'')
-			{
-				while (str[++i] && str[i] != '\'')
-					;
-				i++;
-			}
-			if (str[i] == '$' && ft_isalnum(str[i + 1]))
-			{
-				str = expand_string(str, envp);
-				if (!str)
-					exit(EXIT_FAILURE); //TODO : free all and return prompt
-				i = -1;
-			}
+			while (str[++i] && str[i] != '\'')
+				;
 			i++;
 		}
+		if (str[i] == '$' && ft_isalnum(str[i + 1]))
+		{
+			str = expand_string(str, envp);
+			if (!str)
+				exit(EXIT_FAILURE); //TODO : free all and return prompt
+			i = -1;
+		}
+		i++;
 	}
 	return (str);
 }
