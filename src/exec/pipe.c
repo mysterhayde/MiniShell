@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 13:48:12 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/04 19:14:22 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/05 11:24:41 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ int	exec_pipe_cmd(t_mini *mini, int i, int *pipe_fds)
 		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
 		handle_pipe_child(i, mini, pipe_fds);
-		check_string(mini, mini->token);	
+		check_string(mini, mini->token);
 		exit(mini->ret);
 	}
 	if (i > 0)

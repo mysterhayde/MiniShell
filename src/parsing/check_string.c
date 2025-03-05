@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 16:40:34 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/03/04 18:33:53 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/05 11:23:12 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static char	*search_variable(char *str, char **envp, int *error)
 			{
 				str = expand_string(str, envp);
 				if (!str)
-					return(*error = 1, NULL);
+					return (*error = 1, NULL);
 				i = -1;
 			}
 			i++;

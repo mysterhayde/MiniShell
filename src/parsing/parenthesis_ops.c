@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 10:48:27 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/05 11:10:10 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/05 11:23:47 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	exec_logical_op_with_parens(t_mini *mini, t_token *token)
 	if (!token)
 		return (1);
 	if (token->type == LEFT_PAREN)
-	{	
+	{
 		ret = exec_paren_expr(mini, token);
 		if (!token->next)
 			return (ret);
