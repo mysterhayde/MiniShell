@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 10:00:47 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/03/04 14:44:39 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/05 11:07:44 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,6 +136,8 @@ int	parsing(char *str, t_mini *mini)
 	while (*next_token)
 	{
 		next_token = ft_strtrim(next_token, " \n\t");
+		if (next_token[0] == '#')
+			break ;
 		if (!allocate_tokens(find_next_token(next_token, &len), mini))
 			return (EXIT_FAILURE);
 		next_token += len;
