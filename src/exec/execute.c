@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 13:48:06 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/04 10:19:47 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/05 11:06:30 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ void	execute(t_mini *mini)
 		return ;
 	if (ft_strmincmp(mini->token->cmd[0], "exit", 4) == 0)
 		mini->ret = exit_builtin(mini, mini->token->cmd);
+	else if (has_parentheses(mini->token))
+		mini->ret = exec_logical_op_with_parens(mini, mini->token);
 	else if (has_logical_ops(mini->token))
 		mini->ret = exec_logical_ops(mini, mini->token);
 	else if (mini->is_pipe)

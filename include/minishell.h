@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 17:10:09 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/04 19:30:14 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/05 11:22:01 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,8 @@ typedef enum e_type
 	LIMITER		= 7,
 	AND_OP		= 8, // &&
 	OR_OP		= 9, // ||
+	LEFT_PAREN	= 10,
+	RIGHT_PAREN	= 11
 }	t_type;
 
 /*------------------------------- STRUCTURES ---------------------------------*/
@@ -195,6 +197,13 @@ int		process_single_redir(t_token *current);
 t_token	*create_command_sublist(t_token *start, t_token *end);
 t_token	*find_next_logical_op(t_token *token);
 int		exec_logical_ops(t_mini *mini, t_token *token);
+int		exec_paren_expr(t_mini *mini, t_token *token);
+t_token	*find_matching_paren(t_token *token);
+t_bool	has_parentheses(t_token *token);
+t_token	*skip_paren_expr(t_token *token);
+t_token	*find_next_logical_op_with_parens(t_token *token);
+int		exec_logical_op_with_parens(t_mini *mini, t_token *token);
+t_bool	has_logical_ops(t_token *token);
 void	save_exec_state(t_mini *mini, t_state *state);
 void	restore_exec_state(t_mini *mini, t_state *state);
 int		exec_sublist(t_mini *mini, t_token *sublist);
@@ -209,19 +218,13 @@ char	*find_path(char *cmd, char **envp);
 int		parsing(char *str, t_mini *mini);
 int		is_operator(t_mini *mini, char *str);
 int		check_string(t_mini *mini, t_token *cmd_token);
-
 char	*clean_quote(char *str);
 char	*find_next_token(char *str, int *i);
-
 void	free_tokens(t_token *token);
 void	free_token_list(t_mini *mini);
 void	add_last_token(char *str, t_mini *mini, int type);
-
-
 size_t	expanded_size(char *str, char **envp);
 char	*expand_string(char *str, char **envp);
-
-
 void	modify_str(t_mini *mini);
 
 /*------------------------------- Redirection -------------------------------*/

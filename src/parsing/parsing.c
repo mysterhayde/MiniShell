@@ -6,34 +6,78 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 10:00:47 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/03/04 19:33:44 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/04 20:06:56 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
+/**
+ * @brief Checks if parentheses in the token list are balanced
+ * @param token Token list to check
+ * @return 0 if balanced, 1 if not
+ */
+static int	check_paren_balance(t_token *token)
+{
+	t_token	*current;
+	int		paren_count;
+
+	current = token;
+	paren_count = 0;
+	while (current)
+	{
+		if (current->type == LEFT_PAREN)
+			paren_count++;
+		else if (current->type == RIGHT_PAREN)
+			paren_count--;
+		if (paren_count < 0)
+			return (1);
+		current = current->next;
+	}
+	return (paren_count != 0);
+}
+
+/**
+ * @breif Checks token syntax and balancing of parentheses
+ * @param token Token list to check
+ * @return 0 if syntax is valid, 1 if not
+ */
 static int	check_syntax(t_token *token)
 {
 	int	last_type;
 
+	if (check_paren_balance(token))
+		return (1);
 	last_type = 0;
 	while (token->next)
 	{
 		if (last_type == 0 && (token->type != CMD
-				&& token->type != RDIT && token->type != HERE_DOC))
+				&& token->type != RDIT && token->type != HERE_DOC
+				&& token->type != LEFT_PAREN))
 			return (1);
 		if ((last_type == PIPE || last_type == OR_OP || last_type == AND_OP)
-			&& (token->type != CMD && token->type != RDIT))
+			&& (token->type != CMD && token->type != RDIT
+				&& token->type != LEFT_PAREN))
+			return (1);
+		if (last_type == RIGHT_PAREN && (token->type != PIPE
+			&& token->type != AND_OP && token->type != OR_OP
+			&& token->type != RIGHT_PAREN))
 			return (1);
 		last_type = token->type;
 		token = token->next;
 	}
 	if (token->type != CMD && token->type != ARG && token->type != FILES
-		&& token->type != LIMITER)
+		&& token->type != LIMITER && token->type != RIGHT_PAREN)
 		return (1);
 	return (0);
 }
 
+/**
+ * @brief Allocates tokens based on their type
+ * @param str String to allocate token for
+ * @param mini Shell state
+ * @return The allocated string or NULL on error
+ */
 static char	*allocate_tokens(char *str, t_mini *mini)
 {
 	if (!str)
@@ -124,6 +168,7 @@ static char	*allocate_tokens(char *str, t_mini *mini)
  * 		  them in the right categories.
  * @param char *str
  * @param t_mini *mini
+ * @returns EXIT_SUCCESS or EXIT_FAILURE
  */
 int	parsing(char *str, t_mini *mini)
 {
