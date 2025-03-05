@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 16:40:34 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/03/05 14:53:46 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/05 16:53:28 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static char	*search_error_code(int return_code, char *str)
 	while (str[i])
 	{
 		if (str[i] == '\'')
-			i = (find_next_quote(str + i, str[i]) - 1);
+			i += (skip_unit_next_quote(str, str[i], i) - 1);
 		else if (str[i] == '$' && str[i + 1] == '?')
 		{
 			expanded = expand_error_code(str + i, return_code);
@@ -65,9 +65,10 @@ static char	*search_variable(char *str, char **envp)
 	while (str[i])
 	{
 			if (str[i] == '\'')
-				i = (find_next_quote(str + i, str[i]) - 1);
+				i += (skip_unit_next_quote(str, str[i], i) - 1);
 			else if (str[i] == '$' && ft_isalnum(str[i + 1]))//check echo '$USER''$USER' AND check echo '$USER' $USER
 			{
+				printf("INSIDE EXPAND\n");
 				expanded = expand_string(str + i, envp);
 				temp = ft_substr(str, 0, i);
 				new_str = ft_strjoin(temp, expanded);
