@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 17:10:09 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/05 11:22:01 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/05 18:23:28 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,6 +195,7 @@ t_token	*skip_redirections(t_token *token);
 int		exec_redirections(t_mini *mini, t_token *token);
 int		process_single_redir(t_token *current);
 t_token	*create_command_sublist(t_token *start, t_token *end);
+int		check_paren_balance(t_token *token);
 t_token	*find_next_logical_op(t_token *token);
 int		exec_logical_ops(t_mini *mini, t_token *token);
 int		exec_paren_expr(t_mini *mini, t_token *token);
@@ -203,6 +204,9 @@ t_bool	has_parentheses(t_token *token);
 t_token	*skip_paren_expr(t_token *token);
 t_token	*find_next_logical_op_with_parens(t_token *token);
 int		exec_logical_op_with_parens(t_mini *mini, t_token *token);
+int		exec_paren_logical_ops(t_mini *mini, t_token *token);
+int		exec_paren_with_redir(t_mini *mini, t_token *token);
+int		exec_logical_with_redir(t_mini *mini, t_token *token);
 t_bool	has_logical_ops(t_token *token);
 void	save_exec_state(t_mini *mini, t_state *state);
 void	restore_exec_state(t_mini *mini, t_state *state);

@@ -6,68 +6,80 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 10:00:47 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/03/05 11:24:17 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/05 18:18:53 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
 /**
- * @brief Checks if parentheses in the token list are balanced
- * @param token Token list to check
- * @return 0 if balanced, 1 if not
+ * @brief Checks if the current token has valid syntax
+ * @param token Current token
+ * @param last_type Previous token type
+ * @return 0 if syntax is valid, 1 if not
  */
-static int	check_paren_balance(t_token *token)
+static int	check_token_syntax(t_token *token, int last_type)
 {
-	t_token	*current;
-	int		paren_count;
-
-	current = token;
-	paren_count = 0;
-	while (current)
-	{
-		if (current->type == LEFT_PAREN)
-			paren_count++;
-		else if (current->type == RIGHT_PAREN)
-			paren_count--;
-		if (paren_count < 0)
-			return (1);
-		current = current->next;
-	}
-	return (paren_count != 0);
+	if (last_type == 0 && (token->type != CMD
+			&& token->type != RDIT && token->type != HERE_DOC
+			&& token->type != LEFT_PAREN))
+		return (1);
+	if ((last_type == PIPE || last_type == OR_OP || last_type == AND_OP)
+		&& (token->type != CMD && token->type != RDIT
+			&& token->type != LEFT_PAREN))
+		return (1);
+	if (last_type == LEFT_PAREN && token->type != CMD
+		&& token->type != RDIT && token->type != HERE_DOC
+		&& token->type != LEFT_PAREN)
+		return (1);
+	if (last_type == RIGHT_PAREN && token->type != PIPE
+			&& token->type != AND_OP && token->type != OR_OP
+			&& token->type != RIGHT_PAREN && token->type != CMD
+			&& token->type != RDIT && token->type != HERE_DOC)
+		return (1);
+	return (0);
 }
 
 /**
- * @breif Checks token syntax and balancing of parentheses
+ * @brief Checks if the final token has valid syntax
+ * @param token Final token
+ * @return 0 if valid, 1 if not
+ */
+static int	check_final_token(t_token *token)
+{
+	if (token->type == PIPE || token->type == AND_OP || token->type == OR_OP
+		|| token->type == LEFT_PAREN)
+		return (1);
+	if (token->type != CMD && token->type != ARG && token->type != FILES
+		&& token->type != LIMITER && token->type != RIGHT_PAREN)
+		return (1);
+	return (0);
+}
+
+/**
+ * @brief Checks token syntax and balancing of parentheses
  * @param token Token list to check
  * @return 0 if syntax is valid, 1 if not
  */
 static int	check_syntax(t_token *token)
 {
-	int	last_type;
+	t_token	*current;
+	int		last_type;
 
 	if (check_paren_balance(token))
 		return (1);
+	current = token;
 	last_type = 0;
-	while (token->next)
+	while (current)
 	{
-		if (last_type == 0 && (token->type != CMD
-				&& token->type != RDIT && token->type != HERE_DOC
-				&& token->type != LEFT_PAREN))
+		if (check_token_syntax(current, last_type))
 			return (1);
-		if ((last_type == PIPE || last_type == OR_OP || last_type == AND_OP)
-			&& (token->type != CMD && token->type != RDIT
-				&& token->type != LEFT_PAREN))
-			return (1);
-		if (last_type == RIGHT_PAREN && (token->type != PIPE
-				&& token->type != AND_OP && token->type != OR_OP
-				&& token->type != RIGHT_PAREN))
-			return (1);
-		last_type = token->type;
-		token = token->next;
+		last_type = current->type;
+		if (!current->next)
+			break ;
+		current = current->next;
 	}
-	if (token->type != CMD && token->type != ARG && token->type != FILES
-		&& token->type != LIMITER && token->type != RIGHT_PAREN)
+	if (check_final_token(current))
 		return (1);
 	return (0);
 }

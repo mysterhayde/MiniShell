@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 10:48:27 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/05 11:23:47 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/05 18:23:04 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,23 +34,71 @@ t_token	*skip_paren_expr(t_token *token)
  * @param token Token to start from
  * @return Token containing logical operator or NULL
  */
-t_token	*find_next_op_with_parens(t_token *token)
+t_token	*find_next_logical_op_with_parens(t_token *token)
 {
 	t_token	*current;
+	int		paren_depth;
 
 	current = token;
+	paren_depth = 0;
 	while (current)
 	{
 		if (current->type == LEFT_PAREN)
-			current = skip_paren_expr(current);
-		else if (current->type == AND_OP || current->type == OR_OP)
+			paren_depth++;
+		else if (current->type == RIGHT_PAREN)
+			paren_depth--;
+		else if (paren_depth == 0 &&
+				(current->type == AND_OP || current->type == OR_OP))
 			return (current);
-		else
-			current = current->next;
-		if (!current)
-			break ;
+		current = current->next;
 	}
 	return (NULL);
+}
+
+/**
+ * @brief Execute command that comes after a logical operator
+ * @param mini Shell state
+ * @param op Operator token
+ * @param ret Return value of previous command
+ * @return Execution result
+ */
+static int	exec_after_op(t_mini *mini, t_token *op, int ret)
+{
+	if (!op || !op->next)
+		return (ret);
+	if (op->type == AND_OP)
+	{
+		if (ret == 0)
+			return (exec_logical_op_with_parens(mini, op->next));
+	}
+	else if (op->type == OR_OP)
+	{
+		if (ret != 0)
+			return (exec_logical_op_with_parens(mini, op->next));
+	}
+	return (ret);
+}
+
+/**
+ * @brief Handle execution of parenthesized expression
+ * @param mini Shell state
+ * @param token Token starting with LEFT_PAREN
+ * @return Execution result
+ */
+static int	handle_paren_expr(t_mini *mini, t_token *token)
+{
+	int		ret;
+	t_token	*closing;
+	t_token	*op;
+
+	ret = exec_paren_expr(mini, token);
+	closing = find_matching_paren(token);
+	if (!closing || !closing->next)
+		return (ret);
+	op = closing->next;
+	if (op->type == AND_OP || op->type == OR_OP)
+		return (exec_after_op(mini, op, ret));
+	return (ret);
 }
 
 /**
@@ -68,17 +116,8 @@ int	exec_logical_op_with_parens(t_mini *mini, t_token *token)
 	if (!token)
 		return (1);
 	if (token->type == LEFT_PAREN)
-	{
-		ret = exec_paren_expr(mini, token);
-		if (!token->next)
-			return (ret);
-		op = token->next;
-		if ((op->type == AND_OP && ret == 0)
-			|| (op->type == OR_OP && ret != 0))
-			return (exec_logical_op_with_parens(mini, op->next));
-		return (ret);
-	}
-	op = find_next_logical_op(token);
+		return (handle_paren_expr(mini, token));
+	op = find_next_logical_op_with_parens(token);
 	if (!op)
 		return (exec_sublist(mini, token));
 	sublist = create_command_sublist(token, op);
@@ -86,17 +125,5 @@ int	exec_logical_op_with_parens(t_mini *mini, t_token *token)
 		return (1);
 	ret = exec_sublist(mini, sublist);
 	free_tokens(sublist);
-	if (op->type == AND_OP)
-	{
-		if (ret == 0)
-			return (exec_logical_op_with_parens(mini, op->next));
-		return (ret);
-	}
-	else if (op->type == OR_OP)
-	{
-		if (ret != 0)
-			return (exec_logical_op_with_parens(mini, op->next));
-		return (ret);
-	}
-	return (ret);
+	return (exec_after_op(mini, op, ret));
 }
