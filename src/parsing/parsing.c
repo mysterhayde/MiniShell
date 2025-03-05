@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 10:00:47 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/03/04 20:06:56 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/05 11:24:17 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,8 @@ static int	check_syntax(t_token *token)
 				&& token->type != LEFT_PAREN))
 			return (1);
 		if (last_type == RIGHT_PAREN && (token->type != PIPE
-			&& token->type != AND_OP && token->type != OR_OP
-			&& token->type != RIGHT_PAREN))
+				&& token->type != AND_OP && token->type != OR_OP
+				&& token->type != RIGHT_PAREN))
 			return (1);
 		last_type = token->type;
 		token = token->next;
