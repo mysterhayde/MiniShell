@@ -6,23 +6,11 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 11:51:45 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/03/04 14:17:50 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/05 14:23:02 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-
-static int	find_next_quote(char *str, char quote)
-{
-	int	i;
-
-	i = 1;
-	while (str[i] && str[i] != quote)
-		i++;
-	if (str[i] == '\0')
-		return (-1);
-	return (i + 1);
-}
 
 static int	is_separator(char *str)
 {

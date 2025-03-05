@@ -6,11 +6,23 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 14:24:41 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/03/04 14:45:47 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/05 14:23:11 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+int	find_next_quote(char *str, char quote)
+{
+	int	i;
+
+	i = 1;
+	while (str[i] && str[i] != quote)
+		i++;
+	if (str[i] == '\0')
+		return (-1);
+	return (i + 1);
+}
 
 int	is_operator(t_mini *mini, char *str)
 {
