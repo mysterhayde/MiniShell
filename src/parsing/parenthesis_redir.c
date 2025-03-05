@@ -24,7 +24,7 @@ int	exec_paren_with_redir(t_mini *mini, t_token *token)
 	int		ret;
 
 	save_std_fds(saved_fd);
-	if (apply_redir(token))
+	if (apply_paren_redirections(token))
 		return (restore_std_fds(saved_fd), 1);
 	ret = exec_paren_expr(mini, token);
 	restore_std_fds(saved_fd);
@@ -43,7 +43,7 @@ int	exec_logical_with_redir(t_mini *mini, t_token *token)
 	int		ret;
 
 	save_std_fds(saved_fd);
-	if (apply_redir(token))
+	if (apply_paren_redirections(token))
 		return (restore_std_fds(saved_fd), 1);
 	ret = exec_logical_op_with_parens(mini, token);
 	restore_std_fds(saved_fd);
