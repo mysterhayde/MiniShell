@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 13:48:06 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/05 11:06:30 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/05 18:23:39 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,18 @@ t_bool	has_logical_ops(t_token *token)
 }
 
 /**
+ * @brief Check if first token is a parenthesis
+ * @param token Token to check
+ * @return TRUE if token is LEFT_PAREN, FALSE otherwise
+ */
+static t_bool	is_parenthesis_cmd(t_token *token)
+{
+	if (!token)
+		return (FALSE);
+	return (token->type == LEFT_PAREN);
+}
+
+/**
  * @brief Calls of expansion of argument(s) and then manages 
  * 		  builtin or bin commands
  * @param t_mini *mini
@@ -46,7 +58,12 @@ void	execute(t_mini *mini)
 	if (ft_strmincmp(mini->token->cmd[0], "exit", 4) == 0)
 		mini->ret = exit_builtin(mini, mini->token->cmd);
 	else if (has_parentheses(mini->token))
-		mini->ret = exec_logical_op_with_parens(mini, mini->token);
+	{
+		if (is_parenthesis_cmd(mini->token))
+			mini->ret = exec_paren_with_redir(mini, mini->token);
+		else
+			mini->ret = exec_logical_with_redir(mini, mini->token);
+	}
 	else if (has_logical_ops(mini->token))
 		mini->ret = exec_logical_ops(mini, mini->token);
 	else if (mini->is_pipe)

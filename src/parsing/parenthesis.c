@@ -6,11 +6,36 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 20:08:22 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/05 11:12:55 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/05 18:19:53 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+/**
+ * @brief Checks if parentheses in the token list are balanced
+ * @param token Token list to check
+ * @return 0 if balanced, 1 if not
+ */
+int	check_paren_balance(t_token *token)
+{
+	t_token	*current;
+	int		paren_count;
+
+	current = token;
+	paren_count = 0;
+	while (current)
+	{
+		if (current->type == LEFT_PAREN)
+			paren_count++;
+		else if (current->type == RIGHT_PAREN)
+			paren_count--;
+		if (paren_count < 0)
+			return (1);
+		current = current->next;
+	}
+	return (paren_count != 0);
+}
 
 /**
  * @brief Find matchin closing parenthesis
@@ -59,6 +84,41 @@ t_bool	has_parentheses(t_token *token)
 }
 
 /**
+ * @brief Execute logical operators within parentheses
+ * @param mini Shell state
+ * @param token Token list containing logical operators
+ * @return Execution result
+ */
+int	exec_paren_logical_ops(t_mini *mini, t_token *token)
+{
+	t_token	*op;
+	t_token	*sublist;
+	int		ret;
+
+	op = find_next_logical_op_with_parens(token);
+	if (!op)
+		return (exec_sublist(mini, token));
+	sublist = create_command_sublist(token, op);
+	if (!sublist)
+		return (1);
+	ret = exec_sublist(mini, sublist);
+	free_tokens(sublist);
+	if (op->type == AND_OP)
+	{
+		if (ret == 0)
+			return (exec_logical_op_with_parens(mini, op->next));
+		return (ret);
+	}
+	else if (op->type == OR_OP)
+	{
+		if (ret != 0)
+			return (exec_logical_op_with_parens(mini, op->next));
+		return (ret);
+	}
+	return (ret);
+}
+
+/**
  * @brief Execute expression within parentheses
  * @param mini Shell state
  * @param token Token list starting with LEFT_PAREN
@@ -82,7 +142,7 @@ int	exec_paren_expr(t_mini *mini, t_token *token)
 	if (!sublist)
 		return (1);
 	if (has_logical_ops(sublist))
-		ret = exec_logical_ops(mini, sublist);
+		ret = exec_paren_logical_ops(mini, sublist);
 	else
 		ret = exec_sublist(mini, sublist);
 	free_tokens(sublist);

@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 16:50:34 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/04 19:08:46 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/05 13:30:33 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	close_all_pipes(int pipe_count, int *pipe_fds)
 }
 
 /**
- * @brief Find the next Pipe token and move otken pointer to the next command
+ * @brief Find the next Pipe token or process parentheses
  * @param mini shell state
  * @return 1 if next command found, 0 otherwise
  */
@@ -63,7 +63,16 @@ static int	advance_to_next_pipe_cmd(t_mini *mini)
 
 	current = mini->token;
 	while (current && current->type != PIPE)
+	{
+		if (current && current->type != PIPE)
+		{
+			current = find_matching_paren(current);
+			if (!current)
+				return (0);
+			continue;
+		}
 		current = current->next;
+	}
 	if (!current || !current->next)
 		return (0);
 	mini->token = current->next;
