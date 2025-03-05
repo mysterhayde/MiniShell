@@ -6,26 +6,32 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 16:40:34 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/03/05 14:32:05 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/05 14:53:46 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static char	*expand_error_code(int return_code, char *str)
+static char	*expand_error_code(char *str, int return_code)
 {
 	char *error_code;
-	//char *new_str;
-	(void) str;
+	char *new_str;
+
 	error_code = ft_itoa(return_code);
 	if (!error_code)
 		return (NULL);
-	return (error_code);
+	new_str = ft_strjoin(error_code, str + 2);
+	if (!new_str)
+		return (NULL);
+	return (free(error_code), new_str);
 }
 
 static char	*search_error_code(int return_code, char *str)
 {
-	int i;
+	int		i;
+	char	*temp;
+	char	*new_str;
+	char	*expanded;
 
 	i = 0;
 	while (str[i])
@@ -34,10 +40,14 @@ static char	*search_error_code(int return_code, char *str)
 			i = (find_next_quote(str + i, str[i]) - 1);
 		else if (str[i] == '$' && str[i + 1] == '?')
 		{
-			str = expand_error_code(return_code, str);
-			if (!str)
+			expanded = expand_error_code(str + i, return_code);
+			temp = ft_substr(str, 0, i);
+			new_str = ft_strjoin(temp, expanded);
+			free(temp);
+			free(expanded);
+			if (!new_str)
 				exit(EXIT_FAILURE); //TODO : free all and return prompt
-			//search_error_code(return_code, str);
+			return (free(str), search_error_code(return_code, new_str));
 		}
 		i++;
 	}
@@ -48,8 +58,8 @@ static char	*search_variable(char *str, char **envp)
 {
 	int		i;
 	char	*temp;
-	char	*expanded;
 	char	*new_str;
+	char	*expanded;
 
 	i = 0;
 	while (str[i])
@@ -80,7 +90,6 @@ void	transform_string(t_token *current, char **envp, int return_code)
 	while (current->cmd[j])
 	{
 		current->cmd[j] = search_variable(current->cmd[j], envp);
-		
 		current->cmd[j] = search_error_code(return_code, current->cmd[j]);
 		if (strchr(current->cmd[j], '\"') || strchr(current->cmd[j], '\''))
 		{
