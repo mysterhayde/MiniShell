@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 20:08:22 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/05 18:19:53 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/05 19:36:53 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,38 +84,38 @@ t_bool	has_parentheses(t_token *token)
 }
 
 /**
- * @brief Execute logical operators within parentheses
- * @param mini Shell state
- * @param token Token list containing logical operators
- * @return Execution result
+ * @brief Create a deep copy of a token list segment
+ * @param start Start token (inclusive)
+ * @param end End token (exclusive)
+ * @return New token list
  */
-int	exec_paren_logical_ops(t_mini *mini, t_token *token)
+static t_token	*clone_token_segment(t_token *start, t_token *end)
 {
-	t_token	*op;
-	t_token	*sublist;
-	int		ret;
+	t_token	*result;
+	t_token	*current;
+	t_token	*new_token;
+	t_token	*last;
 
-	op = find_next_logical_op_with_parens(token);
-	if (!op)
-		return (exec_sublist(mini, token));
-	sublist = create_command_sublist(token, op);
-	if (!sublist)
-		return (1);
-	ret = exec_sublist(mini, sublist);
-	free_tokens(sublist);
-	if (op->type == AND_OP)
+	result = NULL;
+	last = NULL;
+	current = start;
+	while (current != end && current)
 	{
-		if (ret == 0)
-			return (exec_logical_op_with_parens(mini, op->next));
-		return (ret);
+		new_token = copy_token(current);
+		if (!new_token)
+		{
+			if (result)
+				free_tokens(result);
+			return (NULL);
+		}
+		if (!result)
+			result = new_token;
+		else
+			last->next = new_token;
+		last = new_token;
+		current = current->next;
 	}
-	else if (op->type == OR_OP)
-	{
-		if (ret != 0)
-			return (exec_logical_op_with_parens(mini, op->next));
-		return (ret);
-	}
-	return (ret);
+	return (result);
 }
 
 /**
@@ -128,6 +128,7 @@ int	exec_paren_expr(t_mini *mini, t_token *token)
 {
 	t_token	*closing;
 	t_token	*sublist;
+	t_state	state;
 	int		ret;
 
 	if (!token || token->type != LEFT_PAREN)
@@ -138,13 +139,15 @@ int	exec_paren_expr(t_mini *mini, t_token *token)
 		show_err_msg("syntax error:", "unmatched parenthesis");
 		return (1);
 	}
-	sublist = create_command_sublist(token->next, closing);
+	sublist = clone_token_segment(token->next, closing);
 	if (!sublist)
 		return (1);
+	save_exec_state(mini, &state);
 	if (has_logical_ops(sublist))
-		ret = exec_paren_logical_ops(mini, sublist);
+		ret = exec_logical_ops(mini, sublist);
 	else
 		ret = exec_sublist(mini, sublist);
+	restore_exec_state(mini, &state);
 	free_tokens(sublist);
 	return (ret);
 }

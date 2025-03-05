@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 10:09:51 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/02/27 17:09:47 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/05 20:03:27 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char	*expand(char *str, char **envp)
 	len = ft_strlen(variable);
 	while (envp[++i])
 		if (ft_strmincmp(variable, envp[i], len) == 0)
-				break ;
+			break ;
 	if (!envp[i])
 		return ("");
 	expanded = malloc(sizeof(char) * (ft_strlen(envp[i]) - len + 1));

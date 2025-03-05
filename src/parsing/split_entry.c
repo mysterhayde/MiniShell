@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 11:51:45 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/03/05 18:17:13 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/05 20:04:14 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static int	is_separator(char *str)
 	else if (str[0] == '(' || str[0] == ')')
 		return (1);
 	else if ((str[0] == '<' || str[0] == '>' || str[0] == '|')
-			&& (str[0] != str[1]))
+		&& (str[0] != str[1]))
 		return (1);
 	else if ((str[0] == '<' || str[0] == '>' || str[0] == '&' || str[0] == '|')
 		&& str[0] == str[1])

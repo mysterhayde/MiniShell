@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 16:50:34 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/05 13:30:33 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/05 20:03:44 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ static int	advance_to_next_pipe_cmd(t_mini *mini)
 			current = find_matching_paren(current);
 			if (!current)
 				return (0);
-			continue;
+			continue ;
 		}
 		current = current->next;
 	}

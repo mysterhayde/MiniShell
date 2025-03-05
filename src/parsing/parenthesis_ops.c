@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 10:48:27 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/05 18:23:04 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/05 20:05:16 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ t_token	*find_next_logical_op_with_parens(t_token *token)
 			paren_depth++;
 		else if (current->type == RIGHT_PAREN)
 			paren_depth--;
-		else if (paren_depth == 0 &&
-				(current->type == AND_OP || current->type == OR_OP))
+		else if (paren_depth == 0 && (current->type == AND_OP
+				|| current->type == OR_OP))
 			return (current);
 		current = current->next;
 	}
@@ -64,19 +64,20 @@ t_token	*find_next_logical_op_with_parens(t_token *token)
  */
 static int	exec_after_op(t_mini *mini, t_token *op, int ret)
 {
+	t_state	state;
+	int		new_ret;
+
 	if (!op || !op->next)
 		return (ret);
-	if (op->type == AND_OP)
-	{
-		if (ret == 0)
-			return (exec_logical_op_with_parens(mini, op->next));
-	}
-	else if (op->type == OR_OP)
-	{
-		if (ret != 0)
-			return (exec_logical_op_with_parens(mini, op->next));
-	}
-	return (ret);
+	save_exec_state(mini, &state);
+	if (op->type == AND_OP && ret == 0)
+		new_ret = exec_logical_op_with_parens(mini, op->next);
+	else if (op->type == OR_OP && ret == 0)
+		new_ret = exec_logical_op_with_parens(mini, op->next);
+	else
+		new_ret = ret;
+	restore_exec_state(mini, &state);
+	return (new_ret);
 }
 
 /**
@@ -93,7 +94,9 @@ static int	handle_paren_expr(t_mini *mini, t_token *token)
 
 	ret = exec_paren_expr(mini, token);
 	closing = find_matching_paren(token);
-	if (!closing || !closing->next)
+	if (!closing)
+		return (ret);
+	if (!closing->next)
 		return (ret);
 	op = closing->next;
 	if (op->type == AND_OP || op->type == OR_OP)
@@ -111,6 +114,7 @@ int	exec_logical_op_with_parens(t_mini *mini, t_token *token)
 {
 	t_token	*op;
 	t_token	*sublist;
+	t_state	state;
 	int		ret;
 
 	if (!token)
@@ -123,7 +127,9 @@ int	exec_logical_op_with_parens(t_mini *mini, t_token *token)
 	sublist = create_command_sublist(token, op);
 	if (!sublist)
 		return (1);
+	save_exec_state(mini, &state);
 	ret = exec_sublist(mini, sublist);
+	restore_exec_state(mini, &state);
 	free_tokens(sublist);
 	return (exec_after_op(mini, op, ret));
 }

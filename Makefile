@@ -35,7 +35,7 @@ EXEC = $(addprefix $(EXEC_DIR), $(EXEC_SRC))
 
 
 PARS_SRC = parsing.c parsing_utils.c split_entry.c tokens.c check_string.c expand_string.c \
-			clear_quotes.c parenthesis.c parenthesis_ops.c parenthesis_redir.c
+			clear_quotes.c parenthesis.c parenthesis_ops.c parenthesis_redir.c parenthesis_exec.c
 PARS_DIR = src/parsing/
 PARS = $(addprefix $(PARS_DIR), $(PARS_SRC))
 
