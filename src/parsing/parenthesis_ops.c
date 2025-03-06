@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 10:48:27 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/05 20:05:16 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/06 22:10:37 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ static int	exec_after_op(t_mini *mini, t_token *op, int ret)
 	save_exec_state(mini, &state);
 	if (op->type == AND_OP && ret == 0)
 		new_ret = exec_logical_op_with_parens(mini, op->next);
-	else if (op->type == OR_OP && ret == 0)
+	else if (op->type == OR_OP && ret != 0)
 		new_ret = exec_logical_op_with_parens(mini, op->next);
 	else
 		new_ret = ret;
