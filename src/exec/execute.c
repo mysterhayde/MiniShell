@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 13:48:06 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/06 21:57:44 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/08 19:20:32 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,8 @@ static t_bool	is_parenthesis_cmd(t_token *token)
  * @param ret Return value from previous command
  * @return New return value
  */
-static int	process_remaining_cmds(t_mini *mini, t_token *tokens, t_bool condition)
+static int	process_remaining_cmds(t_mini *mini, t_token *tokens,
+		t_bool condition)
 {
 	t_state	state;
 	int		ret;

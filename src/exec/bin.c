@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 13:48:58 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/04 17:28:14 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/08 20:35:41 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,19 @@
 
 static void	child_process(char *path, char **cmd, t_mini *mini)
 {
+	struct stat	path_stat;
+
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
 	if (access(path, F_OK) == -1)
 	{
 		free(path);
 		show_error_exit(cmd[0], "No such file or directory", 127);
+	}
+	if (stat(path, &path_stat) == 0 && S_ISDIR(path_stat.st_mode))
+	{
+		free(path);
+		show_error_exit(cmd[0], "Is a directory", 126);
 	}
 	if (access(path, X_OK) == -1)
 	{
@@ -54,8 +61,15 @@ static int	handle_parent(char *path, pid_t pid)
 
 static int	execute_direct(char *path, char **cmd, t_mini *mini)
 {
-	pid_t	pid;
+	pid_t		pid;
+	struct stat	path_stat;
 
+	if (stat(path, &path_stat) == 0 && S_ISDIR(path_stat.st_mode))
+	{
+		show_err_msg(cmd[0], "Is a directory");
+		free(path);
+		return (126);
+	}
 	pid = fork();
 	if (pid == -1)
 	{
@@ -67,10 +81,38 @@ static int	execute_direct(char *path, char **cmd, t_mini *mini)
 	return (handle_parent(path, pid));
 }
 
+static int	handle_direct_path(t_mini *mini, char **cmd)
+{
+	char		*path;
+	struct stat	path_stat;
+
+	if (stat(cmd[0], &path_stat) == 0)
+	{
+		if (S_ISDIR(path_stat.st_mode))
+			return (show_err_return(cmd[0], "Is a directory", 126));
+		path = ft_strdup(cmd[0]);
+		if (!path)
+			return (127);
+		if (!mini->is_pipe)
+			return (execute_direct(path, cmd, mini));
+		child_process(path, cmd, mini);
+		free(path);
+		return (0);
+	}
+	return (-1);
+}
+
 int	exec_bin(t_mini *mini, char **cmd)
 {
 	char	*path;
+	int		ret;
 
+	if (cmd[0] && ft_strchr(cmd[0], '/'))
+	{
+		ret = handle_direct_path(mini, cmd);
+		if (ret >= 0)
+			return (ret);
+	}
 	path = find_path(cmd[0], mini->envp);
 	if (!path)
 		return (show_cmd_not_found(cmd[0]), 127);
