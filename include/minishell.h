@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 17:10:09 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/05 22:01:49 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/08 16:00:09 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
 # include "../libft/libft.h"
 
 # define ERR_MALLOC		"memory allocation failed"
-# define ERR_PERMISSION	"permission denied"
+# define ERR_PERMISSION	"permiss`ion denied"
 # define ERR_TOOMANY	"too many arguments"
 # define ERR_NOVALID	"not a valid identifier"
 # define ERR_NOTNUMERIC	"numeric argument required"
