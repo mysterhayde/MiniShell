@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_string.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 14:55:09 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/03/04 14:13:04 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/08 16:22:47 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static char	*isolate_variable(char *str, char **envp, int *len)
 		return (NULL);
 	expanded = expand(variable, envp);
 	if (!expanded)
-		return (NULL);
+		expanded = ft_strdup("");
 	*(len) += i;
 	return (free(variable), expanded);
 }

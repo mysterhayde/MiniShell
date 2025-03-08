@@ -1,5 +1,5 @@
 NAME = minishell
-CC = cc
+CC = clang
 RM = rm -rf
 FLAGS = -Werror -Wextra -Wall -g
 MAKE := make --no-print-directory
@@ -16,8 +16,8 @@ PRINTF = $(addprefix $(PRINTF_DIR), $(PRINTF_A))
 SRC_DIR  = src/
 MAIN_SRC =	main.c \
 			show_error.c \
-			free_all.c \
-			debug.c
+			free_all.c
+
 SRC = $(addprefix $(SRC_DIR), $(MAIN_SRC))
 
 INIT_SRC = init.c history.c history_utils.c signal.c prompt_utils.c
