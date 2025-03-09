@@ -1,7 +1,7 @@
 NAME = minishell
 CC = clang
 RM = rm -rf
-FLAGS = -Werror -Wextra -Wall -g
+FLAGS = -Werror -Wextra -Wall -g -fsanitize=address
 MAKE := make --no-print-directory
 
 #--------------------------------------LIBFT------------------------------------#
@@ -20,7 +20,7 @@ MAIN_SRC =	main.c \
 
 SRC = $(addprefix $(SRC_DIR), $(MAIN_SRC))
 
-INIT_SRC = init.c history.c history_utils.c signal.c prompt_utils.c
+INIT_SRC = init.c history.c history_utils.c signal.c prompt_utils.c env_utils.c
 INIT_DIR = src/init/
 INIT = $(addprefix $(INIT_DIR), $(INIT_SRC))
 
@@ -35,7 +35,8 @@ EXEC = $(addprefix $(EXEC_DIR), $(EXEC_SRC))
 
 
 PARS_SRC = parsing.c parsing_utils.c split_entry.c tokens.c check_string.c expand_string.c \
-			clear_quotes.c parenthesis.c parenthesis_ops.c parenthesis_redir.c parenthesis_exec.c
+			clear_quotes.c parenthesis.c parenthesis_ops.c parenthesis_redir.c parenthesis_exec.c \
+			token_utils.c
 PARS_DIR = src/parsing/
 PARS = $(addprefix $(PARS_DIR), $(PARS_SRC))
 
@@ -88,4 +89,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re bonus
+.PHONY: all clean fclean re

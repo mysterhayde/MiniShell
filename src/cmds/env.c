@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 15:03:39 by cbopp             #+#    #+#             */
-/*   Updated: 2025/02/10 12:57:51 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/09 14:10:55 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,7 @@ char	**copy_env(char **env)
 	{
 		if (!set(&new_env[i], ft_strdup(env[i])))
 		{
-			while (i > 0)
-				free(new_env[--i]);
-			free(new_env);
+			free_env_arr(new_env);
 			return (NULL);
 		}
 		i++;

@@ -1,25 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_all.c                                         :+:      :+:    :+:   */
+/*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/26 16:18:45 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/09 14:20:09 by cbopp            ###   ########.fr       */
+/*   Created: 2025/03/09 14:11:20 by cbopp             #+#    #+#             */
+/*   Updated: 2025/03/09 14:12:26 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	free_all(t_mini *mini)
+/**
+ * @brief Frees an array of environment variables
+ * @param env The environement array to free
+ */
+void	free_env_arr(char **env)
 {
-	if (!mini)
+	size_t	i;
+
+	if (!env)
 		return ;
-	if (mini->user)
-		free(mini->user);
-	if (mini->token || mini->backup)
-		free_token_list(mini);
-	if (mini->envp)
-		free_env_arr(mini->envp);
+	i = 0;
+	while (env[i])
+	{
+		free(env[i]);
+		i++;
+	}
+	free(env);
 }
