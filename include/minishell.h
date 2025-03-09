@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 17:10:09 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/05 16:57:38 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/09 17:11:36 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
 # include "../libft/libft.h"
 
 # define ERR_MALLOC		"memory allocation failed"
-# define ERR_PERMISSION	"permission denied"
+# define ERR_PERMISSION	"permiss`ion denied"
 # define ERR_TOOMANY	"too many arguments"
 # define ERR_NOVALID	"not a valid identifier"
 # define ERR_NOTNUMERIC	"numeric argument required"
@@ -91,10 +91,11 @@ typedef enum e_type
 	LIMITER		= 7,
 	AND_OP		= 8, // &&
 	OR_OP		= 9, // ||
+	LEFT_PAREN	= 10,
+	RIGHT_PAREN	= 11
 }	t_type;
 
 /*------------------------------- STRUCTURES ---------------------------------*/
-
 typedef struct s_pipe
 {
 	int		*pipe_fds;
@@ -108,6 +109,16 @@ typedef struct s_token
 	t_bool			expand;
 	struct s_token	*next;
 }	t_token;
+
+/**
+ * @brief Structure to store state for token execution
+ */
+typedef struct s_state
+{
+	t_token	*original_token;
+	t_bool	original_is_pipe;
+	int		original_pipe_num;
+}	t_state;
 
 typedef struct s_mini
 {
@@ -138,6 +149,7 @@ int		setup_signal_handlers(void);
 void	reset_signals_for_child(void);
 int		check_signal_interrupt(void);
 char	*get_prompt(t_mini *mini);
+void	free_env_arr(char **env);
 
 /*--------------------------------- Builtins --------------------------------*/
 
@@ -182,8 +194,24 @@ t_token	*skip_redirections(t_token *token);
 int		exec_redirections(t_mini *mini, t_token *token);
 int		process_single_redir(t_token *current);
 t_token	*create_command_sublist(t_token *start, t_token *end);
+int		check_paren_balance(t_token *token);
+int		apply_paren_redirections(t_token *token);
 t_token	*find_next_logical_op(t_token *token);
 int		exec_logical_ops(t_mini *mini, t_token *token);
+int		exec_paren_expr(t_mini *mini, t_token *token);
+t_token	*find_next_logical(t_token *token);
+t_token	*find_matching_paren(t_token *token);
+t_bool	has_parentheses(t_token *token);
+t_token	*skip_paren_expr(t_token *token);
+t_token	*find_next_logical_op_with_parens(t_token *token);
+int		exec_logical_op_with_parens(t_mini *mini, t_token *token);
+int		exec_paren_logical_ops(t_mini *mini, t_token *token);
+int		exec_paren_with_redir(t_mini *mini, t_token *token);
+int		exec_logical_with_redir(t_mini *mini, t_token *token);
+t_bool	has_logical_ops(t_token *token);
+void	save_exec_state(t_mini *mini, t_state *state);
+void	restore_exec_state(t_mini *mini, t_state *state);
+int		exec_sublist(t_mini *mini, t_token *sublist);
 t_token	*copy_token(t_token *token);
 
 /*---------------------------------- Path -----------------------------------*/
@@ -197,20 +225,18 @@ int		is_operator(t_mini *mini, char *str);
 int		find_next_quote(char *str, char quote);
 int		check_string(t_mini *mini, t_token *cmd_token);
 int		skip_until_next_quote(char *str, char quote, int i);
-
+char	*search_variable(char *str, char **envp, int *error);
 char	*clean_quote(char *str);
 char	*find_next_token(char *str, int *i);
-
 void	free_tokens(t_token *token);
 void	free_token_list(t_mini *mini);
 void	add_last_token(char *str, t_mini *mini, int type);
-
-
 size_t	expanded_size(char *str, char **envp);
 char	*expand_string(char *str, char **envp);
-
-
 void	modify_str(t_mini *mini);
+void	free_cmd_arr(char **cmd);
+int		check_final_token(t_token *token);
+int		count_leading_spaces(char *str);
 
 /*------------------------------- Redirection -------------------------------*/
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokens.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 14:00:12 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/03/04 14:47:12 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/09 14:57:05 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,19 @@
  */
 void	free_token_list(t_mini *mini)
 {
+	t_token	*current;
+	t_token	*next;
+
 	if (!mini->backup)
 		return ;
-	mini->token = mini->backup;
-	while (mini->token)
+	current = mini->backup;
+	while (current)
 	{
-		mini->token = mini->token->next;
-		free(mini->backup->cmd);
-		free(mini->backup);
-		mini->backup = mini->token;
+		next = current->next;
+		free_cmd_arr(current->cmd);
+		free(current);
+		current = next;
 	}
-	if (mini->token)
-		free(mini->token);
 	mini->token = NULL;
 	mini->backup = NULL;
 }
@@ -62,10 +63,10 @@ static char	**increase_tab(char **tab, char *str)
 }
 
 /**
- * @brief Create a new node
- * @param char *str
- * @param int type
- * @return t_token node
+ * @brief Create a new token node
+ * @param str The command string
+ * @param type The token type
+ * @return The newly created token node
  */
 static t_token	*new_token(char *str, int type, t_mini *mini)
 {
@@ -76,8 +77,10 @@ static t_token	*new_token(char *str, int type, t_mini *mini)
 		show_error_exit("malloc", "memory allocation failed", 1);
 	new->cmd = malloc(sizeof(char *) * 2);
 	if (!new->cmd)
-		return (NULL);
-	new->cmd[0] = str;
+		return (free(new), NULL);
+	new->cmd[0] = ft_strdup(str);
+	if (!new->cmd[0])
+		return (free(new->cmd), free(new), NULL);
 	new->cmd[1] = NULL;
 	new->type = type;
 	new->next = NULL;
@@ -88,9 +91,6 @@ static t_token	*new_token(char *str, int type, t_mini *mini)
 
 static void	create_first_node(t_mini *mini, char *str, int type)
 {
-	mini->backup = malloc(sizeof(t_token));
-	if (!mini->backup)
-		show_error_exit("malloc", "memory allocation failed", 1);
 	mini->token = new_token(str, type, mini);
 	if (!mini->token)
 		show_error_exit("malloc", "memory allocation failed", 1);
@@ -99,9 +99,9 @@ static void	create_first_node(t_mini *mini, char *str, int type)
 
 /**
  * @brief add a node to the end of the linked list
- * @param char *str
- * @param t_mini *mini
- * @param int type
+ * @param str The command string
+ * @param mini The minishell struct
+ * @param type The token type
  */
 void	add_last_token(char *str, t_mini *mini, int type)
 {

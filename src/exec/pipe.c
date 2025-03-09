@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 13:48:12 by cbopp             #+#    #+#             */
-/*   Updated: 2025/02/27 17:08:26 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/09 14:48:59 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,11 @@ static t_token	*find_next_pipe(t_token *token)
 }
 
 /**
- * @brief Applies redirectiojns up to the next pipe
+ * @brief Applies redirections up to the next pipe
  * @param token starting token
+ * @return 0 on success, 1 on error
  */
-static void	apply_pipe_redir(t_token *token)
+static int	apply_pipe_redir(t_token *token)
 {
 	t_token	*current;
 	t_token	*next_pipe;
@@ -44,11 +45,15 @@ static void	apply_pipe_redir(t_token *token)
 	next_pipe = find_next_pipe(token);
 	while (current && current != next_pipe)
 	{
-		if (current->type == RDIT && current->next
-			&& current->next->type == FILES)
-			process_single_redir(current);
+		if ((current->type == RDIT || current->type == HERE_DOC)
+			&& current->next && current->next->type == FILES)
+		{
+			if (process_single_redir(current))
+				return (1);
+		}
 		current = current->next;
 	}
+	return (0);
 }
 
 /**
@@ -59,7 +64,7 @@ static void	apply_pipe_redir(t_token *token)
  */
 static void	handle_pipe_child(int i, t_mini *mini, int *pipe_fds)
 {
-	int		j;
+	int	j;
 
 	j = 0;
 	if (i > 0)
@@ -87,6 +92,7 @@ static void	handle_pipe_child(int i, t_mini *mini, int *pipe_fds)
 int	exec_pipe_cmd(t_mini *mini, int i, int *pipe_fds)
 {
 	pid_t	pid;
+	t_token	*cmd_token;
 
 	pid = fork();
 	if (pid == -1)
@@ -96,8 +102,10 @@ int	exec_pipe_cmd(t_mini *mini, int i, int *pipe_fds)
 		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
 		handle_pipe_child(i, mini, pipe_fds);
-		check_string(mini, mini->token);	
-		exit(1);
+		cmd_token = skip_redirections(mini->token);
+		if (cmd_token && cmd_token->cmd && cmd_token->cmd[0])
+			check_string(mini, cmd_token);
+		exit(mini->ret);
 	}
 	if (i > 0)
 		close(pipe_fds[(i - 1) * 2]);
@@ -114,9 +122,17 @@ int	exec_pipe_cmd(t_mini *mini, int i, int *pipe_fds)
 int	minipipe(t_mini *mini)
 {
 	t_pipe	p;
+	int		ret;
+	t_bool	is_exit;
 
-	if (ft_strmincmp(mini->token->cmd[0], "exit", 4) == 0)
-		return (mini->exit = 1, exit_builtin(mini, mini->token->cmd));
+	if (mini->token && mini->token->cmd
+		&& ft_strmincmp(mini->token->cmd[0], "exit", 4) == 0)
+	{
+		is_exit = mini->exit;
+		ret = exit_builtin(mini, mini->token->cmd);
+		mini->exit = is_exit;
+		return (ret);
+	}
 	if (!create_pipes(mini->pipe_num, &p.pipe_fds))
 		return (1);
 	p.pids = malloc(sizeof(pid_t) * (mini->pipe_num + 1));
