@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 16:24:36 by cbopp             #+#    #+#             */
-/*   Updated: 2025/02/25 16:54:09 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/06 22:09:41 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,32 +32,36 @@ t_token	*find_next_logical_op(t_token *token)
 }
 
 /**
- * @brief Creates a sublist of tokens up to a logical operator
- * @param start start token
- * @param end end token (not included)
- * @return new token list
+ * @brief Executes a command with logical operators
+ * @param mini shell state
+ * @param token token containing the command
+ * @return exit status
  */
-t_token	*create_command_sublist(t_token *start, t_token *end)
+int	exec_logical_ops(t_mini *mini, t_token *token)
 {
-	t_token	*current;
+	t_token	*op;
 	t_token	*sublist;
-	t_token *new_token;
-	t_token	*last;
+	int		ret;
 
-	sublist = NULL;
-	last = NULL;
-	current = start;
-	while (current != end && current)
+	op = find_next_logical_op(token);
+	if (!op)
+		return (exec_sublist(mini, token));
+	sublist = create_command_sublist(token, op);
+	if (!sublist)
+		return (1);
+	ret = exec_sublist(mini, sublist);
+	free_tokens(sublist);
+	if (op->type == AND_OP)
 	{
-		new_token = copy_token(current);
-		if (!new_token)
-			return (free_tokens(sublist), NULL);
-		if (!sublist)
-			sublist = new_token;
-		else
-			last->next = new_token;
-		last = new_token;
-		current = current->next;
+		if (ret == 0)
+			return (exec_logical_ops(mini, op->next));
+		return (ret);
 	}
-	return (sublist);
+	else if (op->type == OR_OP)
+	{
+		if (ret != 0)
+			return (exec_logical_ops(mini, op->next));
+		return (ret);
+	}
+	return (ret);
 }
