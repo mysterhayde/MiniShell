@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 16:50:34 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/05 20:03:44 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/09 12:59:15 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,16 +64,16 @@ static int	advance_to_next_pipe_cmd(t_mini *mini)
 	current = mini->token;
 	while (current && current->type != PIPE)
 	{
-		if (current && current->type != PIPE)
+		if (current->type == LEFT_PAREN)
 		{
 			current = find_matching_paren(current);
 			if (!current)
 				return (0);
-			continue ;
 		}
-		current = current->next;
+		else
+			current = current->next;
 	}
-	if (!current || !current->next)
+	if (!current)
 		return (0);
 	mini->token = current->next;
 	return (1);
