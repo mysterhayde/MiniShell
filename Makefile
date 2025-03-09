@@ -1,7 +1,7 @@
 NAME = minishell
 CC = clang
 RM = rm -rf
-FLAGS = -Werror -Wextra -Wall -g -fsanitize=address
+FLAGS = -Werror -Wextra -Wall -g
 MAKE := make --no-print-directory
 
 #--------------------------------------LIBFT------------------------------------#

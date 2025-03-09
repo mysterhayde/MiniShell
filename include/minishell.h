@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 17:10:09 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/09 17:11:36 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/09 18:18:36 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,7 +155,9 @@ void	free_env_arr(char **env);
 
 int		pwd(t_mini *mini);
 int		cd(t_mini *mini, char **cmd);
+char	*expand_tilde(char *path, char **envp);
 int		env(t_mini *mini);
+char	*get_env_value(char **env, const char *name);
 int		match_var_name(const char *env_var, const char *var_name);
 int		export(t_mini *mini, char **cmd);
 char	**add_env_var(char **envp, char *new_var);
