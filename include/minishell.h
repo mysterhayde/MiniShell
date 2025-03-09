@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 17:10:09 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/08 16:00:09 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/09 15:24:01 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,8 +149,7 @@ int		setup_signal_handlers(void);
 void	reset_signals_for_child(void);
 int		check_signal_interrupt(void);
 char	*get_prompt(t_mini *mini);
-
-void	debug_print_tokens(char *prefix, t_token *token); //REMOVE
+void	free_env_arr(char **env);
 
 /*--------------------------------- Builtins --------------------------------*/
 
@@ -232,6 +231,9 @@ void	add_last_token(char *str, t_mini *mini, int type);
 size_t	expanded_size(char *str, char **envp);
 char	*expand_string(char *str, char **envp);
 void	modify_str(t_mini *mini);
+void	free_cmd_arr(char **cmd);
+int		check_final_token(t_token *token);
+int		count_leading_spaces(char *str);
 
 /*------------------------------- Redirection -------------------------------*/
 
