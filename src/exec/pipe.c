@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 13:48:12 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/08 21:41:27 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/09 12:58:02 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,8 @@ int	minipipe(t_mini *mini)
 	int		ret;
 	t_bool	is_exit;
 
-	if (ft_strmincmp(mini->token->cmd[0], "exit", 4) == 0)
+	if (mini->token && mini->token->cmd
+		&& ft_strmincmp(mini->token->cmd[0], "exit", 4) == 0)
 	{
 		is_exit = mini->exit;
 		ret = exit_builtin(mini, mini->token->cmd);
