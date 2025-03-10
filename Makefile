@@ -1,7 +1,7 @@
 NAME = minishell
 CC = clang
 RM = rm -rf
-FLAGS = -Werror -Wextra -Wall -g
+FLAGS = -Werror -Wextra -Wall -g -fPIE
 MAKE := make --no-print-directory
 
 #--------------------------------------LIBFT------------------------------------#
@@ -89,4 +89,7 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re
+valgrind:
+	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --track-origins=yes --suppressions=resources/a.supp --log-file="resources/leaks.log" ./minishell
+
+.PHONY: all clean fclean re valgrind
