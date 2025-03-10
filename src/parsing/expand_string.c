@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 14:55:09 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/03/09 17:10:27 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/10 12:03:13 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,5 @@ char	*expand_string(char *str, char **envp)
 		}
 		i++;
 	}
-	free(str);
 	return (result);
 }
