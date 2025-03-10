@@ -1,0 +1,64 @@
+==1125331== Memcheck, a memory error detector
+==1125331== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==1125331== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==1125331== Command: ./minishell
+==1125331== Parent PID: 1125330
+==1125331== 
+==1125331== Invalid free() / delete / delete[] / realloc()
+==1125331==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1125331==    by 0x10D403: expand_string (expand_string.c:137)
+==1125331==    by 0x10D291: search_variable (expand_string.c:101)
+==1125331==    by 0x10CB22: transform_string (check_string.c:98)
+==1125331==    by 0x10CE16: check_string (check_string.c:123)
+==1125331==    by 0x10FE19: exec_redirections (exec_redir.c:55)
+==1125331==    by 0x10E2A8: execute (execute.c:126)
+==1125331==    by 0x109599: process_input (main.c:31)
+==1125331==    by 0x109540: shell_loop (main.c:73)
+==1125331==    by 0x10948F: main (main.c:84)
+==1125331==  Address 0x4b72714 is 4 bytes inside a block of size 15 alloc'd
+==1125331==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1125331==    by 0x110E9C: ft_strdup (in /home/hdougoud/Documents/MiniShell/minishell)
+==1125331==    by 0x10C942: increase_tab (tokens.c:58)
+==1125331==    by 0x10C754: add_last_token (tokens.c:115)
+==1125331==    by 0x10B909: allocate_tokens (parsing.c:64)
+==1125331==    by 0x10B723: parsing (parsing.c:216)
+==1125331==    by 0x109587: process_input (main.c:30)
+==1125331==    by 0x109540: shell_loop (main.c:73)
+==1125331==    by 0x10948F: main (main.c:84)
+==1125331== 
+==1125331== 
+==1125331== FILE DESCRIPTORS: 7 open (3 std) at exit.
+==1125331== Open file descriptor 103: /usr/share/code/v8_context_snapshot.bin
+==1125331==    <inherited from parent>
+==1125331== 
+==1125331== Open file descriptor 44: /dev/ptmx
+==1125331==    <inherited from parent>
+==1125331== 
+==1125331== Open file descriptor 43: /home/hdougoud/.config/Code/logs/20250310T133201/ptyhost.log
+==1125331==    <inherited from parent>
+==1125331== 
+==1125331== Open file descriptor 3: /home/hdougoud/Documents/MiniShell/resources/leaks.log
+==1125331==    <inherited from parent>
+==1125331== 
+==1125331== 
+==1125331== HEAP SUMMARY:
+==1125331==     in use at exit: 208,257 bytes in 229 blocks
+==1125331==   total heap usage: 881 allocs, 654 frees, 273,007 bytes allocated
+==1125331== 
+==1125331== 58 bytes in 7 blocks are definitely lost in loss record 16 of 64
+==1125331==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1125331==    by 0x10C3A4: find_next_token (split_entry.c:74)
+==1125331==    by 0x10B717: parsing (parsing.c:216)
+==1125331==    by 0x109587: process_input (main.c:30)
+==1125331==    by 0x109540: shell_loop (main.c:73)
+==1125331==    by 0x10948F: main (main.c:84)
+==1125331== 
+==1125331== LEAK SUMMARY:
+==1125331==    definitely lost: 58 bytes in 7 blocks
+==1125331==    indirectly lost: 0 bytes in 0 blocks
+==1125331==      possibly lost: 0 bytes in 0 blocks
+==1125331==    still reachable: 0 bytes in 0 blocks
+==1125331==         suppressed: 208,199 bytes in 222 blocks
+==1125331== 
+==1125331== For lists of detected and suppressed errors, rerun with: -s
+==1125331== ERROR SUMMARY: 3 errors from 2 contexts (suppressed: 0 from 0)
