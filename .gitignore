@@ -7,4 +7,4 @@ minishell
 *.dSYM
 vgcore.*
 .history
-ressources
+*.log
