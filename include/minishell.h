@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 17:10:09 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/10 12:03:09 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/10 12:09:48 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@
 # define ERR_TOOMANY	"too many arguments"
 # define ERR_NOVALID	"not a valid identifier"
 # define ERR_NOTNUMERIC	"numeric argument required"
-# define ERR_NODIR		"no such file or directory"
+# define ERR_NODIR		"No such file or directory"
 
 # ifndef PATH_MAX
 #  define PATH_MAX 4096
