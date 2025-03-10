@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 13:48:58 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/08 20:35:41 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/10 14:02:17 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ int	exec_bin(t_mini *mini, char **cmd)
 			return (ret);
 	}
 	path = find_path(cmd[0], mini->envp);
-	if (!path)
+	if (!path || !cmd[0] || cmd[0][0] == '\0')
 		return (show_cmd_not_found(cmd[0]), 127);
 	if (!mini->is_pipe)
 		return (execute_direct(path, cmd, mini));

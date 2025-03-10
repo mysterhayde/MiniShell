@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 15:03:41 by cbopp             #+#    #+#             */
-/*   Updated: 2025/02/21 08:41:34 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/10 19:00:11 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,9 @@ int	exit_builtin(t_mini *mini, char **cmd)
 	}
 	if (!is_numeric(cmd[1]))
 	{
-		show_err_msg("exit", ERR_NOTNUMERIC);
+		// show_err_msg("exit", ERR_NOTNUMERIC);
 		mini->exit = 1;
+		mini->ret = 2;
 		return (255);
 	}
 	if (cmd[2])
@@ -52,6 +53,7 @@ int	exit_builtin(t_mini *mini, char **cmd)
 		return (show_err_return("exit", ERR_TOOMANY, ERR_BUILTIN));
 	}
 	status = ft_atoi(cmd[1]) & 255;
-	mini->exit = 1;
+	mini->exit = ft_atoi(cmd[1]);
+	mini->ret = ft_atoi(cmd[1]);
 	return (status);
 }

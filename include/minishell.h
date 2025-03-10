@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 17:10:09 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/10 12:09:48 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/10 19:01:44 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -243,6 +243,9 @@ int		count_leading_spaces(char *str);
 /*------------------------------- Redirection -------------------------------*/
 
 int		here_doc(char *limiter);
+void	here_doc_child(char *limiter, int temp_fd);
+int		create_temp_file(char **temp_name);
+char	*generate_temp_name(int counter);
 
 /*---------------------------------- Error ----------------------------------*/
 
