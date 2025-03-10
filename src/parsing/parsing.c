@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
+/*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 10:00:47 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/03/09 16:54:07 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/10 22:08:09 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static char	*allocate_tokens(char *str, t_mini *mini)
 		add_last_token(str, mini, CMD);
 	if (!mini->token->cmd)
 		return (NULL);
-	return (str);
+	return (free(str), "OK");
 }
 
 /**
@@ -76,96 +76,96 @@ static char	*allocate_tokens(char *str, t_mini *mini)
  * @param mini Shell stat
  * @return Updated position in string or NULL on error
  */
-static char	*process_token(char *next_token, int *len, t_mini *mini)
-{
-	char	*trimmed;
-	char	*token_str;
-	char	*new_position;
-	int		trim_spaces;
-
-	trim_spaces = count_leading_spaces(next_token);
-	trimmed = ft_strtrim(next_token, " \n\t");
-	if (!trimmed)
-		return (NULL);
-	token_str = find_next_token(trimmed, len);
-	if (!token_str)
-	{
-		free(trimmed);
-		return (NULL);
-	}
-	new_position = next_token + trim_spaces + *len;
-	if (!allocate_tokens(token_str, mini))
-	{
-		free(token_str);
-		free(trimmed);
-		return (NULL);
-	}
-	free(token_str);
-	free(trimmed);
-	return (new_position);
-}
-
-// static void	print_tokens(t_token *token)			// Debug function
+// static char	*process_token(char *next_token, int *len, t_mini *mini)
 // {
-// 	while (token)
+// 	char	*trimmed;
+// 	char	*token_str;
+// 	char	*new_position;
+// 	int		trim_spaces;
+
+// 	trim_spaces = count_leading_spaces(next_token);
+// 	trimmed = ft_strtrim(next_token, " \n\t");
+// 	if (!trimmed)
+// 		return (NULL);
+// 	token_str = find_next_token(trimmed, len);
+// 	if (!token_str)
 // 	{
-// 		if (token->type == CMD)
-// 		{
-// 			printf("%s	", token->cmd[0]);
-// 			printf(COLOR_GREEN"TYPE:	CMD");
-// 			printf(COLOR_RESET"\n");
-// 			for (int i = 1; token->cmd[i]; i++)
-// 			{
-// 				printf("%s	", token->cmd[i]);
-// 				printf(COLOR_GREEN_ULTRA"TYPE:	ARG");
-// 				printf(COLOR_RESET"\n");
-// 			}
-// 		}
-// 		else if (token->type == PIPE)
-// 		{
-// 			printf("%s	", token->cmd[0]);
-// 			printf(COLOR_RED"TYPE:	PIPE");
-// 			printf(COLOR_RESET"\n");
-// 		}
-// 		else if (token->type == RDIT)
-// 		{
-// 			printf("%s	", token->cmd[0]);
-// 			printf(COLOR_BLUE"TYPE:	REDIRECTION");
-// 			printf(COLOR_RESET"\n");
-// 		}
-// 		else if (token->type == FILES)
-// 		{
-// 			printf("%s	", token->cmd[0]);
-// 			printf(COLOR_PURPLE"TYPE:	FILE");
-// 			printf(COLOR_RESET"\n");
-// 		}
-// 		else if (token->type == HERE_DOC)
-// 		{
-// 			printf("%s	", token->cmd[0]);
-// 			printf(COLOR_CYAN"TYPE:	HERE_DOC");
-// 			printf(COLOR_RESET"\n");
-// 		}
-// 		else if (token->type == LIMITER)
-// 		{
-// 			printf("%s	", token->cmd[0]);
-// 			printf(COLOR_CYAN"TYPE:	LIMITER");
-// 			printf(COLOR_RESET"\n");
-// 		}
-// 		else if (token->type == AND_OP)
-// 		{
-// 			printf("%s	", token->cmd[0]);
-// 			printf(COLOR_RED"TYPE:	AND");
-// 			printf(COLOR_RESET"\n");
-// 		}
-// 		else if (token->type == OR_OP)
-// 		{
-// 			printf("%s	", token->cmd[0]);
-// 			printf(COLOR_RED"TYPE:	OR");
-// 			printf(COLOR_RESET"\n");
-// 		}
-// 		token = token->next;
+// 		free(trimmed);
+// 		return (NULL);
 // 	}
+// 	new_position = next_token + trim_spaces + *len;
+// 	if (!allocate_tokens(token_str, mini))
+// 	{
+// 		free(token_str);
+// 		free(trimmed);
+// 		return (NULL);
+// 	}
+// 	free(token_str);
+// 	free(trimmed);
+// 	return (new_position);
 // }
+
+static void	print_tokens(t_token *token)			// Debug function
+{
+	while (token)
+	{
+		if (token->type == CMD)
+		{
+			printf("%s	", token->cmd[0]);
+			printf(COLOR_GREEN"TYPE:	CMD");
+			printf(COLOR_RESET"\n");
+			for (int i = 1; token->cmd[i]; i++)
+			{
+				printf("%s	", token->cmd[i]);
+				printf(COLOR_GREEN_ULTRA"TYPE:	ARG");
+				printf(COLOR_RESET"\n");
+			}
+		}
+		else if (token->type == PIPE)
+		{
+			printf("%s	", token->cmd[0]);
+			printf(COLOR_RED"TYPE:	PIPE");
+			printf(COLOR_RESET"\n");
+		}
+		else if (token->type == RDIT)
+		{
+			printf("%s	", token->cmd[0]);
+			printf(COLOR_BLUE"TYPE:	REDIRECTION");
+			printf(COLOR_RESET"\n");
+		}
+		else if (token->type == FILES)
+		{
+			printf("%s	", token->cmd[0]);
+			printf(COLOR_PURPLE"TYPE:	FILE");
+			printf(COLOR_RESET"\n");
+		}
+		else if (token->type == HERE_DOC)
+		{
+			printf("%s	", token->cmd[0]);
+			printf(COLOR_CYAN"TYPE:	HERE_DOC");
+			printf(COLOR_RESET"\n");
+		}
+		else if (token->type == LIMITER)
+		{
+			printf("%s	", token->cmd[0]);
+			printf(COLOR_CYAN"TYPE:	LIMITER");
+			printf(COLOR_RESET"\n");
+		}
+		else if (token->type == AND_OP)
+		{
+			printf("%s	", token->cmd[0]);
+			printf(COLOR_RED"TYPE:	AND");
+			printf(COLOR_RESET"\n");
+		}
+		else if (token->type == OR_OP)
+		{
+			printf("%s	", token->cmd[0]);
+			printf(COLOR_RED"TYPE:	OR");
+			printf(COLOR_RESET"\n");
+		}
+		token = token->next;
+	}
+}
 
 /**
  * @brief Checks token syntax and balancing of parentheses
@@ -206,21 +206,18 @@ int	parsing(char *str, t_mini *mini)
 {
 	int		len;
 	char	*next_token;
-	char	*prev_token;
 
 	mini->pipe_num = 0;
 	mini->is_pipe = FALSE;
 	next_token = str;
 	while (*next_token)
 	{
-		prev_token = next_token;
-		next_token = process_token(next_token, &len, mini);
-		if (!next_token)
+		ft_strtrim_nc(&next_token, " \t\n");
+		if (!allocate_tokens(find_next_token(next_token, &len), mini)) //trimed secured here
 			return (EXIT_FAILURE);
-		if (next_token == prev_token)
-			next_token++;
+		next_token += len;
 	}
-	// print_tokens(mini->backup); // Debug
+	print_tokens(mini->backup); // Debug
 	mini->token = mini->backup;
 	if (check_syntax(mini->token))
 		return (show_err_msg("Syntax Error", "unexpected token"), EXIT_FAILURE);

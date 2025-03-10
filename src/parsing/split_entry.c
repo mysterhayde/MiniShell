@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_entry.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
+/*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 11:51:45 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/03/09 16:59:54 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/10 15:26:56 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@ char	*find_next_token(char *str, int *len)
 	char	*splited;
 
 	i = 0;
+	if (!str)
+		return (show_err_msg("malloc", "malloc allocation failed"), NULL);
 	*len = word_len(str);
 	if (*len == -1)
 		return (show_err_msg("syntax error", "quote not closed"), NULL);
