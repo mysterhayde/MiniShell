@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 10:00:47 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/03/10 16:02:19 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/10 22:08:09 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static char	*allocate_tokens(char *str, t_mini *mini)
 		add_last_token(str, mini, CMD);
 	if (!mini->token->cmd)
 		return (NULL);
-	return (str);
+	return (free(str), "OK");
 }
 
 /**
