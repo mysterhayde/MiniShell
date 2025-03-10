@@ -1,0 +1,23 @@
+{
+    sa
+    Memcheck:Leak
+    ...
+    fun:readline
+}
+{
+    sab
+    Memcheck:Leak
+    ...
+    fun:add_history
+}{
+    sa
+    Memcheck:Leak
+    ...
+    fun:readline
+}
+{
+    sab
+    Memcheck:Leak
+    ...
+    fun:add_history
+}
