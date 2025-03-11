@@ -6,5 +6,6 @@ minishell
 .vscode
 *.dSYM
 vgcore.*
-minishell_tester
 .history
+*.log
+minishell_tester
