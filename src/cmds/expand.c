@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 10:09:51 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/03/09 15:03:18 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/11 19:43:22 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,6 @@ char	*expand(char *str, char **envp)
 			break ;
 	free(variable);
 	if (!envp[i])
-		return (ft_strdup(""));
+		return (ft_strdup("\0"));
 	return (get_expanded_value(envp, i, len));
 }

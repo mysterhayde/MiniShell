@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 17:10:09 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/11 19:34:51 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/11 20:12:36 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,6 @@ extern int	g_signo;
 
 void	getcurpath(t_mini *mini);
 void	setupenv(t_mini *mini, char **envp);
-
 void	init_readline_history(t_mini *mini);
 void	add_to_history(t_mini *mini, const char *command);
 void	cleanup_history(void);
@@ -148,7 +147,6 @@ void	load_history_from_file(t_mini *mini);
 void	save_history_to_file(t_mini *mini, const char *command);
 void	process_history_lines(char **lines);
 char	*get_history_path(t_mini *mini);
-
 int		setup_signal_handlers(void);
 void	reset_signals_for_child(void);
 int		check_signal_interrupt(void);
@@ -239,6 +237,7 @@ void	free_token_list(t_mini *mini);
 void	add_last_token(char *str, t_mini *mini, int type);
 size_t	expanded_size(char *str, char **envp);
 char	*expand_string(char *str, char **envp);
+void	fix_index(t_token *cmd_token);
 void	modify_str(t_mini *mini);
 void	free_cmd_arr(char **cmd);
 int		check_final_token(t_token *token);
