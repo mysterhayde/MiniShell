@@ -6,87 +6,62 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 13:01:33 by cbopp             #+#    #+#             */
-/*   Updated: 2025/02/25 13:20:00 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/11 19:32:12 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static void	process_history_lines(char **lines)
-{
-	int	i;
-
-	if (!lines)
-		return ;
-	i = 0;
-	while (lines[i])
-	{
-		if (lines[i][0] != '\0')
-			add_history(lines[i]);
-		i++;
-	}
-	ft_free_chartable(lines);
-}
-
-void	load_history_from_file(void)
+/**
+ * @brief Load history from file into readline
+ */
+void	load_history_from_file(t_mini *mini)
 {
 	char	*history_path;
 	int		fd;
 	char	buffer[PATH_MAX + 1];
 	int		bytes_read;
+	char	**lines;
 
-	history_path = get_history_file_path();
+	history_path = get_history_path(mini);
 	if (!history_path)
 		return ;
 	fd = open(history_path, O_RDONLY);
 	free(history_path);
 	if (fd == -1)
 		return ;
-	bytes_read = read(fd, buffer, 4096);
-	if (bytes_read <= 0)
-	{
-		close(fd);
-		return ;
-	}
-	buffer[bytes_read] = '\0';
+	bytes_read = read(fd, buffer, PATH_MAX);
 	close(fd);
-	process_history_lines(ft_split(buffer, '\n'));
+	if (bytes_read <= 0)
+		return ;
+	buffer[bytes_read] = '\0';
+	lines = ft_split(buffer, '\n');
+	if (!lines)
+		return ;
+	process_history_lines(lines);
 }
 
-static void	write_history_entries(int fd, HIST_ENTRY **hist_list)
+static void	write_line_to_file(int fd, const char *line)
 {
-	int		i;
-	char	*with_newline;
+	char	*with_nl;
 
-	if (!hist_list)
-		return ;
-	i = 0;
-	while (hist_list[i])
+	with_nl = ft_strjoin(line, "\n");
+	if (with_nl)
 	{
-		with_newline = ft_strjoin(hist_list[i]->line, "\n");
-		if (with_newline)
-		{
-			write(fd, with_newline, ft_strlen(with_newline));
-			free(with_newline);
-		}
-		i++;
+		write(fd, with_nl, ft_strlen(with_nl));
+		free(with_nl);
 	}
 }
 
-void	save_history_to_file(void)
+void	save_history_to_file(t_mini *mini, const char *command)
 {
-	char		*history_path;
-	int			fd;
-	HIST_ENTRY	**hist_list;
+	int		fd;
+	char	*history_path;
 
-	history_path = get_history_file_path();
-	if (!history_path)
-		return ;
-	fd = open(history_path, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	free(history_path);
+	history_path = get_history_path(mini);
+	fd = open(history_path, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (fd == -1)
 		return ;
-	hist_list = history_list();
-	write_history_entries(fd, hist_list);
+	write_line_to_file(fd, command);
 	close(fd);
 }

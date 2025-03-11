@@ -6,20 +6,20 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 15:04:03 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/11 14:15:12 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/11 19:34:16 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	check_entry(char *entry)
+int	check_entry(char *entry, t_mini *mini)
 {
 	if (entry == NULL)
 		return (ft_printf("exit\n"), cleanup_history(), 1);
 	if (check_signal_interrupt())
 		return (free(entry), 2);
 	if (*entry)
-		add_to_history(entry);
+		add_to_history(mini, entry);
 	return (0);
 }
 
@@ -45,10 +45,10 @@ void	init(t_mini *mini, char **envp)
 	mini->token = NULL;
 	mini->backup = NULL;
 	mini->envp = NULL;
-	init_readline_history();
+	setupenv(mini, envp);
+	init_readline_history(mini);
 	if (setup_signal_handlers())
 		mini->exit = 1;
-	setupenv(mini, envp);
 }
 
 static void	shell_loop(t_mini *mini)
@@ -65,7 +65,7 @@ static void	shell_loop(t_mini *mini)
 			break ;
 		entry = readline(prompt);
 		free(prompt);
-		ret = check_entry(entry);
+		ret = check_entry(entry, mini);
 		if (ret == 1)
 			break ;
 		if (ret == 2)
@@ -83,5 +83,5 @@ int	main(int argc, char **argv, char **envp)
 	init(&mini, envp);
 	shell_loop(&mini);
 	free_all(&mini);
-	return (0);
+	return (mini.ret);
 }

@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 17:10:09 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/11 13:48:45 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/11 19:34:51 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@
 #  define PATH_MAX 4096
 # endif
 
-# define HISTORY_FILE ".history"
+# define HISTORY_FILE ".minishell_history"
 
 /*---------------------------------- ENUM ------------------------------------*/
 
@@ -97,8 +97,6 @@ typedef enum e_type
 
 /*------------------------------- STRUCTURES ---------------------------------*/
 
-
-
 typedef struct s_pipe
 {
 	int		*pipe_fds;
@@ -125,15 +123,15 @@ typedef struct s_state
 
 typedef struct s_mini
 {
-	char		**envp;
-	char		*user;
-	char		*cur_path;
-	int			pipe_num;
-	t_bool		is_pipe;
-	t_token		*token;
-	t_token		*backup;
-	int			exit;
-	int			ret;
+	char			**envp;
+	char			*user;
+	char			*cur_path;
+	int				pipe_num;
+	t_bool			is_pipe;
+	t_token			*token;
+	t_token			*backup;
+	int				exit;
+	int				ret;
 }	t_mini;
 
 extern int	g_signo;
@@ -142,12 +140,15 @@ extern int	g_signo;
 
 void	getcurpath(t_mini *mini);
 void	setupenv(t_mini *mini, char **envp);
-void	init_readline_history(void);
-void	add_to_history(const char *command);
-char	*get_history_file_path(void);
-void	save_history_to_file(void);
-void	load_history_from_file(void);
+
+void	init_readline_history(t_mini *mini);
+void	add_to_history(t_mini *mini, const char *command);
 void	cleanup_history(void);
+void	load_history_from_file(t_mini *mini);
+void	save_history_to_file(t_mini *mini, const char *command);
+void	process_history_lines(char **lines);
+char	*get_history_path(t_mini *mini);
+
 int		setup_signal_handlers(void);
 void	reset_signals_for_child(void);
 int		check_signal_interrupt(void);
