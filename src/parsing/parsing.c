@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 10:00:47 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/03/11 13:38:35 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/11 13:47:57 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,34 +76,34 @@ static char	*allocate_tokens(char *str, t_mini *mini)
  * @param mini Shell stat
  * @return Updated position in string or NULL on error
  */
-static char	*process_token(char *next_token, int *len, t_mini *mini)
-{
-	char	*trimmed;
-	char	*token_str;
-	char	*new_position;
-	int		trim_spaces;
+// static char	*process_token(char *next_token, int *len, t_mini *mini)
+// {
+// 	char	*trimmed;
+// 	char	*token_str;
+// 	char	*new_position;
+// 	int		trim_spaces;
 
-	trim_spaces = count_leading_spaces(next_token);
-	trimmed = ft_strtrim(next_token, " \n\t");
-	if (!trimmed)
-		return (NULL);
-	token_str = find_next_token(trimmed, len);
-	if (!token_str)
-	{
-		free(trimmed);
-		return (NULL);
-	}
-	new_position = next_token + trim_spaces + *len;
-	if (!allocate_tokens(token_str, mini))
-	{
-		free(token_str);
-		free(trimmed);
-		return (NULL);
-	}
-	free(token_str);
-	free(trimmed);
-	return (new_position);
-}
+// 	trim_spaces = count_leading_spaces(next_token);
+// 	trimmed = ft_strtrim(next_token, " \n\t");
+// 	if (!trimmed)
+// 		return (NULL);
+// 	token_str = find_next_token(trimmed, len);
+// 	if (!token_str)
+// 	{
+// 		free(trimmed);
+// 		return (NULL);
+// 	}
+// 	new_position = next_token + trim_spaces + *len;
+// 	if (!allocate_tokens(token_str, mini))
+// 	{
+// 		free(token_str);
+// 		free(trimmed);
+// 		return (NULL);
+// 	}
+// 	free(token_str);
+// 	free(trimmed);
+// 	return (new_position);
+// }
 
 // static void	print_tokens(t_token *token)			// Debug function
 // {
@@ -206,19 +206,16 @@ int	parsing(char *str, t_mini *mini)
 {
 	int		len;
 	char	*next_token;
-	char	*prev_token;
 
 	mini->pipe_num = 0;
 	mini->is_pipe = FALSE;
 	next_token = str;
 	while (*next_token)
 	{
-		prev_token = next_token;
-		next_token = process_token(next_token, &len, mini);
-		if (!next_token)
+		ft_strtrim_nc(&next_token, " \t\n");
+		if (!allocate_tokens(find_next_token(next_token, &len), mini)) //trimed secured here
 			return (EXIT_FAILURE);
-		if (next_token == prev_token)
-			next_token++;
+		next_token += len;
 	}
 	// print_tokens(mini->backup); // Debug
 	mini->token = mini->backup;

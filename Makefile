@@ -1,7 +1,7 @@
 NAME = minishell
 CC = clang
 RM = rm -rf
-FLAGS = -Werror -Wextra -Wall -g
+FLAGS = -Werror -Wextra -Wall -g -fPIE
 MAKE := make --no-print-directory
 
 #--------------------------------------LIBFT------------------------------------#
