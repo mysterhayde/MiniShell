@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 13:48:12 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/09 14:48:59 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/11 14:32:23 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ static int	apply_pipe_redir(t_token *token)
 	next_pipe = find_next_pipe(token);
 	while (current && current != next_pipe)
 	{
-		if ((current->type == RDIT || current->type == HERE_DOC)
-			&& current->next && current->next->type == FILES)
+		if (((current->type == RDIT && current->next->type == FILES)
+				|| current->type == HERE_DOC) && current->next)
 		{
 			if (process_single_redir(current))
 				return (1);

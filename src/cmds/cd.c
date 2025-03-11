@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 15:03:34 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/10 18:57:58 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/11 14:28:25 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,8 @@ int	cd(t_mini *mini, char **cmd)
 	if (access(path, X_OK) == -1)
 		return (free(path), show_err_return("cd", ERR_PERMISSION, ERR_GENERAL));
 	if (chdir(path) == -1)
-		return (free(path), show_err_return("cd", strerror(errno), ERR_GENERAL));
+		return (free(path), show_err_return("cd", strerror(errno),
+				ERR_GENERAL));
 	free(path);
 	return (update_pwd_vars(mini, current_dir));
 }

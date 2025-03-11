@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 16:40:34 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/03/09 17:08:32 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/11 14:34:30 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@
  */
 static char	*expand_error_code(char *str, int return_code)
 {
-	char *error_code;
-	char *new_str;
+	char	*error_code;
+	char	*new_str;
 
 	error_code = ft_itoa(return_code);
 	if (!error_code)

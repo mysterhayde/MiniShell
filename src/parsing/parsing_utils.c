@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 14:24:41 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/03/09 17:11:18 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/11 14:34:09 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	skip_until_next_quote(char *str, char quote, int i)
 {
-	int j;
+	int	j;
 	int	double_quote;
 
 	j = 0;
@@ -101,7 +101,7 @@ int	count_leading_spaces(char *str)
 
 	spaces = 0;
 	while (str[spaces] && (str[spaces] == ' '
-		|| str[spaces] == '\n' || str[spaces] == '\t'))
+			|| str[spaces] == '\n' || str[spaces] == '\t'))
 		spaces++;
 	return (spaces);
 }
