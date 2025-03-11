@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
+/*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 15:04:03 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/05 20:02:30 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/11 16:33:29 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ int	check_entry(char *entry)
 {
 	if (entry == NULL)
 		return (ft_printf("exit\n"), cleanup_history(), 1);
-	if (check_signal_interrupt())
-		return (free(entry), 2);
+	// if (check_signal_interrupt())
+	// 	return (free(entry), 2);
 	if (*entry)
 		add_to_history(entry);
 	return (0);
@@ -44,6 +44,7 @@ void	init(t_mini *mini, char **envp)
 	mini->exit = 0;
 	mini->token = NULL;
 	mini->backup = NULL;
+	mini->last_cmd = NULL;
 	mini->envp = NULL;
 	init_readline_history();
 	if (!setup_signal_handlers())
@@ -59,7 +60,6 @@ static void	shell_loop(t_mini *mini)
 
 	while (mini->exit == 0)
 	{
-		g_signo = 0;
 		prompt = get_prompt(mini);
 		if (!prompt)
 			break ;

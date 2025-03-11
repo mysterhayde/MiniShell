@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 10:00:47 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/03/11 15:46:06 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/11 16:42:07 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,10 @@ static char	*allocate_tokens(char *str, t_mini *mini)
 		add_last_token(str, mini, FILES);
 	else if (mini->token->type == HERE_DOC)
 		add_last_token(str, mini, LIMITER);
-	else if (mini->token->type == PIPE || mini->token->type == AND_OP || mini->token->type == OR_OP )
+	else if (mini->token->type == PIPE || mini->token->type == AND_OP || mini->token->type == OR_OP)
 		add_last_token(str, mini, CMD);
 	else
-		add_last_token(str, mini, ARG); //TODO : ADD ARG AFTER FILE (NEED TO TAKE CAR OF LAST TYPE ARG)
+		add_last_token(str, mini, ARG); //TODO : SECOND ARG IS SAW LIKE A ARGUMENT WHEN FIRST IS PARENTHESES
 	if (!mini->token->cmd)
 		return (NULL);
 	return (str);

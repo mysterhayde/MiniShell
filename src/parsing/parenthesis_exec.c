@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parenthesis_exec.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
+/*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 19:26:35 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/06 21:56:55 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/11 16:25:33 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,8 @@ int	apply_paren_redirections(t_token *token)
 	t_token	*closing;
 
 	closing = find_matching_paren(token);
-	if (!closing || !closing->next)
+	if (!closing || !closing->next || closing->next->type != OR_OP
+			|| closing->next->type != AND_OP)
 		return (0);
 	post_token = closing->next;
 	next_op = find_next_logical(post_token);
