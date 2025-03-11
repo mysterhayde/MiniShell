@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokens.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
+/*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 14:00:12 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/03/09 14:57:05 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/11 10:07:55 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static char	**increase_tab(char **tab, char *str)
 			return (free_tab(new_tab), (NULL));
 		i++;
 	}
-	new_tab[i] = ft_strdup(str);
+	new_tab[i] = str;
 	if (!new_tab[i])
 		return (free_tab(new_tab), NULL);
 	new_tab[i + 1] = NULL;
@@ -74,11 +74,11 @@ static t_token	*new_token(char *str, int type, t_mini *mini)
 
 	new = malloc(sizeof(t_token));
 	if (!new)
-		show_error_exit("malloc", "memory allocation failed", 1);
+		return (show_error_exit("malloc", "memory allocation failed", 1), NULL);
 	new->cmd = malloc(sizeof(char *) * 2);
 	if (!new->cmd)
 		return (free(new), NULL);
-	new->cmd[0] = ft_strdup(str);
+	new->cmd[0] = str;
 	if (!new->cmd[0])
 		return (free(new->cmd), free(new), NULL);
 	new->cmd[1] = NULL;
