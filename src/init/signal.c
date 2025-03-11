@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 13:43:01 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/10 22:54:00 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/11 14:04:35 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 int	g_signo;
 
-static void	handle_signal(int signal)
+static void	handle_signal()
 {
 	printf("signal_receved\n");
 }
@@ -38,6 +38,7 @@ int	setup_signal_handlers(void)
 	sa.sa_handler = handle_signal;
 	sigemptyset(&sa.sa_mask);
 	sa.sa_flags = 0; 
+	return (0);
 }
 
 void	reset_signals_for_child(void)
