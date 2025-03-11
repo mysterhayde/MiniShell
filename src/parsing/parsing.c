@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 10:00:47 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/03/11 10:04:27 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/11 15:46:06 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,54 +56,16 @@ static char	*allocate_tokens(char *str, t_mini *mini)
 		add_last_token(str, mini, CMD);
 	else if (mini->token->type == RDIT)
 		add_last_token(str, mini, FILES);
-	else if (is_operator(mini, str) == HERE_DOC)
-		add_last_token(str, mini, HERE_DOC);
 	else if (mini->token->type == HERE_DOC)
 		add_last_token(str, mini, LIMITER);
-	else if (mini->token->type == CMD || mini->token->type == ARG)
-		add_last_token(str, mini, ARG);
-	else
+	else if (mini->token->type == PIPE || mini->token->type == AND_OP || mini->token->type == OR_OP )
 		add_last_token(str, mini, CMD);
+	else
+		add_last_token(str, mini, ARG); //TODO : ADD ARG AFTER FILE (NEED TO TAKE CAR OF LAST TYPE ARG)
 	if (!mini->token->cmd)
 		return (NULL);
 	return (str);
 }
-
-/**
- * @brief Processes one token from the input string
- * @param next_token POinter to current position in input string
- * @param len Pointer to store token length
- * @param mini Shell stat
- * @return Updated position in string or NULL on error
- */
-// static char	*process_token(char *next_token, int *len, t_mini *mini)
-// {
-// 	char	*trimmed;
-// 	char	*token_str;
-// 	char	*new_position;
-// 	int		trim_spaces;
-
-// 	trim_spaces = count_leading_spaces(next_token);
-// 	trimmed = ft_strtrim(next_token, " \n\t");
-// 	if (!trimmed)
-// 		return (NULL);
-// 	token_str = find_next_token(trimmed, len);
-// 	if (!token_str)
-// 	{
-// 		free(trimmed);
-// 		return (NULL);
-// 	}
-// 	new_position = next_token + trim_spaces + *len;
-// 	if (!allocate_tokens(token_str, mini))
-// 	{
-// 		free(token_str);
-// 		free(trimmed);
-// 		return (NULL);
-// 	}
-// 	free(token_str);
-// 	free(trimmed);
-// 	return (new_position);
-// }
 
 static void	print_tokens(t_token *token)			// Debug function
 {
@@ -163,6 +125,18 @@ static void	print_tokens(t_token *token)			// Debug function
 			printf(COLOR_RED"TYPE:	OR");
 			printf(COLOR_RESET"\n");
 		}
+		else if (token->type == ARG)
+		{
+			printf("%s	", token->cmd[0]);
+			printf(COLOR_GREEN_ULTRA"TYPE:	ARG");
+			printf(COLOR_RESET"\n");
+		}
+		else
+		{
+			printf("%s	", token->cmd[0]);
+			printf(COLOR_RED"TYPE:	UNKNOW");
+			printf(COLOR_RESET"\n");
+		}
 		token = token->next;
 	}
 }
@@ -213,7 +187,7 @@ int	parsing(char *str, t_mini *mini)
 	while (*next_token)
 	{
 		ft_strtrim_nc(&next_token, " \t\n");
-		if (!allocate_tokens(find_next_token(next_token, &len), mini)) //trimed secured here
+		if (!allocate_tokens(find_next_token(next_token, &len), mini))
 			return (EXIT_FAILURE);
 		next_token += len;
 	}
