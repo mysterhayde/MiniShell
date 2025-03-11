@@ -6,11 +6,43 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 14:55:09 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/03/11 14:33:51 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/11 20:12:07 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+/**
+ * @brief Removes any empty arguements/commands in the command list
+ * @param cmd_token The token holding the command and all the arguements
+ */
+void	fix_index(t_token *cmd_token)
+{
+	int		i;
+	int		j;
+	char	**cmd;
+
+	if (!cmd_token || !cmd_token->cmd)
+		return ;
+	cmd = cmd_token->cmd;
+	i = 0;
+	while (cmd[i])
+	{
+		if (cmd[i][0] == '\0')
+		{
+			free(cmd[i]);
+			j = i;
+			while (cmd[j + 1])
+			{
+				cmd[j] = cmd[j + 1];
+				j++;
+			}
+			cmd[j] = NULL;
+			continue ;
+		}
+		i++;
+	}
+}
 
 /**
  * @brief Replaces a variable in a string with its expanded value
