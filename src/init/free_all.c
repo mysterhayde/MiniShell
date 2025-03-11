@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 16:18:45 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/09 14:20:09 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/11 19:34:13 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	free_all(t_mini *mini)
 {
+	cleanup_history();
 	if (!mini)
 		return ;
 	if (mini->user)
