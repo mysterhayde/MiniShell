@@ -6,38 +6,38 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 13:43:01 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/10 22:54:00 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/11 10:34:13 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <signal.h>
+#include <unistd.h>
 #include "../../include/minishell.h"
 
 int	g_signo;
 
 static void	handle_signal(int signal)
 {
+	(void) signal;
 	printf("signal_receved\n");
+	rl_replace_line("", 0);
+	rl_on_new_line();
+	rl_redisplay();
 }
-
-// void	handle_signal(int signo)
-// {
-// 	g_signo = signo;
-// 	if (signo == SIGINT)
-// 	{
-// 		write(STDERR_FILENO, "\n", 1);
-// 		rl_replace_line("", 0);
-// 		rl_on_new_line();
-// 		rl_redisplay();
-// 	}
-// }
 
 int	setup_signal_handlers(void)
 {
 	struct sigaction sa;
+	
 	sa.sa_handler = handle_signal;
 	sigemptyset(&sa.sa_mask);
-	sa.sa_flags = 0; 
+	sa.sa_flags = 0;
+	
+	if (sigaction(SIGINT, &sa, NULL))
+		return	(0);
+	if (sigaction(SIGINT, &sa, NULL))
+		return (0);
+	return (1);
 }
 
 void	reset_signals_for_child(void)
