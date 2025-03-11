@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 14:31:40 by hdougoud          #+#    #+#             */
-/*   Updated: 2024/11/27 10:56:37 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/10 16:03:41 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,22 @@ char	*ft_strtrim(char const *s1, char const *set)
 	return (str);
 }
 
+void	ft_strtrim_nc(char **s1, char const *set)
+{
+	char	*str;
+	int		end;
+
+	end = 0;
+	str = *s1;
+	while (*str && ft_strchr(set, *str))
+		str++;
+	*s1 = str;
+	end = (ft_strlen(str) - 1);
+	while (end >= 0 && ft_strchr(set, str[end]))
+		end--;
+	if (end >= 0)
+		(str[end + 1]) = '\0';
+}
 //int main(void)
 //{
 //	char s[] = "ABC123";
