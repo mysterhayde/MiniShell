@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 15:34:38 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/03/10 19:09:41 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/11 14:32:13 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	here_doc(char *limiter)
 		close(temp_fd);
 		unlink(temp_name);
 		free(temp_name);
-		return(-1);
+		return (-1);
 	}
 	if (pid == 0)
 		here_doc_child(limiter, temp_fd);

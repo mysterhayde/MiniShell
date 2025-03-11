@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:55:42 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/11 12:56:40 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/11 14:33:22 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int	process_single_redir(t_token *current)
 	if (fd == -1)
 		return (1);
 	if (ft_strmincmp(current->cmd[0], "<", 1) == 0
-	|| current->type == HERE_DOC)
+		|| current->type == HERE_DOC)
 		dup2(fd, STDIN_FILENO);
 	else
 		dup2(fd, STDOUT_FILENO);
@@ -98,7 +98,7 @@ int	apply_redir(t_token *token)
 	while (current)
 	{
 		if ((current->type == HERE_DOC || (current->type == RDIT
-		&& current->next->type == FILES)) && current->next)
+					&& current->next->type == FILES)) && current->next)
 		{
 			if (process_single_redir(current))
 				return (1);

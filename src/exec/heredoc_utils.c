@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 15:22:18 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/11 13:38:22 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/11 14:31:25 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	create_temp_file(char **temp_name)
 			return (-1);
 		fd = open(*temp_name, O_CREAT | O_EXCL | O_RDWR, 0600);
 		if (fd != -1)
-			return(fd);
+			return (fd);
 		free(*temp_name);
 		counter++;
 	}
@@ -95,7 +95,7 @@ void	here_doc_child(char *limiter, int temp_fd)
 			ft_putstr_fd("by end-of-file (wanted `", 2);
 			ft_putstr_fd(limiter, 2);
 			ft_putstr_fd("')\n", 2);
-			break;
+			break ;
 		}
 		if (is_delimiter(line, limiter))
 		{
