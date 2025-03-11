@@ -6,19 +6,18 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 17:10:09 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/10 22:44:38 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/11 16:08:59 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include <signal.h>
 # include <unistd.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <sys/wait.h>
-# include <signal.h>
-# include <sys/signal.h>
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <dirent.h>
@@ -109,7 +108,6 @@ typedef struct s_token
 {
 	char			**cmd;
 	t_type			type;
-	t_bool			expand;
 	struct s_token	*next;
 }	t_token;
 
@@ -132,6 +130,7 @@ typedef struct s_mini
 	t_bool		is_pipe;
 	t_token		*token;
 	t_token		*backup;
+	t_token		*last_cmd;
 	int			exit;
 	int			ret;
 }	t_mini;
