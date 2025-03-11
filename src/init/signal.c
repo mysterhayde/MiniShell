@@ -3,37 +3,41 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
+/*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 13:43:01 by cbopp             #+#    #+#             */
-/*   Updated: 2025/02/25 18:45:56 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/10 22:54:00 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <signal.h>
 #include "../../include/minishell.h"
 
 int	g_signo;
 
-void	handle_signal(int signo)
+static void	handle_signal(int signal)
 {
-	g_signo = signo;
-	if (signo == SIGINT)
-	{
-		write(STDERR_FILENO, "\n", 1);
-		rl_replace_line("", 0);
-		rl_on_new_line();
-		rl_redisplay();
-	}
+	printf("signal_receved\n");
 }
+
+// void	handle_signal(int signo)
+// {
+// 	g_signo = signo;
+// 	if (signo == SIGINT)
+// 	{
+// 		write(STDERR_FILENO, "\n", 1);
+// 		rl_replace_line("", 0);
+// 		rl_on_new_line();
+// 		rl_redisplay();
+// 	}
+// }
 
 int	setup_signal_handlers(void)
 {
-	g_signo = 0;
-	if (signal(SIGINT, handle_signal) == SIG_ERR)
-		return (0);
-	if (signal(SIGQUIT, SIG_IGN) == SIG_ERR)
-		return (0);
-	return (1);
+	struct sigaction sa;
+	sa.sa_handler = handle_signal;
+	sigemptyset(&sa.sa_mask);
+	sa.sa_flags = 0; 
 }
 
 void	reset_signals_for_child(void)
