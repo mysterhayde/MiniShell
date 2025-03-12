@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
+/*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 17:10:09 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/11 20:12:36 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/12 14:23:43 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,8 @@
 # include <unistd.h>
 # include <stdio.h>
 # include <stdlib.h>
-# include <sys/wait.h>
 # include <signal.h>
-# include <sys/signal.h>
+# include <sys/wait.h>
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <dirent.h>
@@ -107,7 +106,6 @@ typedef struct s_token
 {
 	char			**cmd;
 	t_type			type;
-	t_bool			expand;
 	struct s_token	*next;
 }	t_token;
 
@@ -123,15 +121,16 @@ typedef struct s_state
 
 typedef struct s_mini
 {
-	char			**envp;
-	char			*user;
-	char			*cur_path;
-	int				pipe_num;
-	t_bool			is_pipe;
-	t_token			*token;
-	t_token			*backup;
-	int				exit;
-	int				ret;
+	char		**envp;
+	char		*user;
+	char		*cur_path;
+	int			pipe_num;
+	t_bool		is_pipe;
+	t_token		*token;
+	t_token		*backup;
+	t_token		*last_cmd;
+	int			exit;
+	int			ret;
 }	t_mini;
 
 extern int	g_signo;

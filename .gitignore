@@ -8,4 +8,5 @@ minishell
 vgcore.*
 .history
 *.log
+a.out
 minishell_tester
