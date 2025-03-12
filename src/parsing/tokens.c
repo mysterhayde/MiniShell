@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 14:00:12 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/03/11 10:07:55 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/11 16:06:20 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,15 +108,19 @@ void	add_last_token(char *str, t_mini *mini, int type)
 	if (!mini->token)
 	{
 		create_first_node(mini, str, type);
+		if (type == CMD)
+			mini->last_cmd = mini->token;
 		return ;
 	}
 	if (type == ARG)
 	{
-		mini->token->cmd = increase_tab(mini->token->cmd, str);
+		mini->last_cmd->cmd = increase_tab(mini->last_cmd->cmd, str);
 		return ;
 	}
 	while (mini->token->next)
 		mini->token = mini->token->next;
 	mini->token->next = new_token(str, type, mini);
 	mini->token = mini->token->next;
+	if (type == CMD)
+		mini->last_cmd = mini->token;
 }
