@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 17:10:09 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/12 14:23:43 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/12 14:26:19 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ typedef struct s_token
 {
 	char			**cmd;
 	t_type			type;
+	t_bool			expand;
 	struct s_token	*next;
 }	t_token;
 
