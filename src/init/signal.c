@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 13:43:01 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/12 14:21:25 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/12 14:33:35 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,9 @@ int	setup_signal_handlers()
 	sigemptyset(&sa_ignore.sa_mask);
 	sa_ignore.sa_flags = 0;
 	if (sigaction(SIGINT, &sa, NULL) == -1)
-		return 0;
+		return 1;
 	if (sigaction(SIGQUIT, &sa_ignore, NULL) == -1)
-		return 0;
-	return 1;
+		return 1;
+	return 0;
 }
 
