@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 14:55:09 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/03/12 15:36:26 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/17 11:10:53 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ static char	*replace_variable(char *str, char *expanded, int start, int end)
  * @param envp Environment variables list
  * @return Modified string with the expanded variable
  */
-char	*isolate_variables(char *str, int i, char **envp)
+static char	*isolate_variables(char *str, int i, char **envp)
 {
 	int		j;
 	char	*var_name;
