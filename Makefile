@@ -20,7 +20,7 @@ MAIN_SRC =	main.c \
 
 SRC = $(addprefix $(SRC_DIR), $(MAIN_SRC))
 
-INIT_SRC = init.c history.c history_utils.c signal.c prompt_utils.c env_utils.c
+INIT_SRC = init.c history.c history_utils.c signal.c prompt_utils.c env_utils.c check_null.c
 INIT_DIR = src/init/
 INIT = $(addprefix $(INIT_DIR), $(INIT_SRC))
 

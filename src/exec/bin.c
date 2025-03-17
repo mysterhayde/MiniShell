@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 13:48:58 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/11 19:55:03 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/13 18:14:38 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ static int	handle_direct_path(t_mini *mini, char **cmd)
 		free(path);
 		return (0);
 	}
-	return (-1);
+	return (show_err_return(cmd[0], "No such file or directory", 127));
 }
 
 int	exec_bin(t_mini *mini, char **cmd)

@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 15:03:41 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/10 19:00:11 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/13 18:09:51 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int	is_numeric(char *str)
 		i++;
 	while (str[i])
 	{
-		if (!ft_isdigit(str[i]))
+		if (!ft_isdigit(str[i]) || str[i] == '"')
 			return (0);
 		i++;
 	}
@@ -41,16 +41,15 @@ int	exit_builtin(t_mini *mini, char **cmd)
 	}
 	if (!is_numeric(cmd[1]))
 	{
-		// show_err_msg("exit", ERR_NOTNUMERIC);
 		mini->exit = 1;
 		mini->ret = 2;
-		return (255);
+		return (2);
 	}
 	if (cmd[2])
 	{
 		if (!mini->is_pipe)
 			mini->exit = 0;
-		return (show_err_return("exit", ERR_TOOMANY, ERR_BUILTIN));
+		show_error_exit("exit", ERR_TOOMANY, ERR_GENERAL);
 	}
 	status = ft_atoi(cmd[1]) & 255;
 	mini->exit = ft_atoi(cmd[1]);

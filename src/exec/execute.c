@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 13:48:06 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/08 19:20:32 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/13 18:10:24 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ void	execute(t_mini *mini)
 	if (!mini->token || !mini->token->cmd)
 		return ;
 	if (ft_strmincmp(mini->token->cmd[0], "exit", 4) == 0)
-		mini->ret = exit_builtin(mini, mini->token->cmd);
+		check_string(mini, mini->token);
 	else if (has_parentheses(mini->token))
 	{
 		if (is_parenthesis_cmd(mini->token))
