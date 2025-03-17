@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 17:10:09 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/12 14:26:19 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/17 12:01:20 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -224,24 +224,35 @@ char	*find_path(char *cmd, char **envp);
 
 /*--------------------------------- Parsing ---------------------------------*/
 
+int		count_leading_spaces(char *str);
 int		parsing(char *str, t_mini *mini);
+int		check_final_token(t_token *token);
 int		is_operator(t_mini *mini, char *str);
 int		find_next_quote(char *str, char quote);
-int		check_string(t_mini *mini, t_token *cmd_token);
 int		skip_until_next_quote(char *str, char quote, int i);
-char	*search_variable(char *str, char **envp, int *error);
+
 char	*clean_quote(char *str);
 char	*find_next_token(char *str, int *i);
+char	*search_variable(char *str, char **envp, int *error);
+
+void	free_cmd_arr(char **cmd);
+void	modify_str(t_mini *mini);
 void	free_tokens(t_token *token);
 void	free_token_list(t_mini *mini);
 void	add_last_token(char *str, t_mini *mini, int type);
+
 size_t	expanded_size(char *str, char **envp);
+
+
+/*---------------------------- Before Redirection ---------------------------*/
+
+char	**wildcard(char *pwd, char **cmd);
 char	*expand_string(char *str, char **envp);
+
+int		search_wildcard(char *str);
+int		check_string(t_mini *mini, t_token *cmd_token);
+
 void	fix_index(t_token *cmd_token);
-void	modify_str(t_mini *mini);
-void	free_cmd_arr(char **cmd);
-int		check_final_token(t_token *token);
-int		count_leading_spaces(char *str);
 
 /*------------------------------- Redirection -------------------------------*/
 
