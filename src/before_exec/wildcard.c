@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 16:46:21 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/03/17 11:59:59 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/17 14:46:50 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	search_wildcard(char *str)
 	char	quote;
 
 	i = 0;
-	while(str)
+	while(str[i])
 	{
 		if (str[i] == '\'' || str[i] == '\"')
 		{
@@ -26,6 +26,7 @@ int	search_wildcard(char *str)
 			while(str[i] && str[i] != quote)
 				i++;
 			i++;
+			continue ;
 		}
 		if (str[i] == '*')
 			return (1);
@@ -60,23 +61,32 @@ static char	**add_cmd(char **cmd, char *str)
 	return (free(cmd), new_cmd);
 }
 
-char	**wildcard(char *pwd, char **cmd)
+
+char	**wildcard(char *pwd, char **cmd, char *wildcard)
 {
+	int				args;
+	char			**wildcard_tab;
 	DIR				*dir;
 	struct dirent	*file;
 
 	dir = opendir(pwd);
 	if (dir == NULL)
 		return (NULL);
+	args = split_wildcard(wildcard, &wildcard_tab);
+	if (args == -1)
+		return (NULL);
+	ft_print_chartable(wildcard_tab);
 	while (1)
 	{
 		file = readdir(dir);
 		if (file == NULL)
 			break;
-		printf("WILDCARD	%s\n", file->d_name);
-		cmd = add_cmd(cmd, file->d_name);
-		if (!cmd)
-			return (NULL);
+		if (args == 0) //|| //compare_wildcard(wildcard, file->d_name))
+		{
+			cmd = add_cmd(cmd, file->d_name);
+			if (!cmd)
+				return (NULL);			
+		}
 	}
 	return (cmd);
 }
