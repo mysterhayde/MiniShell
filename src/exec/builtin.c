@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 15:03:19 by cbopp             #+#    #+#             */
-/*   Updated: 2025/02/26 16:16:17 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/13 18:05:19 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ int	is_builtin(char *cmd)
 	else if (ft_strmincmp(cmd, "echo", 4) == 0)
 		return (1);
 	else if (ft_strmincmp(cmd, "unset", 5) == 0)
+		return (1);
+	else if (ft_strmincmp(cmd, "exit", 4) == 0)
 		return (1);
 	return (0);
 }
