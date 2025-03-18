@@ -1,5 +1,5 @@
 NAME = minishell
-CC = clang
+CC = cc
 RM = rm -rf
 FLAGS = -Werror -Wextra -Wall -g -fPIE
 MAKE := make --no-print-directory
