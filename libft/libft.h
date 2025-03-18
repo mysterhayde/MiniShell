@@ -36,6 +36,8 @@
 # define COLOR_PURPLE		"\x1b[35m"
 # define COLOR_CYAN			"\x1b[36m"
 # define COLOR_RESET		"\x1b[0m"
+# define BLUE_LIGHT 		"\033[94m"
+# define PURPLE 			"\033[35m"
 
 //-------------------------------- LIBFT ---------------------------------------
 

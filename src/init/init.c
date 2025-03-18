@@ -35,7 +35,8 @@ static void	getuser(t_mini *mini)
 	{
 		i++;
 	}
-	mini->user = ft_strdup(mini->envp[i] + 5);
+	mini->user = ft_strjoin(COLOR_BLUE, mini->envp[i] + 5);
+	//mini->user = ft_strdup(mini->envp[i] + 5);
 }
 
 static char	**make_env(void)

@@ -69,24 +69,30 @@ char	**wildcard(char *pwd, char **cmd, char *wildcard)
 	DIR				*dir;
 	struct dirent	*file;
 
+	wildcard_tab = NULL;
 	dir = opendir(pwd);
 	if (dir == NULL)
 		return (NULL);
 	args = split_wildcard(wildcard, &wildcard_tab);
 	if (args == -1)
-		return (NULL);
-	ft_print_chartable(wildcard_tab);
+		return (closedir(dir), NULL);
+	if (args != 0)
+	{
+		for (int i = 0; wildcard_tab[i]; i++)
+			printf("%s\n", wildcard_tab[i]);
+	}
 	while (1)
 	{
 		file = readdir(dir);
 		if (file == NULL)
 			break;
-		if (args == 0) //|| //compare_wildcard(wildcard, file->d_name))
+		if (args == 0) //|| compare_wildcard(wildcard, file->d_name))
 		{
 			cmd = add_cmd(cmd, file->d_name);
 			if (!cmd)
 				return (NULL);			
 		}
 	}
-	return (cmd);
+	free_tab(wildcard_tab);
+	return (closedir(dir), cmd);
 }
