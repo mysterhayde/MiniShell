@@ -250,7 +250,7 @@ char	*expand_string(char *str, char **envp);
 char	**wildcard(char *pwd, char **cmd, char *wildcard);
 
 
-int		search_wildcard(char *str);
+int		search_wildcard_char(char *str);
 int		check_string(t_mini *mini, t_token *cmd_token);
 int		split_wildcard(char *wildcard, char ***wildcard_tab);
 
