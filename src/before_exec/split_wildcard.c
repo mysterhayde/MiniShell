@@ -28,7 +28,7 @@ static char **fill_wildcard_tab(char **tab, char *wildcard)
 		tab[j] = malloc(sizeof(char) * (i + 1));
 		if (!tab[j])
 			return (NULL);
-		ft_strlcpy(tab[j], wildcard, i);
+		ft_strlcpy(tab[j], wildcard, i + 1);
 		j++;
 		wildcard += i;
 	}

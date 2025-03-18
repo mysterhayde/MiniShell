@@ -88,8 +88,9 @@ static int	handle_var_error(char *cmd)
  */
 int	transform_string(t_token *current, char **envp, int return_code)
 {
-	int	j;
-	int	error;
+	int		j;
+	int		error;
+	char	current_path[PATH_MAX];
 
 	j = 0;
 	error = 0;
@@ -100,7 +101,12 @@ int	transform_string(t_token *current, char **envp, int return_code)
 			return (handle_var_error(current->cmd[0]));
 		current->cmd[j] = search_error_code(return_code, current->cmd[j]);
 		if (search_wildcard(current->cmd[j]))
-			current->cmd = wildcard("/home/hdougoud/Documents/MiniShell", current->cmd, current->cmd[j]);
+		{
+			if (getcwd(current_path, PATH_MAX) != NULL)
+				current->cmd = wildcard(current_path, current->cmd, current->cmd[j]);
+			if (!current->cmd)
+				return (handle_var_error("wildcard"));
+		}
 		if (strchr(current->cmd[j], '\"') || strchr(current->cmd[j], '\''))
 			current->cmd[j] = clean_quote(current->cmd[j]);
 		if (!current->cmd[j])
