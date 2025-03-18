@@ -12,7 +12,12 @@
 
 #include "../../include/minishell.h"
 
-int	search_wildcard(char *str)
+int	compare_wildcard(char *wildcard, char *file)
+{
+
+}
+
+int	search_wildcard_char(char *str)
 {
 	int		i;
 	char	quote;
@@ -62,14 +67,17 @@ static char	**add_cmd(char **cmd, char *str)
 }
 
 
-char	**wildcard(char *pwd, char **cmd, char *wildcard)
+char	**wildcard(char *pwd, char **cmd, char *wildcard_char)
 {
 	int				args;
+	char			*wildcard;
 	char			**wildcard_tab;
 	DIR				*dir;
 	struct dirent	*file;
 
+	wildcard = ft_strdup(wildcard_char);
 	wildcard_tab = NULL;
+	//remove current wildcard character
 	dir = opendir(pwd);
 	if (dir == NULL)
 		return (NULL);

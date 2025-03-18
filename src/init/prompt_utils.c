@@ -20,7 +20,7 @@ char	*get_prompt(t_mini *mini)
 	temp = ft_strjoin(mini->user, COLOR_PURPLE" ~ MyShell> "COLOR_RESET);
 	if (!temp)
 		return (NULL);
-	prompt = ft_strdup(temp);
+	prompt = ft_strdup(temp); //USELESS ??
 	if (!prompt)
 		return (free(prompt), NULL);
 	free(temp);
