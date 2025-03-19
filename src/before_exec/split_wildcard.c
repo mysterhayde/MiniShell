@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 13:24:57 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/03/19 11:57:41 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/19 13:34:14 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ static char **fill_wildcard_tab(char **tab, char *wildcard)
 		j++;
 		wildcard += i;
 	}
+	tab[j] = NULL;
 	return (tab);
 }
 

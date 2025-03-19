@@ -6,11 +6,28 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 11:36:04 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/03/19 11:55:02 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/19 14:06:08 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+static int	compare_wildcard_and_file(char **wildcard_tab, char *file)
+{
+	char	*str;
+	int		i;
+
+	i = 0;
+	str = file;
+	while (wildcard_tab[i])
+	{
+		str = ft_strnstr(file, wildcard_tab[i], ft_strlen(str));
+		if (!str)
+			return (0);
+		i++;
+	}
+	return (1);
+}
 
 static char	**add_cmd(char **tab, char *str)
 {
@@ -38,13 +55,13 @@ static char	**add_cmd(char **tab, char *str)
 	return (safe_free((void **) &tab), new_tab);
 }
 
-char	**read_dir(char *pwd, char **cmd, char **wildcard_tab, int args)
+char	**read_dir(char *pwd, char **wildcard_tab, int args)
 {
 	DIR				*dir;
 	struct dirent	*file;
 	char			**files_tab;
 
-	wildcard_tab = NULL;
+	files_tab = NULL;
 	dir = opendir(pwd);
 	if (dir == NULL)
 		return (NULL);
@@ -55,7 +72,7 @@ char	**read_dir(char *pwd, char **cmd, char **wildcard_tab, int args)
 			break;
 		if (args == 0 || compare_wildcard_and_file(wildcard_tab, file->d_name))
 		{
-			files_tab = add_cmd(cmd, file->d_name);
+			files_tab = add_cmd(files_tab, file->d_name);
 			if (!files_tab)
 				return (NULL);
 		}
