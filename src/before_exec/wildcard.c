@@ -25,7 +25,6 @@ static int	tab_size(char **tab)
 
 static char	**combine_tabs(char **cmd, char **wildcard_tab, int k)
 {
-	printf(COLOR_RED"COMBINE_TAB");
 	int		i;
 	int		j;
 	int		args;
@@ -34,18 +33,24 @@ static char	**combine_tabs(char **cmd, char **wildcard_tab, int k)
 	i = 0;
 	j = 0;
 	args = (tab_size(cmd) - 1) + tab_size(wildcard_tab);
-	new_tab = malloc(sizeof(char *) * (args));
+	new_tab = malloc(sizeof(char *) * (args + 1));
 	if (!new_tab)
 		return (NULL);
 	while(i < k)
 	{
-		new_tab[i] = cmd[i];
+		new_tab[i] = ft_strdup(cmd[i]);
+		if (!new_tab)
+			return (free_tab(new_tab) ,NULL);
 		i++;
 	}
 	while(wildcard_tab[j])
 		new_tab[i++] = wildcard_tab[j++];
 	while(cmd[++k])
-		new_tab[i++] = cmd[k];
+	{
+		new_tab[i++] = ft_strdup(cmd[k]);
+		if (!new_tab)
+			return (free_tab(new_tab) ,NULL);
+	}
 	new_tab[i] = NULL;
 	return (free_tab(cmd), new_tab);
 }
