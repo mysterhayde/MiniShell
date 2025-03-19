@@ -6,15 +6,27 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 16:46:21 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/03/17 14:46:50 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/19 10:31:48 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-int	compare_wildcard(char *wildcard, char *file)
+int	compare_wildcard(char **wildcard_tab, char *file)
 {
+	char	*str;
+	int		i;
 
+	i = 0;
+	str = file;
+	while (wildcard_tab[i])
+	{
+		str = ft_strnstr(file, wildcard_tab[i], ft_strlen(str));
+		if (!str)
+			return (0);
+		i++;
+	}
+	return (1);
 }
 
 int	search_wildcard_char(char *str)
@@ -67,20 +79,16 @@ static char	**add_cmd(char **cmd, char *str)
 }
 
 
-char	**wildcard(char *pwd, char **cmd, char *wildcard_char)
+char	**wildcard(char *pwd, char **cmd, char *wildcard)
 {
 	int				args;
-	char			*wildcard;
 	char			**wildcard_tab;
 	DIR				*dir;
 	struct dirent	*file;
 
-	wildcard = ft_strdup(wildcard_char);
+	dir = NULL; //remove later
 	wildcard_tab = NULL;
 	//remove current wildcard character
-	dir = opendir(pwd);
-	if (dir == NULL)
-		return (NULL);
 	args = split_wildcard(wildcard, &wildcard_tab);
 	if (args == -1)
 		return (closedir(dir), NULL);
@@ -89,16 +97,19 @@ char	**wildcard(char *pwd, char **cmd, char *wildcard_char)
 		for (int i = 0; wildcard_tab[i]; i++)
 			printf("%s\n", wildcard_tab[i]);
 	}
+	dir = opendir(pwd);
+	if (dir == NULL)
+		return (NULL);
 	while (1)
 	{
 		file = readdir(dir);
 		if (file == NULL)
 			break;
-		if (args == 0) //|| compare_wildcard(wildcard, file->d_name))
+		if (args == 0 || compare_wildcard(wildcard_tab, file->d_name))
 		{
 			cmd = add_cmd(cmd, file->d_name);
 			if (!cmd)
-				return (NULL);			
+				return (NULL);
 		}
 	}
 	free_tab(wildcard_tab);
