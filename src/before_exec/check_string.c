@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 16:40:34 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/03/17 12:54:54 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/19 09:46:30 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ int	transform_string(t_token *current, char **envp, int return_code)
 		if (error || !current->cmd[j])
 			return (handle_var_error(current->cmd[0]));
 		current->cmd[j] = search_error_code(return_code, current->cmd[j]);
-		if (search_wildcard(current->cmd[j]))
+		if (search_wildcard_char(current->cmd[j]))
 		{
 			if (getcwd(current_path, PATH_MAX) != NULL)
 				current->cmd = wildcard(current_path, current->cmd, current->cmd[j]);
