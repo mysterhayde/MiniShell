@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 16:40:34 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/03/19 09:46:30 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/19 15:26:11 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,6 @@ int	transform_string(t_token *current, char **envp, int return_code)
 {
 	int		j;
 	int		error;
-	char	current_path[PATH_MAX];
 
 	j = 0;
 	error = 0;
@@ -100,17 +99,12 @@ int	transform_string(t_token *current, char **envp, int return_code)
 		if (error || !current->cmd[j])
 			return (handle_var_error(current->cmd[0]));
 		current->cmd[j] = search_error_code(return_code, current->cmd[j]);
-		if (search_wildcard_char(current->cmd[j]))
-		{
-			if (getcwd(current_path, PATH_MAX) != NULL)
-				current->cmd = wildcard(current_path, current->cmd, current->cmd[j]);
-			if (!current->cmd)
-				return (handle_var_error("wildcard"));
-		}
 		if (strchr(current->cmd[j], '\"') || strchr(current->cmd[j], '\''))
+		{
 			current->cmd[j] = clean_quote(current->cmd[j]);
-		if (!current->cmd[j])
-			return (handle_var_error(current->cmd[0]));
+			if (!current->cmd[j])
+				return (handle_var_error(current->cmd[0]));
+		}
 		j++;
 	}
 	return (0);
@@ -126,6 +120,9 @@ int	check_string(t_mini *mini, t_token *cmd_token)
 {
 	int	ret;
 
+	cmd_token->cmd = search_wildcard(cmd_token);
+	if (!cmd_token->cmd)
+		return (ERR_GENERAL);
 	if (transform_string(cmd_token, mini->envp, mini->ret) != 0)
 		return (ERR_GENERAL);
 	fix_index(cmd_token);
