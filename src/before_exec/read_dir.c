@@ -77,5 +77,6 @@ char	**read_dir(char *pwd, char **wildcard_tab, int args)
 				return (NULL);
 		}
 	}
-	return (free_tab(wildcard_tab), closedir(dir), files_tab);
+	//free_tab(wildcard_tab)
+	return (closedir(dir), files_tab);
 }
