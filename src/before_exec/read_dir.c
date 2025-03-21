@@ -41,7 +41,7 @@ static char	**add_cmd(char **tab, char *str)
 		i++;
 	new_tab = malloc(sizeof(char *) * (i + 2));
 	if (!new_tab)
-		return (show_err_msg("Malloc", "Malloc fail"), NULL);
+		return (show_err_msg("Malloc", "failed"), NULL);
 	i = 0;
 	while (tab && tab[i])
 	{
@@ -50,7 +50,7 @@ static char	**add_cmd(char **tab, char *str)
 	}
 	new_tab[i] = ft_strdup(str);
 	if (!new_tab[i])
-		return (show_err_msg("Malloc", "Malloc fail"), free_tab(new_tab), NULL);
+		return (show_err_msg("Malloc", "failed"), free_tab(new_tab), NULL);
 	new_tab[i + 1] = NULL;
 	return (safe_free((void **) &tab), new_tab);
 }
@@ -77,6 +77,5 @@ char	**read_dir(char *pwd, char **wildcard_tab, int args)
 				return (NULL);
 		}
 	}
-	//free_tab(wildcard_tab)
 	return (closedir(dir), files_tab);
 }
