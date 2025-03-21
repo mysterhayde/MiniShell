@@ -44,7 +44,11 @@ static char	**combine_tabs(char **cmd, char **wildcard_tab, int k)
 		i++;
 	}
 	while(wildcard_tab[j])
-		new_tab[i++] = wildcard_tab[j++];
+	{
+		new_tab[i++] = ft_strdup(wildcard_tab[j++]);
+		if (!new_tab)
+			return (free(new_tab), NULL);
+	}
 	while(cmd[++k])
 	{
 		new_tab[i++] = ft_strdup(cmd[k]);
@@ -86,7 +90,6 @@ char	**wildcard(char *pwd, char **cmd, char *wildcard, int i)
 	char 			**result;
 
 	wildcard_tab = NULL;
-	//wildcard = clean_quote(wildcard);
 	args = split_wildcard(wildcard, &wildcard_tab);
 	if (args == -1)
 		return (NULL);
@@ -95,7 +98,7 @@ char	**wildcard(char *pwd, char **cmd, char *wildcard, int i)
 		return (cmd); //check leak
 	// sort files_tab
 	result = combine_tabs(cmd, files, i);
-	return (free_tab(wildcard_tab), result);
+	return (free_tab(wildcard_tab), free_tab(files), result);
 }
 
 char **search_wildcard(t_token *token)
