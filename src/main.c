@@ -59,7 +59,7 @@ static void	shell_loop(t_mini *mini)
 
 	while (mini->exit == 0)
 	{
-		g_signo = 0;
+		//g_signo = 0;
 		prompt = get_prompt(mini);
 		if (!prompt)
 			break ;
