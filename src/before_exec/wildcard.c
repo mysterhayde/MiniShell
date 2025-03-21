@@ -82,18 +82,20 @@ char	**wildcard(char *pwd, char **cmd, char *wildcard, int i)
 {
 	int				args;
 	char			**wildcard_tab;
+	char			**files;
+	char 			**result;
 
 	wildcard_tab = NULL;
 	//wildcard = clean_quote(wildcard);
 	args = split_wildcard(wildcard, &wildcard_tab);
 	if (args == -1)
 		return (NULL);
-	wildcard_tab = read_dir(pwd, wildcard_tab, args);
-	if (!wildcard_tab)
+	files = read_dir(pwd, wildcard_tab, args);
+	if (!files)
 		return (cmd); //check leak
 	// sort files_tab
-	cmd = combine_tabs(cmd, wildcard_tab, i);
-	return (free_tab(wildcard_tab), cmd);
+	result = combine_tabs(cmd, files, i);
+	return (free_tab(wildcard_tab), result);
 }
 
 char **search_wildcard(t_token *token)
