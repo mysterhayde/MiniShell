@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   expand_string.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
+/*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 14:55:09 by hdougoud          #+#    #+#             */
 /*   Updated: 2025/03/13 18:25:55 by cbopp            ###   ########.fr       */
@@ -52,7 +52,7 @@ static char	*replace_variable(char *str, char *expanded, int start, int end)
  * @param envp Environment variables list
  * @return Modified string with the expanded variable
  */
-char	*isolate_variables(char *str, int i, char **envp)
+static char	*isolate_variables(char *str, int i, char **envp)
 {
 	int		j;
 	char	*var_name;
@@ -96,7 +96,7 @@ char	*search_variable(char *str, char **envp, int *error)
 	{
 		if (str[i] == '\'')
 			i += (skip_until_next_quote(str, str[i], i) - 1);
-		else if (str[i] == '$' && ft_isalnum(str[i + 1])) //check echo '$USER''$USER' AND check echo '$USER' $USER
+		else if (str[i] == '$' && ft_isalnum(str[i + 1]))
 		{
 			expanded = expand_string(str + i, envp);
 			temp = ft_substr(str, 0, i);

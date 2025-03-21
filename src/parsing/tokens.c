@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 14:00:12 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/03/11 16:06:20 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/19 15:16:09 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	free_token_list(t_mini *mini)
 	}
 	mini->token = NULL;
 	mini->backup = NULL;
+	mini->last_cmd = NULL;
 }
 
 static char	**increase_tab(char **tab, char *str)
@@ -105,6 +106,7 @@ static void	create_first_node(t_mini *mini, char *str, int type)
  */
 void	add_last_token(char *str, t_mini *mini, int type)
 {
+	//printf("%d\n", type);
 	if (!mini->token)
 	{
 		create_first_node(mini, str, type);

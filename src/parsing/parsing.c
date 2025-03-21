@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 10:00:47 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/03/12 14:23:21 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/19 15:07:02 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,12 @@ static char	*allocate_tokens(char *str, t_mini *mini)
 		add_last_token(str, mini, FILES);
 	else if (mini->token->type == HERE_DOC)
 		add_last_token(str, mini, LIMITER);
-	else if (mini->token->type == PIPE || mini->token->type == AND_OP || mini->token->type == OR_OP)
+	else if (mini->token->type == PIPE || mini->token->type == AND_OP
+		|| mini->token->type == OR_OP || mini->token->type == LEFT_PAREN
+		|| !mini->last_cmd)
 		add_last_token(str, mini, CMD);
 	else
-		add_last_token(str, mini, ARG); //TODO : SECOND ARG IS SAW LIKE A ARGUMENT WHEN FIRST IS PARENTHESES
+		add_last_token(str, mini, ARG);
 	if (!mini->token->cmd)
 		return (NULL);
 	return (str);
@@ -125,6 +127,18 @@ static char	*allocate_tokens(char *str, t_mini *mini)
 // 			printf(COLOR_RED"TYPE:	OR");
 // 			printf(COLOR_RESET"\n");
 // 		}
+// 		else if (token->type == LEFT_PAREN || token->type == RIGHT_PAREN)
+// 		{
+// 			printf("%s	", token->cmd[0]);
+// 			printf(COLOR_YELLOW"TYPE:	PARENTHESE");
+// 			printf(COLOR_RESET"\n");
+// 		}
+// 		else 
+// 		{
+// 			printf("%s	", token->cmd[0]);
+// 			printf(COLOR_RED_ULTRA"TYPE:	UNKNOW");
+// 			printf(COLOR_RESET"\n");
+// 		}
 // 		token = token->next;
 // 	}
 // }
@@ -179,7 +193,7 @@ int	parsing(char *str, t_mini *mini)
 			return (EXIT_FAILURE);
 		next_token += len;
 	}
-	// print_tokens(mini->backup); // Debug
+	//print_tokens(mini->backup); // Debug
 	mini->token = mini->backup;
 	if (check_syntax(mini->token))
 		return (show_err_msg("Syntax Error", "unexpected token"), EXIT_FAILURE);

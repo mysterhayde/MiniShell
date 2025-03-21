@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 14:38:59 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/03/04 12:52:43 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/17 11:21:31 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static size_t	strlen_quote(char *str)
 	return (i - quote);
 }
 
-char	*remove_quote(char *str, char *cleaned)
+static char	*remove_quote(char *str, char *cleaned)
 {
 	int		i;
 	int		j;
@@ -70,6 +70,8 @@ char	*clean_quote(char *str)
 	char	*cleaned;
 	int		len;
 
+	if (!str)
+		return (NULL);
 	len = strlen_quote(str);
 	cleaned = malloc(sizeof(char) * (len + 1));
 	if (!cleaned)
