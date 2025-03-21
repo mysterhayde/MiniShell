@@ -12,13 +12,13 @@
 
 #include "../../include/minishell.h"
 
-static char **fill_wildcard_tab(char **tab, char *wildcard)
+static char	**fill_wildcard_tab(char **tab, char *wildcard)
 {
 	int	i;
 	int	j;
 
 	j = 0;
-	while(*wildcard)
+	while (*wildcard)
 	{
 		i = 0;
 		if (*wildcard == '*')
@@ -50,7 +50,7 @@ static int	count_wildcard_args(char *wildcard)
 			args++;
 			while (wildcard[i] && wildcard[i] != '*')
 				i++;
-			continue;
+			continue ;
 		}
 		i++;
 	}
@@ -61,7 +61,7 @@ int	split_wildcard(char *wildcard, char ***wildcard_tab)
 {
 	int		args;
 	char	**tab;
-	
+
 	args = count_wildcard_args(wildcard);
 	if (args == 0)
 		return (0);
