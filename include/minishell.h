@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 17:10:09 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/21 17:50:09 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/21 19:21:34 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,9 +196,15 @@ int		process_single_redir_heredoc(t_mini *mini, t_token *token);
 int		apply_redir_heredoc(t_mini *mini, t_token *token);
 int		apply_pipe_redir_heredoc(t_mini *mini, t_token *token);
 void	handle_pipe_child_heredoc(t_mini *mini, int i, int *pipe_fds);
+void	here_doc_child_with_num(char *limiter, int temp_fd, int heredoc_num);
+char	*create_heredoc_prompt(int heredoc_num);
+int		is_delimiter(char *line, char *delimiter);
 int		exec_pipe_cmd_heredoc(t_mini *mini, int i, int *pipe_fds);
 int		run_pipe_commands_heredoc(t_mini *mini, t_pipe *p);
 int		exec_redir_heredoc(t_mini *mini, t_token *token);
+int		run_pipe_commands_heredoc(t_mini *mini, t_pipe *p);
+int		handle_heredoc_redirection(t_mini *mini, t_token *token);
+t_token	*find_next_pipe_token(t_token *token);
 int		minipipe_heredoc(t_mini *mini);
 int		exec_paren_with_redir_heredoc(t_mini *mini, t_token *token);
 int		exec_logical_with_redir_heredoc(t_mini *mini, t_token *token);
@@ -277,6 +283,7 @@ void	fix_index(t_token *cmd_token);
 /*------------------------------- Redirection -------------------------------*/
 
 int		here_doc(char *limiter);
+int		here_doc_with_num(char *limiter, int heredoc_num);
 void	here_doc_child(char *limiter, int temp_fd);
 int		create_temp_file(char **temp_name);
 char	*generate_temp_name(int counter);

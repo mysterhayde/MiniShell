@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 13:37:51 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/21 14:14:39 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/21 18:48:50 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
  * @param token Starting token
  * @return Next pipe token or NULL
  */
-static t_token	*find_next_pipe_token(t_token *token)
+t_token	*find_next_pipe_token(t_token *token)
 {
 	t_token	*current;
 
@@ -70,13 +70,19 @@ void	handle_pipe_child_heredoc(t_mini *mini, int i, int *pipe_fds)
 	j = 0;
 	if (i > 0)
 	{
-		dup2(pipe_fds[(i - 1) * 2], STDIN_FILENO);
-		close(pipe_fds[(i - 1) * 2]);
+		if (dup2(pipe_fds[(i - 1) * 2], STDIN_FILENO) == -1)
+		{
+			show_err_msg("dup2", "failed");
+			exit(1);
+		}
 	}
 	if (i < mini->pipe_num)
 	{
-		dup2(pipe_fds[i * 2 + 1], STDOUT_FILENO);
-		close(pipe_fds[i * 2 + 1]);
+		if (dup2(pipe_fds[i * 2 + 1], STDOUT_FILENO) == -1)
+		{
+			show_err_msg("dup2", "failed");
+			exit(1);
+		}
 	}
 	while (j < (mini->pipe_num * 2))
 		close(pipe_fds[j++]);
@@ -107,6 +113,8 @@ int	exec_pipe_cmd_heredoc(t_mini *mini, int i, int *pipe_fds)
 		cmd_token = skip_redirections(mini->token);
 		if (cmd_token && cmd_token->cmd && cmd_token->cmd[0])
 			check_string(mini, cmd_token);
+		else
+			exit(0);	
 		exit(mini->ret);
 	}
 	if (i > 0)
@@ -114,37 +122,4 @@ int	exec_pipe_cmd_heredoc(t_mini *mini, int i, int *pipe_fds)
 	if (i < mini->pipe_num)
 		close(pipe_fds[i * 2 + 1]);
 	return (pid);
-}
-
-/**
- * @brief Updates a pipeline of commands to use preprocessed heredocs
- * @param mini Shell state
- * @param p Pipe information structure
- * @return 0 on succcess, 1 on failure
- */
-int	run_pipe_commands_heredoc(t_mini *mini, t_pipe *p)
-{
-	int		i;
-	t_token	*current;
-
-	i = 0;
-	current = mini->token;
-	while (i <= mini->pipe_num)
-	{
-		p->pids[i] = exec_pipe_cmd_heredoc(mini, i, p->pipe_fds);
-		if (p->pids[i] == -1)
-		{
-			free(p->pipe_fds);
-			free(p->pids);
-			return (1);
-		}
-		if (i < mini->pipe_num)
-		{
-			current = find_next_pipe_token(current);
-			if (current)
-				current = current->next;
-		}
-		i++;
-	}
-	return (0);
 }

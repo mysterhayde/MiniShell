@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 13:27:45 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/21 13:37:38 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/21 18:47:29 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,26 @@ static int	get_heredoc_fd(t_mini *mini, t_token *token)
 }
 
 /**
+ * @brief Duplicates the heredoc file descriptor for use
+ * @param mini Shell state
+ * @param token Heredoc token
+ * @return 0 on success, 1 on failure
+ */
+int	handle_heredoc_redirection(t_mini *mini, t_token *token)
+{
+	int	fd;
+	int	target_fd;
+
+	fd = get_heredoc_fd(mini, token);
+	if (fd == -1)
+		return (1);
+	target_fd = STDIN_FILENO;
+	if (dup2(fd, target_fd) == -1)
+		show_err_return("dup2", "failed", ERR_GENERAL);
+	return (0);
+}
+
+/**
  * @brief Frees the heredoc arrays and closes file descriptors
  * @param mini Shell state
  */
@@ -78,55 +98,4 @@ void	free_heredoc_arrays(t_mini *mini)
 		mini->heredoc_tokens = NULL;
 	}
 	mini->heredoc_count = 0;
-}
-
-/**
- * @brief Processes a single redir including heredoc
- * @param mini Shell state
- * @param token Redicrection token
- * @return 0 on success, 1 on failure
- */
-int	process_single_redir_heredoc(t_mini *mini, t_token *token)
-{
-	int	fd;
-	int	target_fd;
-
-	if (token->type == HERE_DOC)
-	{
-		fd = get_heredoc_fd(mini, token);
-		if (fd != -1)
-		{
-			target_fd = STDIN_FILENO;
-			if (dup2(fd, target_fd) == -1)
-				return (1);
-			return (0);
-		}
-	}
-	return (process_single_redir(token));
-}
-
-/**
- * @brief Modified version of apply_redir for preprocessed heredocs
- * @param mini Shell state
- * @param token Token list to process
- * @return 0 on success, 1 on failure
- */
-int	apply_redir_heredoc(t_mini *mini, t_token *token)
-{
-	t_token	*current;
-
-	current = token;
-	while (current)
-	{
-		if (current->type == CMD)
-			break ;
-		if (((current->type == RDIT && current->next->type == FILES)
-			|| current->type == HERE_DOC) && current->next)
-		{
-			if (process_single_redir_heredoc(mini, current))
-				return (1);
-		}
-		current = current->next;
-	}
-	return (0);
 }

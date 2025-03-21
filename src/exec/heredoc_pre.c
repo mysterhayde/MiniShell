@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 13:15:24 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/21 13:26:38 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/21 19:20:58 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ static int	execute_heredocs(t_mini *mini)
 			if (!delimiter)
 				return (1);
 			mini->heredoc_tokens[i] = current;
-			mini->heredoc_fds[i] = here_doc(delimiter);
+			mini->heredoc_fds[i] = here_doc_with_num(delimiter, i + 1);
 			if (mini->heredoc_fds[i] == -1)
 				return (1);
 			i++;
