@@ -1,5 +1,5 @@
 NAME = minishell
-CC = clang
+CC = cc
 RM = rm -rf
 FLAGS = -Werror -Wextra -Wall -g -fPIE
 MAKE := make --no-print-directory
@@ -13,7 +13,7 @@ PRINTF = $(addprefix $(PRINTF_DIR), $(PRINTF_A))
 
 #--------------------------------------SOURCES---------------------------------#
 
-SRC_DIR  = src/
+SRC_DIR  =	src/
 MAIN_SRC =	main.c \
 			show_error.c \
 			free_all.c
@@ -24,26 +24,30 @@ INIT_SRC = init.c history.c history_utils.c signal.c prompt_utils.c env_utils.c 
 INIT_DIR = src/init/
 INIT = $(addprefix $(INIT_DIR), $(INIT_SRC))
 
-CMDS_SRC = pwd.c cd.c env.c echo.c exit.c unset.c export.c expand.c
-CMDS_DIR = src/cmds/
+CMDS_SRC =	pwd.c cd.c env.c echo.c exit.c unset.c export.c expand.c
+CMDS_DIR =	src/cmds/
 CMDS = $(addprefix $(CMDS_DIR), $(CMDS_SRC))
 
-EXEC_SRC = execute.c builtin.c bin.c path.c pipe.c exec_utils.c pipe_utils.c pipe_wait.c \
+EXEC_SRC = 	execute.c builtin.c bin.c path.c pipe.c exec_utils.c pipe_utils.c pipe_wait.c \
 			redir.c redir2.c exec_redir.c operators.c operators2.c heredoc.c operator_state.c \
 			heredoc_utils.c
 EXEC_DIR = src/exec/
 EXEC = $(addprefix $(EXEC_DIR), $(EXEC_SRC))
 
 
-PARS_SRC = parsing.c parsing_utils.c split_entry.c tokens.c check_string.c expand_string.c \
-			clear_quotes.c parenthesis.c parenthesis_ops.c parenthesis_redir.c parenthesis_exec.c \
+PARS_SRC =	parsing.c parsing_utils.c split_entry.c tokens.c parenthesis.c \
+			parenthesis_ops.c parenthesis_redir.c parenthesis_exec.c \
 			token_utils.c
 PARS_DIR = src/parsing/
 PARS = $(addprefix $(PARS_DIR), $(PARS_SRC))
 
-ALL_SRC = $(SRC) $(INIT) $(CMDS) $(PARS) $(EXEC)
+BEF_EXEC = check_string.c expand_string.c clear_quotes.c wildcard.c split_wildcard.c read_dir.c
+BEF_DIR  = src/before_exec/
+BEFORE = $(addprefix $(BEF_DIR), $(BEF_EXEC))
 
-vpath %.c $(SRC_DIR) $(INIT_DIR) $(EXEC_DIR) $(CMDS_DIR) $(PARS_DIR)
+ALL_SRC = $(SRC) $(INIT) $(CMDS) $(PARS) $(EXEC) $(BEFORE)
+
+vpath %.c $(SRC_DIR) $(INIT_DIR) $(EXEC_DIR) $(CMDS_DIR) $(PARS_DIR) $(BEF_DIR)
 
 #--------------------------------------OBJECTS----------------------------------#
 
@@ -90,7 +94,7 @@ fclean: clean
 
 re: fclean all
 
-valgrind:
+valgrind: all
 	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --track-origins=yes --suppressions=resources/a.supp --log-file="resources/leaks.log" ./minishell
 
 .PHONY: all clean fclean re valgrind

@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 19:26:35 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/11 16:25:33 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/12 15:36:42 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	apply_paren_redirections(t_token *token)
 
 	closing = find_matching_paren(token);
 	if (!closing || !closing->next || closing->next->type != OR_OP
-			|| closing->next->type != AND_OP)
+		|| closing->next->type != AND_OP)
 		return (0);
 	post_token = closing->next;
 	next_op = find_next_logical(post_token);
