@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 13:48:06 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/13 18:10:24 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/21 14:11:06 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ t_bool	has_logical_ops(t_token *token)
  * @param token Token to check
  * @return TRUE if token is LEFT_PAREN, FALSE otherwise
  */
-static t_bool	is_parenthesis_cmd(t_token *token)
+t_bool	is_parenthesis_cmd(t_token *token)
 {
 	if (!token)
 		return (FALSE);
@@ -52,7 +52,7 @@ static t_bool	is_parenthesis_cmd(t_token *token)
  * @param ret Return value from previous command
  * @return New return value
  */
-static int	process_remaining_cmds(t_mini *mini, t_token *tokens,
+int	process_remaining_cmds(t_mini *mini, t_token *tokens,
 		t_bool condition)
 {
 	t_state	state;
@@ -109,6 +109,11 @@ void	execute(t_mini *mini)
 {
 	if (!mini->token || !mini->token->cmd)
 		return ;
+	if (scan_and_execute_heredocs(mini))
+	{
+		mini->ret = 1;
+		return ;
+	}
 	if (ft_strmincmp(mini->token->cmd[0], "exit", 4) == 0)
 		check_string(mini, mini->token);
 	else if (has_parentheses(mini->token))
@@ -116,12 +121,13 @@ void	execute(t_mini *mini)
 		if (is_parenthesis_cmd(mini->token))
 			mini->ret = exec_parenthesis(mini);
 		else
-			mini->ret = exec_logical_with_redir(mini, mini->token);
+			mini->ret = exec_logical_with_redir_heredoc(mini, mini->token);
 	}
 	else if (has_logical_ops(mini->token))
 		mini->ret = exec_logical_ops(mini, mini->token);
 	else if (mini->is_pipe)
-		mini->ret = minipipe(mini);
+		mini->ret = minipipe_heredoc(mini);
 	else
-		mini->ret = exec_redirections(mini, mini->token);
+		mini->ret = exec_redir_heredoc(mini, mini->token);
+	free_heredoc_arrays(mini);
 }

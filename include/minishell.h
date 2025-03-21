@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 17:10:09 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/12 14:26:19 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/21 14:12:59 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,10 @@ typedef struct s_mini
 	char		*cur_path;
 	int			pipe_num;
 	t_bool		is_pipe;
+	t_bool		is_heredoc;
+	t_token		**heredoc_tokens;
+	int			*heredoc_fds;
+	int			heredoc_count;
 	t_token		*token;
 	t_token		*backup;
 	t_token		*last_cmd;
@@ -186,6 +190,18 @@ int		run_pipe_commands(t_mini *mini, t_pipe *p);
 void	close_all_pipes(int pipe_count, int *pipe_fds);
 int		create_pipes(int pipe_count, int **pipe_fds);
 int		wait_for_children(t_mini *mini, pid_t *pids);
+int		scan_and_execute_heredocs(t_mini *mini);
+void	free_heredoc_arrays(t_mini *mini);
+int		process_single_redir_heredoc(t_mini *mini, t_token *token);
+int		apply_redir_heredoc(t_mini *mini, t_token *token);
+int		apply_pipe_redir_heredoc(t_mini *mini, t_token *token);
+void	handle_pipe_child_heredoc(t_mini *mini, int i, int *pipe_fds);
+int		exec_pipe_cmd_heredoc(t_mini *mini, int i, int *pipe_fds);
+int		run_pipe_commands_heredoc(t_mini *mini, t_pipe *p);
+int		exec_redir_heredoc(t_mini *mini, t_token *token);
+int		minipipe_heredoc(t_mini *mini);
+int		exec_paren_with_redir_heredoc(t_mini *mini, t_token *token);
+int		exec_logical_with_redir_heredoc(t_mini *mini, t_token *token);
 
 /*---------------------------------- Redir ----------------------------------*/
 int		open_file_input(char *filename);
@@ -206,6 +222,8 @@ int		exec_paren_expr(t_mini *mini, t_token *token);
 t_token	*find_next_logical(t_token *token);
 t_token	*find_matching_paren(t_token *token);
 t_bool	has_parentheses(t_token *token);
+t_bool	is_parenthesis_cmd(t_token *token);
+int		process_remaining_cmds(t_mini *mini, t_token *tokens, t_bool condition);
 t_token	*skip_paren_expr(t_token *token);
 t_token	*find_next_logical_op_with_parens(t_token *token);
 int		exec_logical_op_with_parens(t_mini *mini, t_token *token);

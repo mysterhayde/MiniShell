@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 15:04:03 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/13 18:02:14 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/21 14:09:47 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,10 @@ void	init(t_mini *mini, char **envp)
 	mini->token = NULL;
 	mini->backup = NULL;
 	mini->envp = NULL;
+	mini->is_heredoc = FALSE;
+	mini->heredoc_tokens = NULL;
+	mini->heredoc_fds = NULL;
+	mini->heredoc_count = 0;
 	setupenv(mini, envp);
 	init_readline_history(mini);
 	if (setup_signal_handlers())
