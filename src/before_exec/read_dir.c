@@ -69,7 +69,7 @@ char	**read_dir(char *pwd, char **wildcard_tab, int args)
 	{
 		file = readdir(dir);
 		if (file == NULL)
-			break;
+			break ;
 		if (args == 0 || compare_wildcard_and_file(wildcard_tab, file->d_name))
 		{
 			files_tab = add_cmd(files_tab, file->d_name);
