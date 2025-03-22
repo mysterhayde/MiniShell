@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
+/*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 15:04:03 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/13 18:02:14 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/22 02:48:59 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@ int	check_entry(char *entry, t_mini *mini)
 {
 	if (entry == NULL)
 		return (ft_printf("exit\n"), cleanup_history(), 1);
-	// if (check_signal_interrupt())
-	// 	return (free(entry), 2);
 	if (*entry)
 		add_to_history(mini, entry);
 	return (0);
