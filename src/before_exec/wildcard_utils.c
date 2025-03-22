@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 18:51:17 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/03/22 02:46:48 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/22 02:51:05 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	ft_tablen(char **tab)
 
 static int	ft_strcmp_wildcard(char *s1, char *s2)
 {
-	unsigned int				i;
+	int				i;
 	unsigned char	c1;
 	unsigned char	c2;
 
