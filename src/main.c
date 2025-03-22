@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 15:04:03 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/13 18:02:14 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/22 15:14:23 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ static void	process_input(t_mini *mini, char *entry)
 void	init(t_mini *mini, char **envp)
 {
 	mini->exit = 0;
+	mini->ret = 0;
 	mini->token = NULL;
 	mini->backup = NULL;
 	mini->envp = NULL;
