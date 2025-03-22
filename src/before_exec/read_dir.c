@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 11:36:04 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/03/19 14:06:08 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/22 02:39:19 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,12 +69,12 @@ char	**read_dir(char *pwd, char **wildcard_tab, int args)
 	{
 		file = readdir(dir);
 		if (file == NULL)
-			break ;
+			return (closedir(dir), NULL);
 		if (args == 0 || compare_wildcard_and_file(wildcard_tab, file->d_name))
 		{
 			files_tab = add_cmd(files_tab, file->d_name);
 			if (!files_tab)
-				return (NULL);
+				return ((closedir(dir)), NULL);
 		}
 	}
 	return (closedir(dir), files_tab);
