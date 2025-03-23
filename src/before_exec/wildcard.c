@@ -6,11 +6,26 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 16:46:21 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/03/22 02:54:05 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/23 23:45:28 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+static char	**combine_utils(char **cmd_dest, char** cmd_src, int *pos, int j)
+{
+	int	i;
+
+	i = *(pos);
+	while (cmd_src[j])
+	{
+		cmd_dest[i] = ft_strdup(cmd_src[j++]);
+		if (!cmd_dest[i++])
+			return (NULL);
+	}
+	*(pos) = i;
+	return (cmd_dest);
+}
 
 static char	**combine_tabs(char **cmd, char **wildcard_tab, int k)
 {
@@ -19,31 +34,24 @@ static char	**combine_tabs(char **cmd, char **wildcard_tab, int k)
 	int		args;
 	char	**new_tab;
 
-	i = 0;
+	i = -1;
 	j = 0;
 	args = (ft_tablen(cmd) - 1) + ft_tablen(wildcard_tab);
 	new_tab = malloc(sizeof(char *) * (args + 1));
 	if (!new_tab)
 		return (NULL);
-	while (i < k)
+	while (++i < k)
 	{
 		new_tab[i] = ft_strdup(cmd[i]);
 		if (!new_tab[i])
 			return (free_tab(new_tab), NULL);
-		i++;
 	}
-	while (wildcard_tab[j])
-	{
-		new_tab[i] = ft_strdup(wildcard_tab[j++]);
-		if (!new_tab[i++])
-			return (free_tab(new_tab), NULL);
-	}
-	while (cmd[++k])
-	{
-		new_tab[i] = ft_strdup(cmd[k]);
-		if (!new_tab[i++])
-			return (free_tab(new_tab), NULL);
-	}
+	new_tab = combine_utils(new_tab, wildcard_tab, &i, j);
+	if (!new_tab)
+		return (NULL);
+	new_tab = combine_utils(new_tab, cmd, &i, k + 1);
+	if (!new_tab)
+		return (NULL);
 	new_tab[i] = NULL;
 	return (free_tab(cmd), new_tab);
 }
