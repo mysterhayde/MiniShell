@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokens.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 14:00:12 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/03/19 15:16:09 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/24 15:08:23 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ static t_token	*new_token(char *str, int type, t_mini *mini)
 	new->cmd[1] = NULL;
 	new->type = type;
 	new->next = NULL;
+	new->processed = FALSE;
 	if (type == PIPE)
 		mini->pipe_num++;
 	return (new);

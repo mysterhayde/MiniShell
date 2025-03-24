@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 17:10:09 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/24 13:43:47 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/24 15:16:59 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -285,6 +285,10 @@ int		exec_paren_with_redir_heredoc(t_mini *mini, t_token *token);
 int		exec_logical_with_redir_heredoc(t_mini *mini, t_token *token);
 int		apply_redir_with_heredoc(t_mini *mini, t_token *token);
 int		process_remaining_cmds(t_mini *mini, t_token *tokens, t_bool condition);
+t_bool	is_parenthesis_cmd(t_token *token);
+int		process_single_heredoc(t_mini *mini, t_token *current, int i);
+int		allocate_heredoc_arrays(t_mini *mini, int count);
+int		count_heredocs(t_token *token);
 
 /*---------------------------------- Error ----------------------------------*/
 

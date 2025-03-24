@@ -6,12 +6,36 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 13:13:51 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/24 13:42:05 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/24 15:15:56 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
+/**
+ * @brief Check if command has parentheses
+ * @param token Token to check
+ * @return TRUE if contains parentheses, FALSE otherwise
+ */
+// static t_bool	has_parentheses_check(t_token *token)
+// {
+// 	t_token	*current;
+
+// 	current = token;
+// 	while (current)
+// 	{
+// 		if (current->type == LEFT_PAREN || current->type == RIGHT_PAREN)
+// 			return (TRUE);
+// 		current = current->next;
+// 	}
+// 	return (FALSE);
+// }
+
+/**
+ * @brief Process first part before executing command
+ * @param mini Shell state
+ * @return 0 on success, 1 on failure
+ */
 static int	pre_process(t_mini *mini)
 {
 	reset_heredoc_processed_flags(mini->token);
@@ -43,7 +67,7 @@ static void	execute_complex(t_mini *mini)
 {
 	if (has_parentheses(mini->token))
 	{
-		if (has_parentheses(mini->token))
+		if (is_parenthesis_cmd(mini->token))
 			mini->ret = exec_parenthesis(mini);
 		else
 			mini->ret = exec_logical_with_redir_heredoc(mini, mini->token);
