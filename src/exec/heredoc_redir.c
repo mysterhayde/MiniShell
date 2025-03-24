@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 13:28:04 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/24 13:36:22 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/24 16:09:07 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,6 @@ int	apply_redir_with_heredoc(t_mini *mini, t_token *token)
 	current = token;
 	while (current)
 	{
-		if (current->type == CMD)
-			break ;
 		if (((current->type == RDIT && current->next
 					&& current->next->type == FILES)
 				|| current->type == HERE_DOC) && current->next)
