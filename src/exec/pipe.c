@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 13:48:12 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/11 14:32:23 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/24 13:31:37 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,7 @@ int	minipipe(t_mini *mini)
 	p.pids = malloc(sizeof(pid_t) * (mini->pipe_num + 1));
 	if (!p.pids)
 		return (free(p.pipe_fds), 1);
-	if (run_pipe_commands(mini, &p) == 1)
+	if (run_pipe_commands_with_heredoc(mini, &p) == 1)
 		return (1);
 	return (wait_pipe_children(mini, &p));
 }

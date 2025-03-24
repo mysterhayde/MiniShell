@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 17:10:09 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/19 14:29:57 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/24 13:43:47 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@ typedef struct s_token
 	char			**cmd;
 	t_type			type;
 	t_bool			expand;
+	t_bool			processed;
 	struct s_token	*next;
 }	t_token;
 
@@ -126,6 +127,10 @@ typedef struct s_mini
 	char		*user;
 	char		*cur_path;
 	int			pipe_num;
+	t_token		**heredoc_tokens;
+	int			heredoc_count;
+	int			*heredoc_fds;
+	t_bool		isheredoc;
 	t_bool		is_pipe;
 	t_token		*token;
 	t_token		*backup;
@@ -206,6 +211,7 @@ int		exec_paren_expr(t_mini *mini, t_token *token);
 t_token	*find_next_logical(t_token *token);
 t_token	*find_matching_paren(t_token *token);
 t_bool	has_parentheses(t_token *token);
+int		exec_parenthesis(t_mini *mini);
 t_token	*skip_paren_expr(t_token *token);
 t_token	*find_next_logical_op_with_parens(t_token *token);
 int		exec_logical_op_with_parens(t_mini *mini, t_token *token);
@@ -246,10 +252,9 @@ size_t	expanded_size(char *str, char **envp);
 
 /*---------------------------- Before Redirection ---------------------------*/
 
-char 	**search_wildcard(t_token *token);
+char	**search_wildcard(t_token *token);
 char	*expand_string(char *str, char **envp);
 char	**read_dir(char *pwd, char **wildcard_tab, int args);
-
 
 int		check_string(t_mini *mini, t_token *cmd_token);
 int		split_wildcard(char *wildcard, char ***wildcard_tab);
@@ -262,6 +267,24 @@ int		here_doc(char *limiter);
 void	here_doc_child(char *limiter, int temp_fd);
 int		create_temp_file(char **temp_name);
 char	*generate_temp_name(int counter);
+void	reset_heredoc_processed_flags(t_token *token);
+int		scan_and_execute_heredocs(t_mini *mini);
+int		here_doc_with_num(char *limiter, int heredoc_num);
+void	here_doc_child_with_num(char *limiter, int temp_fd, int heredoc_num);
+char	*create_heredoc_prompt(int heredoc_num);
+int		is_delimiter(char *line, char *delimiter);
+void	free_heredoc_arrays(t_mini *mini);
+int		handle_heredoc_redirection(t_mini *mini, t_token *token);
+int		process_single_redir_with_heredoc(t_mini *mini, t_token *token);
+t_token	*find_next_pipe_token(t_token *token);
+int		exec_pipe_cmd_with_heredoc(t_mini *mini, int i, int *pipe_fds);
+int		run_pipe_commands_with_heredoc(t_mini *mini, t_pipe *p);
+int		exec_redirections_with_heredoc(t_mini *mini, t_token *token);
+int		minipipe_with_heredoc(t_mini *mini);
+int		exec_paren_with_redir_heredoc(t_mini *mini, t_token *token);
+int		exec_logical_with_redir_heredoc(t_mini *mini, t_token *token);
+int		apply_redir_with_heredoc(t_mini *mini, t_token *token);
+int		process_remaining_cmds(t_mini *mini, t_token *tokens, t_bool condition);
 
 /*---------------------------------- Error ----------------------------------*/
 
