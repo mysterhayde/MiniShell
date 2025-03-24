@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 16:29:10 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/24 16:36:51 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/24 21:55:59 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ int	exec_sublist(t_mini *mini, t_token *sublist)
 	{
 		mini->is_pipe = TRUE;
 		mini->pipe_num = has_pipe;
-		ret = minipipe(mini);
+		ret = minipipe_with_heredoc(mini);
 	}
 	else
 	{
