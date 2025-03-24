@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 17:10:09 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/24 23:20:33 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/24 23:35:53 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -268,6 +268,7 @@ int		create_temp_file(char **temp_name);
 char	*generate_temp_name(int counter);
 void	reset_heredoc_processed_flags(t_token *token);
 int		scan_and_execute_heredocs(t_mini *mini);
+int		scan_and_execute_all_heredocs(t_mini *mini);
 int		here_doc_with_num(char *limiter, int heredoc_num);
 void	here_doc_child_with_num(char *limiter, int temp_fd, int heredoc_num);
 char	*create_heredoc_prompt(int heredoc_num);
@@ -284,7 +285,8 @@ int		exec_paren_with_redir_heredoc(t_mini *mini, t_token *token);
 int		exec_logical_with_redir_heredoc(t_mini *mini, t_token *token);
 int		apply_redir_with_heredoc(t_mini *mini, t_token *token);
 int		process_remaining_cmds(t_mini *mini, t_token *tokens, t_bool condition);
-int		process_remaining_cmds_heredoc(t_mini *mini, t_token *tokens, t_bool condition);
+int		process_remaining_cmds_heredoc(t_mini *mini, t_token *tokens,
+			t_bool condition);
 int		exec_logical_ops_heredoc(t_mini *mini, t_token *token);
 t_bool	is_parenthesis_cmd(t_token *token);
 int		process_single_heredoc(t_mini *mini, t_token *current, int i);
