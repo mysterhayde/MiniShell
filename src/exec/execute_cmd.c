@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 13:13:51 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/24 17:24:28 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/24 23:20:45 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ static void	execute_complex(t_mini *mini)
 			mini->ret = exec_logical_with_redir_heredoc(mini, mini->token);
 	}
 	else if (has_logical_ops(mini->token))
-		mini->ret = exec_logical_ops(mini, mini->token);
+		mini->ret = exec_logical_ops_heredoc(mini, mini->token);
 	else if (mini->is_pipe)
 		mini->ret = minipipe_with_heredoc(mini);
 	else

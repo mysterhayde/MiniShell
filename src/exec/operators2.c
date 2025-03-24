@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 16:29:10 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/24 21:55:59 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/24 23:21:32 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,10 @@ int	exec_sublist(t_mini *mini, t_token *sublist)
 	else
 	{
 		mini->is_pipe = FALSE;
-		ret = exec_redirections_with_heredoc(mini, sublist);
+		if (has_logical_ops(sublist))
+			ret = exec_logical_ops_heredoc(mini, sublist);
+		else
+			ret = exec_redirections_with_heredoc(mini, sublist);
 	}
 	restore_exec_state(mini, &state);
 	return (ret);
