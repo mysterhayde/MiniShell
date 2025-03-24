@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 15:34:38 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/03/24 13:25:14 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/24 17:31:39 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,14 +76,4 @@ int	here_doc_with_num(char *limiter, int heredoc_num)
 int	here_doc(char *limiter)
 {
 	return (here_doc_with_num(limiter, 1));
-}
-
-/**
- * @brief For backward compatibility - same as here_doc_child_with_num
- * @param limiter The delimiter string to stop reading at
- * @param temp_fd File descriptor of the temporary file
- */
-void	here_doc_child(char *limiter, int temp_fd)
-{
-	here_doc_child_with_num(limiter, temp_fd, 1);
 }
