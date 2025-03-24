@@ -31,7 +31,7 @@ CMDS = $(addprefix $(CMDS_DIR), $(CMDS_SRC))
 EXEC_SRC = 	execute.c builtin.c bin.c path.c pipe.c exec_utils.c pipe_utils.c pipe_wait.c \
 			redir.c redir2.c exec_redir.c operators.c operators2.c heredoc.c operator_state.c \
 			heredoc_utils.c execute_cmd.c heredoc_post.c heredoc_pre.c heredoc_redir.c heredoc_utils2.c \
-			pipe_heredoc_utils.c pipe_heredoc.c exec_heredoc.c
+			pipe_heredoc_utils.c pipe_heredoc.c exec_heredoc.c heredoc_exec.c
 EXEC_DIR = src/exec/
 EXEC = $(addprefix $(EXEC_DIR), $(EXEC_SRC))
 

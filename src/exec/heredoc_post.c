@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 10:00:00 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/24 13:27:27 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/24 15:34:38 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,16 +60,21 @@ int	handle_heredoc_redirection(t_mini *mini, t_token *token)
 {
 	int	fd;
 	int	target_fd;
+	int	dup_fd;
 
 	fd = get_heredoc_fd(mini, token);
 	if (fd == -1)
 		return (1);
 	target_fd = STDIN_FILENO;
+	dup_fd = dup(fd);
+	if (dup_fd == -1)
+		show_err_return("dup2", "failed", 1);
 	if (dup2(fd, target_fd) == -1)
 	{
 		ft_putstr_fd("minishell: dup2 failed\n", 2);
-		return (1);
+		return (close(dup_fd), 1);
 	}
+	close(dup_fd);
 	return (0);
 }
 

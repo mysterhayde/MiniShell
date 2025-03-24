@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 13:39:40 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/24 13:41:59 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/24 15:35:55 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ int	exec_paren_with_redir_heredoc(t_mini *mini, t_token *token)
 int	exec_logical_with_redir_heredoc(t_mini *mini, t_token *token)
 {
 	t_token	*next_op;
+	t_token	*prev_token;
 	int		ret;
 
 	if (!token)

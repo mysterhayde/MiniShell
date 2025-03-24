@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 10:00:00 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/24 13:24:17 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/24 15:16:54 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
  * @param token Starting token in list
  * @return Number of heredocs found
  */
-static int	count_heredocs(t_token *token)
+int	count_heredocs(t_token *token)
 {
 	t_token	*current;
 	int		count;
@@ -26,7 +26,7 @@ static int	count_heredocs(t_token *token)
 	current = token;
 	while (current)
 	{
-		if (current->type == HERE_DOC && current->next)
+		if (current->type == HERE_DOC && current->next && !current->processed)
 			count++;
 		current = current->next;
 	}
@@ -39,7 +39,7 @@ static int	count_heredocs(t_token *token)
  * @param count Number of heredocs
  * @return 0 on success, 1 on failure
  */
-static int	allocate_heredoc_arrays(t_mini *mini, int count)
+int	allocate_heredoc_arrays(t_mini *mini, int count)
 {
 	if (count <= 0)
 		return (0);
@@ -70,60 +70,23 @@ static char	*get_heredoc_delimiter(t_token *token)
 }
 
 /**
- * @brief Executes all heredocs and stores file descriptors
+ * @brief Processes a single heredoc
  * @param mini Shell state
+ * @param current Current heredoc token
+ * @param i Index in heredoc arrays
  * @return 0 on success, 1 on failure
  */
-static int	execute_heredocs(t_mini *mini)
+int	process_single_heredoc(t_mini *mini, t_token *current, int i)
 {
-	t_token	*current;
 	char	*delimiter;
-	int		i;
 
-	current = mini->token;
-	i = 0;
-	while (current && i < mini->heredoc_count)
-	{
-		if (current->type == HERE_DOC && current->next)
-		{
-			delimiter = get_heredoc_delimiter(current);
-			if (!delimiter)
-				return (1);
-			mini->heredoc_tokens[i] = current;
-			mini->heredoc_fds[i] = here_doc_with_num(delimiter, i + 1);
-			if (mini->heredoc_fds[i] == -1)
-				return (1);
-			i++;
-		}
-		current = current->next;
-	}
-	return (0);
-}
-
-/**
- * @brief Scans and executes all heredocs in the command line
- * @param mini Shell state
- * @return 0 on success, 1 on failure
- */
-int	scan_and_execute_heredocs(t_mini *mini)
-{
-	int	count;
-	int	result;
-
-	if (!mini || !mini->token)
-		return (0);
-	count = count_heredocs(mini->token);
-	if (count == 0)
-		return (0);
-	if (allocate_heredoc_arrays(mini, count))
+	delimiter = get_heredoc_delimiter(current);
+	if (!delimiter)
 		return (1);
-	mini->isheredoc = TRUE;
-	result = execute_heredocs(mini);
-	mini->isheredoc = FALSE;
-	if (result)
-	{
-		free_heredoc_arrays(mini);
+	mini->heredoc_tokens[i] = current;
+	mini->heredoc_fds[i] = here_doc_with_num(delimiter, i + 1);
+	if (mini->heredoc_fds[i] == -1)
 		return (1);
-	}
+	current->processed = TRUE;
 	return (0);
 }
