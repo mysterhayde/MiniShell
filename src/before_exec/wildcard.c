@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 16:46:21 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/03/23 23:45:28 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/24 14:16:53 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,20 +82,19 @@ int	search_wildcard_char(char *str)
 char	**wildcard(char *pwd, char **cmd, char *wildcard, int i)
 {
 	int		args;
-	char	**wildcard_tab;
 	char	**files;
 	char	**result;
 
-	wildcard_tab = NULL;
-	args = split_wildcard(wildcard, &wildcard_tab);
-	if (args == -1)
-		return (NULL);
-	files = read_dir(pwd, wildcard_tab, args);
+	if (!ft_strcmp(wildcard, "*"))
+		args = 0;
+	else
+		args = 1;
+	files = read_dir(pwd, args, wildcard);
 	if (!files)
 		return (cmd);
 	files = sort_wildcard_tab(files);
 	result = combine_tabs(cmd, files, i);
-	return (free_tab(wildcard_tab), free_tab(files), result);
+	return (free_tab(files), result);
 }
 
 char	**search_wildcard(t_token *token)
