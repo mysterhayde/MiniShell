@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 15:34:38 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/03/11 14:32:13 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/24 13:25:14 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,12 @@ static int	wait_here_doc(pid_t pid, int temp_fd, char *temp_name)
 }
 
 /**
- * @brief Implements here_doc functionality using a temporary file
+ * @brief Implements here_doc functionality with numbered prompt
  * @param limiter The delimiter string to stop reading at
+ * @param heredoc_num The number of this heredoc
  * @return File descriptor for reading, -1 on error
  */
-int	here_doc(char *limiter)
+int	here_doc_with_num(char *limiter, int heredoc_num)
 {
 	pid_t	pid;
 	int		temp_fd;
@@ -63,6 +64,26 @@ int	here_doc(char *limiter)
 		return (-1);
 	}
 	if (pid == 0)
-		here_doc_child(limiter, temp_fd);
+		here_doc_child_with_num(limiter, temp_fd, heredoc_num);
 	return (wait_here_doc(pid, temp_fd, temp_name));
+}
+
+/**
+ * @brief Backward compatibility wrapper for here_doc
+ * @param limiter The delimiter string to stop reading at
+ * @return File descriptor for reading, -1 on error
+ */
+int	here_doc(char *limiter)
+{
+	return (here_doc_with_num(limiter, 1));
+}
+
+/**
+ * @brief For backward compatibility - same as here_doc_child_with_num
+ * @param limiter The delimiter string to stop reading at
+ * @param temp_fd File descriptor of the temporary file
+ */
+void	here_doc_child(char *limiter, int temp_fd)
+{
+	here_doc_child_with_num(limiter, temp_fd, 1);
 }

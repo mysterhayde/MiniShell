@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 15:22:18 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/11 14:56:11 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/24 13:35:10 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,52 +60,43 @@ int	create_temp_file(char **temp_name)
 }
 
 /**
+ * @brief Creates a custom heredoc prompt with number
+ * @param heredoc_num The heredoc number
+ * @return The prompt string (must be freed) or NULL on error
+ */
+char	*create_heredoc_prompt(int heredoc_num)
+{
+	char	*num_str;
+	char	*prompt_part1;
+	char	*prompt_part2;
+	char	*prompt;
+
+	num_str = ft_itoa(heredoc_num);
+	if (!num_str)
+		return (NULL);
+	prompt_part1 = ft_strjoin("heredoc ", num_str);
+	free(num_str);
+	if (!prompt_part1)
+		return (NULL);
+	prompt_part2 = ft_strjoin(prompt_part1, "> ");
+	free(prompt_part1);
+	if (!prompt_part2)
+		return (NULL);
+	prompt = prompt_part2;
+	return (prompt);
+}
+
+/**
  * @brief Checks if a line matches the delimiter exactly
  * @param line The input line
  * @param delimiter The delimiter to check against
  * @return 1 if matches, 0 if not
  */
-static int	is_delimiter(char *line, char *delimiter)
+int	is_delimiter(char *line, char *delimiter)
 {
 	if (!line || !delimiter)
 		return (0);
 	if ((ft_strlen(line)) != ft_strlen(delimiter))
 		return (0);
 	return (ft_strmincmp(line, delimiter, ft_strlen(delimiter)) == 0);
-}
-
-/**
- * @brief Handles reading input for the here_doc in the child process
- * @param limiter The delimiter string to stop reading at
- * @param temp_fd File descriptor of the temporary file
- */
-void	here_doc_child(char *limiter, int temp_fd)
-{
-	char	*line;
-
-	signal(SIGINT, SIG_DFL);
-	signal(SIGQUIT, SIG_IGN);
-	while (1)
-	{
-		ft_putstr_fd("> ", 2);
-		line = readline("");
-		if (!line)
-		{
-			ft_putstr_fd("minishell: warning: here-document delimited ", 2);
-			ft_putstr_fd("by end-of-file (wanted `", 2);
-			ft_putstr_fd(limiter, 2);
-			ft_putstr_fd("')\n", 2);
-			break ;
-		}
-		if (is_delimiter(line, limiter))
-		{
-			free(line);
-			break ;
-		}
-		ft_putstr_fd(line, temp_fd);
-		ft_putstr_fd("\n", temp_fd);
-		free(line);
-	}
-	close(temp_fd);
-	exit(0);
 }
