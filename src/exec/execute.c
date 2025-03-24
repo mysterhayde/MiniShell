@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 13:48:06 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/24 15:22:18 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/24 23:20:57 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,9 +89,9 @@ int	exec_parenthesis(t_mini *mini)
 	if (!next_op)
 		return (ret);
 	if (next_op->type == AND_OP)
-		ret = process_remaining_cmds(mini, next_op->next, ret == 0);
+		ret = process_remaining_cmds_heredoc(mini, next_op->next, ret == 0);
 	else if (next_op->type == OR_OP)
-		ret = process_remaining_cmds(mini, next_op->next, ret != 0);
+		ret = process_remaining_cmds_heredoc(mini, next_op->next, ret != 0);
 	return (ret);
 }
 
