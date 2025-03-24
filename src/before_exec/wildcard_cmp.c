@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 14:20:10 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/03/24 16:18:30 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/24 16:30:06 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static int	last_segment(char *wildcard)
 {
 	int	i;
-	
+
 	i = 0;
 	while (wildcard[i] && wildcard[i] != '*')
 		i++;
@@ -24,22 +24,21 @@ static int	last_segment(char *wildcard)
 	if (!wildcard[i + 1])
 		return (1);
 	return (0);
-	
 }
 
 static int	segment_len(const char *str)
 {
-	int i;
-	
+	int	i;
+
 	i = 0;
 	while (str[i] && str[i] != '*')
 		i++;
 	return (i);
 }
 
-int	check_first_segment(char *file, char **wildcard)
+static int	check_first_segment(char *file, char **wildcard)
 {
-	int segment;
+	int	segment;
 
 	if (**wildcard == '*')
 	{
@@ -52,13 +51,13 @@ int	check_first_segment(char *file, char **wildcard)
 	return (1);
 }
 
-int check_last_segment(char *file, char *wildcard)
+static int	check_last_segment(char *file, char *wildcard)
 {
 	int	segment;
 
 	segment = segment_len(wildcard);
 	if (wildcard[segment] == '*')
-		return(0);
+		return (0);
 	while (*file)
 	{
 		if (!ft_strcmp(file, wildcard))

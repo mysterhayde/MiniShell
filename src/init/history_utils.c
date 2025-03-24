@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   history_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
+/*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 13:01:33 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/11 19:32:12 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/24 16:34:00 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,5 +63,6 @@ void	save_history_to_file(t_mini *mini, const char *command)
 	if (fd == -1)
 		return ;
 	write_line_to_file(fd, command);
+	free(history_path);
 	close(fd);
 }

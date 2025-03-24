@@ -6,11 +6,34 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 18:51:17 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/03/22 02:51:05 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/24 16:47:35 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+int	search_wildcard_char(char *str)
+{
+	int		i;
+	char	quote;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '\'' || str[i] == '\"')
+		{
+			quote = str[i++];
+			while (str[i] && str[i] != quote)
+				i++;
+			i++;
+			continue ;
+		}
+		if (str[i] == '*')
+			return (1);
+		i++;
+	}
+	return (0);
+}
 
 int	ft_tablen(char **tab)
 {
