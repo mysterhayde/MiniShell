@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 11:36:04 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/03/24 14:20:41 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/24 16:37:52 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ char	**read_dir(char *pwd, int args, char *wildcard)
 
 	files_tab = NULL;
 	dir = opendir(pwd);
-	if (dir == NULL)
+	if (!dir)
 		return (NULL);
 	while (1)
 	{
@@ -55,7 +55,7 @@ char	**read_dir(char *pwd, int args, char *wildcard)
 			|| compare_wildcard_and_file(file->d_name, wildcard))
 		{
 			if (file->d_name[0] == '.')
-				continue;
+				continue ;
 			files_tab = add_cmd(files_tab, file->d_name);
 			if (!files_tab)
 				return ((closedir(dir)), NULL);

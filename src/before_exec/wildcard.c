@@ -6,13 +6,13 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 16:46:21 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/03/24 14:16:53 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/24 16:47:30 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static char	**combine_utils(char **cmd_dest, char** cmd_src, int *pos, int j)
+static char	**combine_utils(char **cmd_dest, char **cmd_src, int *pos, int j)
 {
 	int	i;
 
@@ -54,29 +54,6 @@ static char	**combine_tabs(char **cmd, char **wildcard_tab, int k)
 		return (NULL);
 	new_tab[i] = NULL;
 	return (free_tab(cmd), new_tab);
-}
-
-int	search_wildcard_char(char *str)
-{
-	int		i;
-	char	quote;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == '\'' || str[i] == '\"')
-		{
-			quote = str[i++];
-			while (str[i] && str[i] != quote)
-				i++;
-			i++;
-			continue ;
-		}
-		if (str[i] == '*')
-			return (1);
-		i++;
-	}
-	return (0);
 }
 
 char	**wildcard(char *pwd, char **cmd, char *wildcard, int i)
