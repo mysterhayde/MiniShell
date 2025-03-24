@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 13:48:58 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/18 15:03:55 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/24 23:36:57 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ int	exec_bin(t_mini *mini, char **cmd)
 {
 	char	*path;
 	int		ret;
+
 	if (!cmd[0] || cmd[0][0] == '\0')
 		return (0);
 	if (cmd[0] && ft_strchr(cmd[0], '/'))

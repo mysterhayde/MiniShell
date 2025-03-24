@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 15:03:54 by cbopp             #+#    #+#             */
-/*   Updated: 2025/02/27 15:45:25 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/24 23:37:05 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ static void	getuser(t_mini *mini)
 		i++;
 	}
 	mini->user = ft_strjoin(COLOR_BLUE, mini->envp[i] + 5);
-	//mini->user = ft_strdup(mini->envp[i] + 5);
 }
 
 static char	**make_env(void)

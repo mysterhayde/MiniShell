@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 13:13:51 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/24 23:32:45 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/24 23:36:51 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@
  */
 static int	pre_process(t_mini *mini)
 {
-	// Use the new function that scans all heredocs at once
 	if (scan_and_execute_all_heredocs(mini))
 		return (1);
 	return (0);
