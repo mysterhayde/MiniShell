@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 15:34:38 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/03/24 17:31:39 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/25 13:57:05 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static int	wait_here_doc(pid_t pid, int temp_fd, char *temp_name)
  * @param heredoc_num The number of this heredoc
  * @return File descriptor for reading, -1 on error
  */
-int	here_doc_with_num(char *limiter, int heredoc_num)
+int	here_doc_with_num(t_mini *mini, char *limiter, int heredoc_num)
 {
 	pid_t	pid;
 	int		temp_fd;
@@ -64,16 +64,10 @@ int	here_doc_with_num(char *limiter, int heredoc_num)
 		return (-1);
 	}
 	if (pid == 0)
-		here_doc_child_with_num(limiter, temp_fd, heredoc_num);
+	{
+		unlink(temp_name);
+		free(temp_name);
+		here_doc_child_with_num(mini, limiter, temp_fd, heredoc_num);
+	}
 	return (wait_here_doc(pid, temp_fd, temp_name));
-}
-
-/**
- * @brief Backward compatibility wrapper for here_doc
- * @param limiter The delimiter string to stop reading at
- * @return File descriptor for reading, -1 on error
- */
-int	here_doc(char *limiter)
-{
-	return (here_doc_with_num(limiter, 1));
 }

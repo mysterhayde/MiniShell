@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:55:42 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/11 14:35:01 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/25 13:39:44 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,8 @@ int	process_single_redir(t_token *current)
 		fd = open_file_output(current->next->cmd[0]);
 	else if (ft_strmincmp(current->cmd[0], ">>", 2) == 0)
 		fd = open_file_append(current->next->cmd[0]);
-	else if (ft_strmincmp(current->cmd[0], "<<", 2) == 0)
-		fd = here_doc(current->next->cmd[0]);
+	// else if (ft_strmincmp(current->cmd[0], "<<", 2) == 0)
+	// 	fd = here_doc(current->next->cmd[0]);
 	else
 		return (1);
 	if (fd == -1)

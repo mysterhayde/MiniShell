@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 23:32:00 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/24 23:34:26 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/25 13:33:21 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,5 +102,6 @@ int	scan_and_execute_all_heredocs(t_mini *mini)
 		return (1);
 	}
 	mark_all_heredocs_processed(mini->token);
+	free_heredoc_arrays(mini);
 	return (0);
 }
