@@ -6,11 +6,29 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 16:46:21 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/03/25 14:14:47 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/25 15:59:50 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+static char	**add_prefix(char **tab, char *prefixe)
+{
+	int		i;
+	char	*new_file;
+
+	i = 0;
+	while (tab[i])
+	{
+		new_file = ft_strjoin(prefixe, tab[i]);
+		if (!new_file)
+			return(NULL);
+		free(tab[i]);
+		tab[i] = new_file;
+		i++;
+	}
+	return (tab);
+}
 
 static char	**combine_utils(char **cmd_dest, char **cmd_src, int *pos, int j)
 {
@@ -75,6 +93,9 @@ static char	**wildcard(char **cmd, char *wildcard, int i)
 	if (!files)
 		return (cmd);
 	files = sort_wildcard_tab(files);
+	if (prefix)
+		if (add_prefix(files, prefix) == NULL)
+			return (NULL);
 	result = combine_tabs(cmd, files, i);
 	return (result);
 }
@@ -95,7 +116,7 @@ char	**search_wildcard(t_token *token)
 			token->cmd = wildcard(token->cmd, wildcard_cpy, i);
 			if (!token->cmd)
 				return (show_err_msg("wildcard", "Wildcard failed"), NULL);
-			free(wildcard_cpy);
+			//free(wildcard_cpy);
 		}
 		i++;
 	}

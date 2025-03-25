@@ -6,11 +6,13 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 15:04:03 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/25 13:11:51 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/25 16:40:00 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+int g_signo = 0;
 
 int	check_entry(char *entry, t_mini *mini)
 {
@@ -43,6 +45,7 @@ void	init(t_mini *mini, char **envp)
 	mini->ret = 0;
 	mini->token = NULL;
 	mini->backup = NULL;
+	mini->last_cmd = NULL;
 	mini->envp = NULL;
 	mini->isheredoc = FALSE;
 	mini->heredoc_tokens = NULL;
@@ -50,8 +53,11 @@ void	init(t_mini *mini, char **envp)
 	mini->heredoc_count = 0;
 	setupenv(mini, envp);
 	init_readline_history(mini);
-	if (setup_signal_handlers())
+	if (setup_signal_handlers(mini))
+	{
 		mini->exit = 1;
+		mini->ret = 130;
+	}
 }
 
 static void	shell_loop(t_mini *mini)
