@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 13:39:40 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/25 12:47:44 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/25 12:55:45 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,19 +25,15 @@ int	exec_redirections_with_heredoc(t_mini *mini, t_token *token)
 	t_token	*cmd_token;
 
 	save_std_fds(saved_fd);
-	if (ft_strmincmp(token->cmd[0], "echo", 4) == 0
-		&& token->cmd[1])
-	{
-		ret = check_string(mini, token);
-		restore_std_fds(saved_fd);
-		return (ret);
-	}
 	if (apply_redir_with_heredoc(mini, token))
 		return (restore_std_fds(saved_fd), 1);
 	cmd_token = skip_redirections(token);
 	if (!cmd_token)
 		return (restore_std_fds(saved_fd), 0);
-	ret = check_string(mini, cmd_token);
+	if (is_builtin(cmd_token->cmd[0]))
+		ret = exec_builtin(mini, cmd_token->cmd);
+	else
+		ret = exec_bin(mini, cmd_token->cmd);
 	restore_std_fds(saved_fd);
 	return (ret);
 }
