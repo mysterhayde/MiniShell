@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 17:10:09 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/25 13:11:42 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/25 16:26:39 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,7 +152,7 @@ void	load_history_from_file(t_mini *mini);
 void	save_history_to_file(t_mini *mini, const char *command);
 void	process_history_lines(char **lines);
 char	*get_history_path(t_mini *mini);
-int		setup_signal_handlers(void);
+int		setup_signal_handlers(t_mini *mini);
 void	reset_signals_for_child(void);
 int		check_signal_interrupt(void);
 char	*get_prompt(t_mini *mini);

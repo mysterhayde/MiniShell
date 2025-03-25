@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 13:48:58 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/25 13:11:58 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/25 16:25:05 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static int	handle_parent(char *path, pid_t pid)
 	free(path);
 	if (waitpid(pid, &status, 0) == -1)
 		return (show_err_return("waitpid", "Wait failed", ERR_GENERAL));
-	setup_signal_handlers();
+	//setup_signal_handlers();
 	if (WIFSIGNALED(status))
 	{
 		if (WTERMSIG(status) == SIGINT)

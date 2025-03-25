@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
+/*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 16:50:34 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/09 12:59:15 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/25 16:25:14 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,7 @@ int	wait_pipe_children(t_mini *mini, t_pipe *p)
 		i++;
 	}
 	free(p->pids);
-	setup_signal_handlers();
+	//setup_signal_handlers();
 	if (last_status == 0 && mini->ret != 0)
 		last_status = mini->ret;
 	mini->ret = last_status;
