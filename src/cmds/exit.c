@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 15:03:41 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/13 18:09:51 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/25 17:31:03 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,55 @@ static int	is_numeric(char *str)
 	return (1);
 }
 
+/**
+ * @brief Process non-numeric exit argument
+ * @param mini Shell state
+ * @return Exit status (2)
+ */
+static int	handle_non_num_exit(t_mini *mini)
+{
+	mini->exit = 1;
+	mini->ret = 2;
+	return (2);
+}
+
+/**
+ * @brief Exists the program for child processes
+ * @param mini Shell state
+ * @param status Exit status
+ */
+void	child_exit(t_mini *mini, int status)
+{
+	free_heredoc_arrays(mini);
+	free_token_list(mini);
+	free_all(mini);
+	cleanup_history();
+	exit(status);
+}
+
+/**
+ * @brief Handles the exit builtin in pipe context
+ * @param mini Shell state
+ * @param cmd Command arguments
+ * @return Exit status
+ */
+int	handle_exit_in_pipe(t_mini *mini, char **cmd)
+{
+	t_bool	is_exit;
+	int		ret;
+
+	is_exit = mini->exit;
+	ret = exit_builtin(mini, cmd);
+	mini->exit = is_exit;
+	return (ret);
+}
+
+/**
+ * @brief Built-in exit command implementation
+ * @param mini Shell state
+ * @param cmd Command arguments
+ * @return Exit code or status
+ */
 int	exit_builtin(t_mini *mini, char **cmd)
 {
 	int	status;
@@ -40,11 +89,7 @@ int	exit_builtin(t_mini *mini, char **cmd)
 		return (0);
 	}
 	if (!is_numeric(cmd[1]))
-	{
-		mini->exit = 1;
-		mini->ret = 2;
-		return (2);
-	}
+		return (handle_non_num_exit(mini));
 	if (cmd[2])
 	{
 		if (!mini->is_pipe)
@@ -54,5 +99,7 @@ int	exit_builtin(t_mini *mini, char **cmd)
 	status = ft_atoi(cmd[1]) & 255;
 	mini->exit = ft_atoi(cmd[1]);
 	mini->ret = ft_atoi(cmd[1]);
+	if (mini->is_pipe)
+		child_exit(mini, status);
 	return (status);
 }

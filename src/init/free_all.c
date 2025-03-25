@@ -6,11 +6,25 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 16:18:45 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/25 13:43:32 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/25 16:28:44 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+/**
+ * @brief Frees pipe resources allocated in t_pipe structure
+ * @param p Pipe strucutre containing resources to free
+ */
+void	free_pipe_resources(t_pipe *p)
+{
+	if (p->pipe_fds)
+		free(p->pipe_fds);
+	if (p->pids)
+		free(p->pids);
+	p->pipe_fds = NULL;
+	p->pids = NULL;
+}
 
 void	free_all(t_mini *mini)
 {
@@ -27,4 +41,16 @@ void	free_all(t_mini *mini)
 		free_token_list(mini);
 	if (mini->envp)
 		free_env_arr(mini->envp);
+}
+
+/**
+ * @brief Safe exit function that ensures cleanup before exiting
+ * @param mini Shell state
+ * @param exit_code Exit code to return
+ */
+void	safe_exit(t_mini *mini, int exit_code)
+{
+	free_all(mini);
+	cleanup_history();
+	exit(exit_code);
 }
