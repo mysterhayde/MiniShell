@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 13:29:13 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/25 16:32:05 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/25 18:33:01 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ void	handle_pipe_child_with_heredoc(t_mini *mini, int i, int *pipe_fds)
  * @param pipe_fds Array of pipe file descriptors
  * @return Process ID or -1 on failure
  */
-int	exec_pipe_cmd_with_heredoc(t_mini *mini, int i, int *pipe_fds)
+int	exec_pipe_cmd_with_heredoc(t_mini *mini, int i, t_pipe *p)
 {
 	pid_t	pid;
 	t_token	*cmd_token;
@@ -110,18 +110,18 @@ int	exec_pipe_cmd_with_heredoc(t_mini *mini, int i, int *pipe_fds)
 		return (-1);
 	if (pid == 0)
 	{
-		handle_pipe_child_with_heredoc(mini, i, pipe_fds);
+		handle_pipe_child_with_heredoc(mini, i, p->pipe_fds);
 		cmd_token = skip_redirections(mini->token);
 		if (cmd_token && cmd_token->cmd && cmd_token->cmd[0])
 			ret = check_string(mini, cmd_token);
 		else
 			ret = 0;
+		free_pipe_resources(p);
 		safe_exit(mini, ret);
-
 	}
 	if (i > 0)
-		close(pipe_fds[(i - 1) * 2]);
+		close(p->pipe_fds[(i - 1) * 2]);
 	if (i < mini->pipe_num)
-		close(pipe_fds[i * 2 + 1]);
+		close(p->pipe_fds[i * 2 + 1]);
 	return (pid);
 }
