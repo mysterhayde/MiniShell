@@ -6,22 +6,25 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 16:46:21 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/03/19 15:33:29 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/25 11:42:34 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static int	tab_size(char **tab)
+static char	**combine_utils(char **cmd_dest, char **cmd_src, int *pos, int j)
 {
 	int	i;
 
-	i = 0;
-	if (!tab)
-		return (0);
-	while (tab[i])
-		i++;
-	return (i);
+	i = *(pos);
+	while (cmd_src[j])
+	{
+		cmd_dest[i] = ft_strdup(cmd_src[j++]);
+		if (!cmd_dest[i++])
+			return (NULL);
+	}
+	*(pos) = i;
+	return (cmd_dest);
 }
 
 static char	**combine_tabs(char **cmd, char **wildcard_tab, int k)
@@ -31,92 +34,67 @@ static char	**combine_tabs(char **cmd, char **wildcard_tab, int k)
 	int		args;
 	char	**new_tab;
 
-	i = 0;
+	i = -1;
 	j = 0;
-	args = (tab_size(cmd) - 1) + tab_size(wildcard_tab);
+	args = (ft_tablen(cmd) - 1) + ft_tablen(wildcard_tab);
 	new_tab = malloc(sizeof(char *) * (args + 1));
 	if (!new_tab)
 		return (NULL);
-	while (i < k)
+	while (++i < k)
 	{
 		new_tab[i] = ft_strdup(cmd[i]);
-		if (!new_tab)
-			return (free_tab(new_tab), NULL);
-		i++;
-	}
-	while (wildcard_tab[j])
-	{
-		new_tab[i++] = ft_strdup(wildcard_tab[j++]);
-		if (!new_tab)
-			return (free(new_tab), NULL);
-	}
-	while (cmd[++k])
-	{
-		new_tab[i++] = ft_strdup(cmd[k]);
-		if (!new_tab)
+		if (!new_tab[i])
 			return (free_tab(new_tab), NULL);
 	}
+	new_tab = combine_utils(new_tab, wildcard_tab, &i, j);
+	if (!new_tab)
+		return (NULL);
+	new_tab = combine_utils(new_tab, cmd, &i, k + 1);
+	if (!new_tab)
+		return (NULL);
 	new_tab[i] = NULL;
-	return (free_tab(cmd), new_tab);
+	return (free_tab(wildcard_tab), free_tab(cmd), new_tab);
 }
 
-int	search_wildcard_char(char *str)
-{
-	int		i;
-	char	quote;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == '\'' || str[i] == '\"')
-		{
-			quote = str[i++];
-			while (str[i] && str[i] != quote)
-				i++;
-			i++;
-			continue ;
-		}
-		if (str[i] == '*')
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
-char	**wildcard(char *pwd, char **cmd, char *wildcard, int i)
+static char	**wildcard(char **cmd, char *wildcard, int i)
 {
 	int		args;
-	char	**wildcard_tab;
+	char	*cwd;
+	char	*prefix;
 	char	**files;
-	char	**result;
 
-	wildcard_tab = NULL;
-	args = split_wildcard(wildcard, &wildcard_tab);
-	if (args == -1)
+	args = 1;
+	prefix = NULL;
+	cwd = get_directory(&wildcard, &prefix);
+	if (!cwd)
 		return (NULL);
-	files = read_dir(pwd, wildcard_tab, args);
+	if (!ft_strcmp(wildcard, "*"))
+		args = 0;
+	files = read_dir(cwd, args, wildcard);
 	if (!files)
 		return (cmd);
-	// sort files_tab
-	result = combine_tabs(cmd, files, i);
-	return (free_tab(wildcard_tab), free_tab(files), result);
+	files = sort_wildcard_tab(files);
+	files = combine_tabs(cmd, files, i);
+	return (free(cwd), files);
 }
 
 char	**search_wildcard(t_token *token)
 {
 	int		i;
-	char	current_path[PATH_MAX + 1];
+	char	*wildcard_cpy;
 
 	i = 0;
 	while (token->cmd[i])
 	{
-		if (getcwd(current_path, PATH_MAX) == NULL)
-			return (show_err_msg("getcwd", "getcwd failed"), NULL);
 		if (search_wildcard_char(token->cmd[i]))
 		{
-			token->cmd = wildcard(current_path, token->cmd, token->cmd[i], i);
+			wildcard_cpy = ft_strdup(token->cmd[i]);
+			if (!wildcard_cpy)
+				return (show_err_msg("Malloc", "Allocation failed"), NULL);
+			token->cmd = wildcard(token->cmd, token->cmd[i], i);
 			if (!token->cmd)
-				return (show_err_msg("wildcard", "wildcard failed"), NULL);
+				return (show_err_msg("wildcard", "Wildcard failed"), NULL);
+			free(wildcard_cpy);
 		}
 		i++;
 	}

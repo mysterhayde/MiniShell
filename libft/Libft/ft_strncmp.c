@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 10:54:33 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/02/28 16:41:21 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/22 01:50:15 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,25 +66,14 @@ int	ft_strmincmp(const char *s1, const char *s2, size_t min)
  * @return 1 if there is a difference and 0 if the 2 strings are identical
  * @warning only works with strings ending in null
  */
-int	ft_strcmp(char *s1, char *s2)
+int	ft_strcmp(const char *s1, const char *s2)
 {
 	int	i;
 
 	i = 0;
-	if (!s1 || !s2)
-		return (-1);
-	while (s1[i] && s2[i])
-	{
-		if (s1[i] == s2[i])
-			i++;
-		else
-			return (1);
-	}
-	if ((!s1[i] && s2[i]) || (s1[i] && !s2[i]))
-		return (1);
-	if (!s1[i] && !s2[i])
-		return (0);
-	return (0);
+	while (s1[i] && (s1[i] == s2[i]))
+		i++;
+	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 }
 
 //int main(void)

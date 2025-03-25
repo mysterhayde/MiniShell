@@ -10,3 +10,4 @@ vgcore.*
 *.log
 a.out
 minishell_tester
+*.txt

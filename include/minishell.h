@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
+/*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 17:10:09 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/24 23:35:53 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/25 13:11:42 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,6 +179,7 @@ int		exit_builtin(t_mini *mini, char **cmd);
 char	*expand(char *str, char **envp);
 
 /*--------------------------------- Execute ---------------------------------*/
+
 void	execute(t_mini *mini);
 int		is_builtin(char *cmd);
 int		exec_builtin(t_mini *mini, char **cmd);
@@ -193,6 +194,7 @@ int		create_pipes(int pipe_count, int **pipe_fds);
 int		wait_for_children(t_mini *mini, pid_t *pids);
 
 /*---------------------------------- Redir ----------------------------------*/
+
 int		open_file_input(char *filename);
 int		open_file_output(char *filename);
 int		open_file_append(char *filename);
@@ -249,15 +251,18 @@ void	add_last_token(char *str, t_mini *mini, int type);
 
 size_t	expanded_size(char *str, char **envp);
 
-
 /*---------------------------- Before Redirection ---------------------------*/
 
+char	**sort_wildcard_tab(char **tab);
 char	**search_wildcard(t_token *token);
 char	*expand_string(char *str, char **envp);
-char	**read_dir(char *pwd, char **wildcard_tab, int args);
+char	*get_directory(char **wildcard, char **prefix);
+char	**read_dir(char *pwd, int args, char *wildcard);
 
+int		ft_tablen(char **tab);
+int		search_wildcard_char(char *str);
 int		check_string(t_mini *mini, t_token *cmd_token);
-int		split_wildcard(char *wildcard, char ***wildcard_tab);
+int		compare_wildcard_and_file(char *file, char *wildcard);
 
 void	fix_index(t_token *cmd_token);
 

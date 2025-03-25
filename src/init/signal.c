@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 13:43:01 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/17 13:14:44 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/25 12:56:02 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ static void	handle_signal(int signal)
 {
 	if (signal == SIGINT)
 	{
+		return ;
 		write(1, "\n", 1);
 		rl_on_new_line();
 		rl_replace_line("", 0);
@@ -30,7 +31,7 @@ int	setup_signal_handlers(void)
 	struct sigaction	sa;
 	struct sigaction	sa_ignore;
 
-	sa.sa_handler = handle_signal;
+	sa.sa_handler = handle_signal; //handle_signal;
 	sigemptyset(&sa.sa_mask);
 	sa.sa_flags = SA_RESTART;
 	if (sigaction(SIGINT, &sa, NULL) == -1)
