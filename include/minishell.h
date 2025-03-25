@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 17:10:09 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/25 17:31:17 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/25 18:33:24 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -289,7 +289,7 @@ void	free_heredoc_arrays(t_mini *mini);
 int		handle_heredoc_redirection(t_mini *mini, t_token *token);
 int		process_single_redir_with_heredoc(t_mini *mini, t_token *token);
 t_token	*find_next_pipe_token(t_token *token);
-int		exec_pipe_cmd_with_heredoc(t_mini *mini, int i, int *pipe_fds);
+int		exec_pipe_cmd_with_heredoc(t_mini *mini, int i, t_pipe *p);
 int		run_pipe_commands_with_heredoc(t_mini *mini, t_pipe *p);
 int		exec_redirections_with_heredoc(t_mini *mini, t_token *token);
 int		minipipe_with_heredoc(t_mini *mini);
