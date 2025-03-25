@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 15:04:03 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/25 16:40:00 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/25 16:16:26 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,12 @@ static void	shell_loop(t_mini *mini)
 			break ;
 		entry = readline(prompt);
 		free(prompt);
+		if (g_signo == 1)
+		{
+			mini->ret = 130;
+			g_signo = 0;
+			continue ;
+		}
 		ret = check_entry(entry, mini);
 		if (ret == 1)
 			break ;
