@@ -6,36 +6,17 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 11:36:04 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/03/19 14:06:08 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/25 10:40:46 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-
-static int	compare_wildcard_and_file(char **wildcard_tab, char *file)
-{
-	char	*str;
-	int		i;
-
-	i = 0;
-	str = file;
-	while (wildcard_tab[i])
-	{
-		str = ft_strnstr(file, wildcard_tab[i], ft_strlen(str));
-		if (!str)
-			return (0);
-		i++;
-	}
-	return (1);
-}
 
 static char	**add_cmd(char **tab, char *str)
 {
 	int		i;
 	char	**new_tab;
 
-	if (str[0] == '.')
-		return (tab);
 	i = 0;
 	while (tab && tab[i])
 		i++;
@@ -55,7 +36,7 @@ static char	**add_cmd(char **tab, char *str)
 	return (safe_free((void **) &tab), new_tab);
 }
 
-char	**read_dir(char *pwd, char **wildcard_tab, int args)
+char	**read_dir(char *pwd, int args, char *wildcard)
 {
 	DIR				*dir;
 	struct dirent	*file;
@@ -63,18 +44,21 @@ char	**read_dir(char *pwd, char **wildcard_tab, int args)
 
 	files_tab = NULL;
 	dir = opendir(pwd);
-	if (dir == NULL)
+	if (!dir)
 		return (NULL);
 	while (1)
 	{
 		file = readdir(dir);
 		if (file == NULL)
 			break ;
-		if (args == 0 || compare_wildcard_and_file(wildcard_tab, file->d_name))
+		if (args == 0
+			|| compare_wildcard_and_file(file->d_name, wildcard))
 		{
+			if (file->d_name[0] == '.')
+				continue ;
 			files_tab = add_cmd(files_tab, file->d_name);
 			if (!files_tab)
-				return (NULL);
+				return ((closedir(dir)), NULL);
 		}
 	}
 	return (closedir(dir), files_tab);
