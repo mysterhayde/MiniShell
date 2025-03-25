@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 17:10:09 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/25 13:11:42 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/25 13:40:15 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -268,14 +268,15 @@ void	fix_index(t_token *cmd_token);
 
 /*------------------------------- Redirection -------------------------------*/
 
-int		here_doc(char *limiter);
+// int		here_doc(char *limiter);
 int		create_temp_file(char **temp_name);
 char	*generate_temp_name(int counter);
 void	reset_heredoc_processed_flags(t_token *token);
 int		scan_and_execute_heredocs(t_mini *mini);
 int		scan_and_execute_all_heredocs(t_mini *mini);
-int		here_doc_with_num(char *limiter, int heredoc_num);
-void	here_doc_child_with_num(char *limiter, int temp_fd, int heredoc_num);
+int		here_doc_with_num(t_mini *mini, char *limiter, int heredoc_num);
+void	here_doc_child_with_num(t_mini *mini, char *limiter, int temp_fd,
+			int heredoc_num);
 char	*create_heredoc_prompt(int heredoc_num);
 int		is_delimiter(char *line, char *delimiter);
 void	free_heredoc_arrays(t_mini *mini);

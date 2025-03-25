@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 13:48:06 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/24 23:20:57 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/25 13:27:40 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	process_remaining_cmds(t_mini *mini, t_token *tokens,
 	else if (has_logical_ops(tokens))
 		ret = exec_logical_ops(mini, tokens);
 	else
-		ret = exec_redirections_with_heredoc(mini, tokens);
+		ret = check_string(mini, tokens);
 	restore_exec_state(mini, &state);
 	return (ret);
 }

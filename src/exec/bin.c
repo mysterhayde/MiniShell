@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bin.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 13:48:58 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/25 13:11:58 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/25 12:59:06 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ int	exec_bin(t_mini *mini, char **cmd)
 
 	if (!cmd[0] || cmd[0][0] == '\0')
 		return (0);
-	if (cmd[0] && ft_strchr(cmd[0], '/'))
+	if (cmd[0] && ft_strchr(cmd[0], '/') && mini->token->type == CMD)
 	{
 		ret = handle_direct_path(mini, cmd);
 		if (ret >= 0)
