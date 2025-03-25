@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 16:46:21 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/03/25 11:42:34 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/25 14:14:47 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static char	**combine_tabs(char **cmd, char **wildcard_tab, int k)
 	if (!new_tab)
 		return (NULL);
 	new_tab[i] = NULL;
-	return (free_tab(wildcard_tab), free_tab(cmd), new_tab);
+	return (free_tab(cmd), new_tab);
 }
 
 static char	**wildcard(char **cmd, char *wildcard, int i)
@@ -62,6 +62,7 @@ static char	**wildcard(char **cmd, char *wildcard, int i)
 	char	*cwd;
 	char	*prefix;
 	char	**files;
+	char	**result;
 
 	args = 1;
 	prefix = NULL;
@@ -74,8 +75,8 @@ static char	**wildcard(char **cmd, char *wildcard, int i)
 	if (!files)
 		return (cmd);
 	files = sort_wildcard_tab(files);
-	files = combine_tabs(cmd, files, i);
-	return (free(cwd), files);
+	result = combine_tabs(cmd, files, i);
+	return (result);
 }
 
 char	**search_wildcard(t_token *token)
@@ -91,7 +92,7 @@ char	**search_wildcard(t_token *token)
 			wildcard_cpy = ft_strdup(token->cmd[i]);
 			if (!wildcard_cpy)
 				return (show_err_msg("Malloc", "Allocation failed"), NULL);
-			token->cmd = wildcard(token->cmd, token->cmd[i], i);
+			token->cmd = wildcard(token->cmd, wildcard_cpy, i);
 			if (!token->cmd)
 				return (show_err_msg("wildcard", "Wildcard failed"), NULL);
 			free(wildcard_cpy);

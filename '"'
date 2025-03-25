@@ -1,0 +1,13 @@
+'"'
+a.out
+include
+libft
+Makefile
+man
+minishell
+Objects
+out
+resources
+src
+tester.txt
+test.txt
