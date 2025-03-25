@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 12:00:00 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/24 17:31:22 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/25 12:06:57 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,7 @@ static void	read_heredoc_lines(char *limiter, int temp_fd, int heredoc_num)
 		prompt = ft_strdup("heredoc> ");
 	while (1)
 	{
-		ft_putstr_fd(prompt, 2);
-		line = readline("");
+		line = readline(prompt);
 		if (!line)
 		{
 			display_heredoc_eof_warning(limiter);
