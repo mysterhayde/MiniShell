@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 17:10:09 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/24 22:11:45 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/25 11:12:59 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -250,6 +250,7 @@ size_t	expanded_size(char *str, char **envp);
 char	**sort_wildcard_tab(char **tab);
 char	**search_wildcard(t_token *token);
 char	*expand_string(char *str, char **envp);
+char	*get_directory(char **wildcard, char **prefix);
 char	**read_dir(char *pwd, int args, char *wildcard);
 
 int		ft_tablen(char **tab);

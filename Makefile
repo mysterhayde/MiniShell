@@ -42,7 +42,7 @@ PARS_DIR = src/parsing/
 PARS = $(addprefix $(PARS_DIR), $(PARS_SRC))
 
 BEF_EXEC = check_string.c expand_string.c clear_quotes.c wildcard.c read_dir.c \
-		   wildcard_utils.c wildcard_cmp.c
+		   wildcard_utils.c wildcard_cmp.c wildcard_getdir.c
 BEF_DIR  = src/before_exec/
 BEFORE = $(addprefix $(BEF_DIR), $(BEF_EXEC))
 

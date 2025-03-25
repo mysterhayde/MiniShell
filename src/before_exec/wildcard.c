@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 16:46:21 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/03/24 16:47:30 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/25 11:42:34 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,42 +53,48 @@ static char	**combine_tabs(char **cmd, char **wildcard_tab, int k)
 	if (!new_tab)
 		return (NULL);
 	new_tab[i] = NULL;
-	return (free_tab(cmd), new_tab);
+	return (free_tab(wildcard_tab), free_tab(cmd), new_tab);
 }
 
-char	**wildcard(char *pwd, char **cmd, char *wildcard, int i)
+static char	**wildcard(char **cmd, char *wildcard, int i)
 {
 	int		args;
+	char	*cwd;
+	char	*prefix;
 	char	**files;
-	char	**result;
 
+	args = 1;
+	prefix = NULL;
+	cwd = get_directory(&wildcard, &prefix);
+	if (!cwd)
+		return (NULL);
 	if (!ft_strcmp(wildcard, "*"))
 		args = 0;
-	else
-		args = 1;
-	files = read_dir(pwd, args, wildcard);
+	files = read_dir(cwd, args, wildcard);
 	if (!files)
 		return (cmd);
 	files = sort_wildcard_tab(files);
-	result = combine_tabs(cmd, files, i);
-	return (free_tab(files), result);
+	files = combine_tabs(cmd, files, i);
+	return (free(cwd), files);
 }
 
 char	**search_wildcard(t_token *token)
 {
 	int		i;
-	char	current_path[PATH_MAX + 1];
+	char	*wildcard_cpy;
 
 	i = 0;
 	while (token->cmd[i])
 	{
-		if (getcwd(current_path, PATH_MAX) == NULL)
-			return (show_err_msg("getcwd", "getcwd failed"), NULL);
 		if (search_wildcard_char(token->cmd[i]))
 		{
-			token->cmd = wildcard(current_path, token->cmd, token->cmd[i], i);
+			wildcard_cpy = ft_strdup(token->cmd[i]);
+			if (!wildcard_cpy)
+				return (show_err_msg("Malloc", "Allocation failed"), NULL);
+			token->cmd = wildcard(token->cmd, token->cmd[i], i);
 			if (!token->cmd)
-				return (show_err_msg("wildcard", "wildcard failed"), NULL);
+				return (show_err_msg("wildcard", "Wildcard failed"), NULL);
+			free(wildcard_cpy);
 		}
 		i++;
 	}
