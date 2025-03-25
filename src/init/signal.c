@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 13:43:01 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/25 16:39:53 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/25 16:17:09 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ static void	handle_signal(int signal)
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
+		g_signo = 1;
 	}
 }
 
