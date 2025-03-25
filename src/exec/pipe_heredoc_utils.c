@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 13:29:30 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/24 13:29:46 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/25 17:26:05 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,7 @@ static int	execute_cmd_in_pipe(t_mini *mini, t_pipe *p, int i)
 	p->pids[i] = exec_pipe_cmd_with_heredoc(mini, i, p->pipe_fds);
 	if (p->pids[i] == -1)
 	{
-		free(p->pipe_fds);
-		free(p->pids);
+		free_pipe_resources(p);
 		return (1);
 	}
 	return (0);

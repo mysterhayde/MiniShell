@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 17:10:09 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/25 13:40:15 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/25 17:31:17 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,6 +176,9 @@ t_bool	is_valid_identifier(char *str);
 int		echo(char **cmd);
 int		unset(t_mini *mini, char **cmd);
 int		exit_builtin(t_mini *mini, char **cmd);
+void	child_process_exit(t_mini *mini, int status);
+void	safe_exit(t_mini *mini, int exit_code);
+int		handle_exit_in_pipe(t_mini *mini, char **cmd);
 char	*expand(char *str, char **envp);
 
 /*--------------------------------- Execute ---------------------------------*/
@@ -262,6 +265,9 @@ char	**read_dir(char *pwd, int args, char *wildcard);
 int		ft_tablen(char **tab);
 int		search_wildcard_char(char *str);
 int		check_string(t_mini *mini, t_token *cmd_token);
+char	*search_error_code(int return_code, char *str);
+char	*replace_error_code(char *str, int i, int return_code);
+char	*expand_error_code(char *str, int return_code);
 int		compare_wildcard_and_file(char *file, char *wildcard);
 
 void	fix_index(t_token *cmd_token);
@@ -301,6 +307,7 @@ int		count_heredocs(t_token *token);
 
 /*---------------------------------- Error ----------------------------------*/
 
+void	free_pipe_resources(t_pipe *p);
 void	free_all(t_mini *mini);
 void	show_err_msg(char *cmd, char *error);
 void	show_error_exit(char *cmd, char *error, int code);

@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 16:50:34 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/09 12:59:15 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/25 17:53:02 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,8 +96,7 @@ int	run_pipe_commands(t_mini *mini, t_pipe *p)
 		if (p->pids[i] == -1)
 		{
 			close_all_pipes(mini->pipe_num, p->pipe_fds);
-			free(p->pipe_fds);
-			free(p->pids);
+			free_pipe_resources(p);
 			return (1);
 		}
 		if (i < mini->pipe_num)
@@ -120,7 +119,6 @@ int	wait_pipe_children(t_mini *mini, t_pipe *p)
 	int	last_status;
 
 	close_all_pipes(mini->pipe_num, p->pipe_fds);
-	free(p->pipe_fds);
 	i = 0;
 	last_status = 0;
 	while (i <= mini->pipe_num)
@@ -132,10 +130,10 @@ int	wait_pipe_children(t_mini *mini, t_pipe *p)
 			last_status = WEXITSTATUS(status);
 		i++;
 	}
-	free(p->pids);
 	setup_signal_handlers();
 	if (last_status == 0 && mini->ret != 0)
 		last_status = mini->ret;
 	mini->ret = last_status;
+	free_pipe_resources(p);
 	return (last_status);
 }
