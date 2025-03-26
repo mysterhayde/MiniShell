@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 16:40:34 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/03/26 17:19:08 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/26 17:36:59 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,24 +32,24 @@ static int	handle_var_error(char *cmd)
  * @param return_code Last command's return code
  * @return 0 on success, error code on failure
  */
-int	transform_string(t_token *current, char **envp, int return_code)
+int	transform_string(t_token *token, char **envp, int return_code)
 {
 	int		j;
 	int		error;
 
 	j = 0;
 	error = 0;
-	while (current->cmd[j])
+	while (token->cmd[j])
 	{
-		current->cmd[j] = search_variable(current->cmd[j], envp, &error);
-		if (error || !current->cmd[j])
-			return (handle_var_error(current->cmd[0]));
-		current->cmd[j] = search_error_code(return_code, current->cmd[j]);
-		if (ft_strchr(current->cmd[j], '\"') || ft_strchr(current->cmd[j], '\''))
+		token->cmd[j] = search_variable(token->cmd[j], envp, &error);
+		if (error || !token->cmd[j])
+			return (handle_var_error(token->cmd[0]));
+		token->cmd[j] = search_error_code(return_code, token->cmd[j]);
+		if (ft_strchr(token->cmd[j], '\"') || ft_strchr(token->cmd[j], '\''))
 		{
-			current->cmd[j] = clean_quote(current->cmd[j]);
-			if (!current->cmd[j])
-				return (handle_var_error(current->cmd[0]));
+			token->cmd[j] = clean_quote(token->cmd[j]);
+			if (!token->cmd[j])
+				return (handle_var_error(token->cmd[0]));
 		}
 		j++;
 	}
