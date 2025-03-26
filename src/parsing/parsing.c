@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 10:00:47 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/03/26 15:44:43 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/26 17:15:19 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,11 @@ static char	*allocate_tokens(char *str, t_mini *mini)
 	else if (!mini->token)
 		add_last_token(str, mini, CMD);
 	else if (mini->token->type == RDIT)
+	{
+		if (ft_strchr(str, '\'') || ft_strchr(str, '\"'))
+			str = clean_quote(str);
 		add_last_token(str, mini, FILES);
+	}
 	else if (mini->token->type == HERE_DOC)
 		add_last_token(str, mini, LIMITER);
 	else if (mini->token->type == PIPE || mini->token->type == AND_OP
