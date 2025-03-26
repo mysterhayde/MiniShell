@@ -6,27 +6,27 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 17:10:09 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/26 17:21:07 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/26 17:48:14 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include <unistd.h>
+# include <errno.h>
+# include <fcntl.h>
 # include <stdio.h>
-# include <stdlib.h>
+# include <dirent.h>
+# include <limits.h>
+# include <unistd.h>
 # include <signal.h>
+# include <stdlib.h>
+# include <string.h>
+# include <sys/stat.h>
 # include <sys/wait.h>
 # include <sys/types.h>
-# include <sys/stat.h>
-# include <dirent.h>
-# include <string.h>
-# include <errno.h>
-# include <limits.h>
-# include <fcntl.h>
-# include <readline/readline.h>
 # include <readline/history.h>
+# include <readline/readline.h>
 # include "../libft/libft.h"
 
 # define ERR_MALLOC		"memory allocation failed"
@@ -143,91 +143,101 @@ extern int	g_signo;
 
 /*---------------------------------- INIT ------------------------------------*/
 
-void	getcurpath(t_mini *mini);
-void	setupenv(t_mini *mini, char **envp);
-void	init_readline_history(t_mini *mini);
-void	add_to_history(t_mini *mini, const char *command);
-void	cleanup_history(void);
-void	load_history_from_file(t_mini *mini);
-void	save_history_to_file(t_mini *mini, const char *command);
-void	process_history_lines(char **lines);
-char	*get_history_path(t_mini *mini);
-int		setup_signal_handlers(t_mini *mini);
-void	reset_signals_for_child(void);
 int		check_signal_interrupt(void);
-char	*get_prompt(t_mini *mini);
+int		setup_signal_handlers(t_mini *mini);
+
+void	cleanup_history(void);
 void	free_env_arr(char **env);
+void	getcurpath(t_mini *mini);
+void	reset_signals_for_child(void);
+void	setupenv(t_mini *mini, char **envp);
+void	process_history_lines(char **lines);
+void	init_readline_history(t_mini *mini);
+void	load_history_from_file(t_mini *mini);
+void	add_to_history(t_mini *mini, const char *command);
+void	save_history_to_file(t_mini *mini, const char *command);
+
+char	*get_prompt(t_mini *mini);
+char	*get_history_path(t_mini *mini);
 
 /*--------------------------------- Builtins --------------------------------*/
 
 int		pwd(t_mini *mini);
-int		cd(t_mini *mini, char **cmd);
-char	*expand_tilde(char *path, char **envp);
-int		env(t_mini *mini);
-char	*get_env_value(char **env, const char *name);
-int		match_var_name(const char *env_var, const char *var_name);
-int		export(t_mini *mini, char **cmd);
-char	**add_env_var(char **envp, char *new_var);
-int		print_export_list(char	**envp);
-char	**update_env_var(char **envp, char *var_name, char *new_var);
-char	**copy_env(char **env);
-size_t	get_env_size(char **env);
-t_bool	is_valid_identifier(char *str);
 int		echo(char **cmd);
+int		env(t_mini *mini);
+int		cd(t_mini *mini, char **cmd);
 int		unset(t_mini *mini, char **cmd);
+int		print_export_list(char	**envp);
+int		export(t_mini *mini, char **cmd);
 int		exit_builtin(t_mini *mini, char **cmd);
-void	child_process_exit(t_mini *mini, int status);
-void	safe_exit(t_mini *mini, int exit_code);
 int		handle_exit_in_pipe(t_mini *mini, char **cmd);
+int		match_var_name(const char *env_var, const char *var_name);
+
+char	**copy_env(char **env);
 char	*expand(char *str, char **envp);
+char	*expand_tilde(char *path, char **envp);
+char	**add_env_var(char **envp, char *new_var);
+char	*get_env_value(char **env, const char *name);
+char	**update_env_var(char **envp, char *var_name, char *new_var);
+
+void	safe_exit(t_mini *mini, int exit_code);
+void	child_process_exit(t_mini *mini, int status);
+
+size_t	get_env_size(char **env);
+
+t_bool	is_valid_identifier(char *str);
 
 /*--------------------------------- Execute ---------------------------------*/
 
-void	execute(t_mini *mini);
 int		is_builtin(char *cmd);
-int		exec_builtin(t_mini *mini, char **cmd);
-int		exec_bin(t_mini *mini, char **cmd);
 int		minipipe(t_mini *mini);
-void	find_cmd(t_mini *mini);
-int		exec_pipe_cmd(t_mini *mini, int i, int *pipe_fds);
-int		wait_pipe_children(t_mini *mini, t_pipe *p);
+int		exec_bin(t_mini *mini, char **cmd);
+int		exec_builtin(t_mini *mini, char **cmd);
 int		run_pipe_commands(t_mini *mini, t_pipe *p);
-void	close_all_pipes(int pipe_count, int *pipe_fds);
+int		wait_pipe_children(t_mini *mini, t_pipe *p);
 int		create_pipes(int pipe_count, int **pipe_fds);
 int		wait_for_children(t_mini *mini, pid_t *pids);
+int		exec_pipe_cmd(t_mini *mini, int i, int *pipe_fds);
+
+void	execute(t_mini *mini);
+void	find_cmd(t_mini *mini);
+void	close_all_pipes(int pipe_count, int *pipe_fds);
 
 /*---------------------------------- Redir ----------------------------------*/
 
+int		apply_redir(t_token *token);
+int		exec_parenthesis(t_mini *mini);
 int		open_file_input(char *filename);
 int		open_file_output(char *filename);
 int		open_file_append(char *filename);
+int		check_paren_balance(t_token *token);
+int		process_single_redir(t_token *current);
+int		apply_paren_redirections(t_token *token);
+int		exec_sublist(t_mini *mini, t_token *sublist);
+int		exec_paren_expr(t_mini *mini, t_token *token);
+int		exec_logical_ops(t_mini *mini, t_token *token);
+int		exec_redirections(t_mini *mini, t_token *token);
+int		exec_paren_with_redir(t_mini *mini, t_token *token);
+int		exec_paren_logical_ops(t_mini *mini, t_token *token);
+int		exec_logical_with_redir(t_mini *mini, t_token *token);
+int		exec_logical_op_with_parens(t_mini *mini, t_token *token);
+
 void	save_std_fds(int saved_fd[2]);
 void	restore_std_fds(int saved_fd[2]);
-int		apply_redir(t_token *token);
-t_token	*skip_redirections(t_token *token);
-int		exec_redirections(t_mini *mini, t_token *token);
-int		process_single_redir(t_token *current);
-t_token	*create_command_sublist(t_token *start, t_token *end);
-int		check_paren_balance(t_token *token);
-int		apply_paren_redirections(t_token *token);
-t_token	*find_next_logical_op(t_token *token);
-int		exec_logical_ops(t_mini *mini, t_token *token);
-int		exec_paren_expr(t_mini *mini, t_token *token);
-t_token	*find_next_logical(t_token *token);
-t_token	*find_matching_paren(t_token *token);
-t_bool	has_parentheses(t_token *token);
-int		exec_parenthesis(t_mini *mini);
-t_token	*skip_paren_expr(t_token *token);
-t_token	*find_next_logical_op_with_parens(t_token *token);
-int		exec_logical_op_with_parens(t_mini *mini, t_token *token);
-int		exec_paren_logical_ops(t_mini *mini, t_token *token);
-int		exec_paren_with_redir(t_mini *mini, t_token *token);
-int		exec_logical_with_redir(t_mini *mini, t_token *token);
-t_bool	has_logical_ops(t_token *token);
 void	save_exec_state(t_mini *mini, t_state *state);
 void	restore_exec_state(t_mini *mini, t_state *state);
-int		exec_sublist(t_mini *mini, t_token *sublist);
+
+t_bool	has_logical_ops(t_token *token);
+t_bool	has_parentheses(t_token *token);
+
 t_token	*copy_token(t_token *token);
+t_token	*skip_paren_expr(t_token *token);
+t_token	*find_next_logical(t_token *token);
+t_token	*skip_redirections(t_token *token);
+t_token	*find_next_logical_op(t_token *token);
+t_token	*find_matching_paren(t_token *token);
+t_token	*find_next_logical_op_with_parens(t_token *token);
+t_token	*create_command_sublist(t_token *start, t_token *end);
 
 /*---------------------------------- Path -----------------------------------*/
 
@@ -265,53 +275,58 @@ char	**read_dir(char *pwd, int args, char *wildcard);
 int		ft_tablen(char **tab);
 int		search_wildcard_char(char *str);
 int		check_string(t_mini *mini, t_token *cmd_token);
-char	*search_error_code(int return_code, char *str);
-char	*replace_error_code(char *str, int i, int return_code);
-char	*expand_error_code(char *str, int return_code);
 int		compare_wildcard_and_file(char *file, char *wildcard);
+
+char	*search_error_code(int return_code, char *str);
+char	*expand_error_code(char *str, int return_code);
+char	*replace_error_code(char *str, int i, int return_code);
 
 void	fix_index(t_token *cmd_token);
 
 /*------------------------------- Redirection -------------------------------*/
 
-// int		here_doc(char *limiter);
+int		count_heredocs(t_token *token);
 int		create_temp_file(char **temp_name);
-char	*generate_temp_name(int counter);
-void	reset_heredoc_processed_flags(t_token *token);
-int		scan_and_execute_heredocs(t_mini *mini);
-int		scan_and_execute_all_heredocs(t_mini *mini);
-int		here_doc_with_num(t_mini *mini, char *limiter, int heredoc_num);
-void	here_doc_child_with_num(t_mini *mini, char *limiter, int temp_fd,
-			int heredoc_num);
-char	*create_heredoc_prompt(int heredoc_num);
-int		is_delimiter(char *line, char *delimiter);
-void	free_heredoc_arrays(t_mini *mini);
-int		handle_heredoc_redirection(t_mini *mini, t_token *token);
-int		process_single_redir_with_heredoc(t_mini *mini, t_token *token);
-t_token	*find_next_pipe_token(t_token *token);
-int		exec_pipe_cmd_with_heredoc(t_mini *mini, int i, t_pipe *p);
-int		run_pipe_commands_with_heredoc(t_mini *mini, t_pipe *p);
-int		exec_redirections_with_heredoc(t_mini *mini, t_token *token);
 int		minipipe_with_heredoc(t_mini *mini);
-int		exec_paren_with_redir_heredoc(t_mini *mini, t_token *token);
-int		exec_logical_with_redir_heredoc(t_mini *mini, t_token *token);
+int		scan_and_execute_heredocs(t_mini *mini);
+int		is_delimiter(char *line, char *delimiter);
+int		scan_and_execute_all_heredocs(t_mini *mini);
+int		allocate_heredoc_arrays(t_mini *mini, int count);
+int		exec_logical_ops_heredoc(t_mini *mini, t_token *token);
 int		apply_redir_with_heredoc(t_mini *mini, t_token *token);
+int		run_pipe_commands_with_heredoc(t_mini *mini, t_pipe *p);
+int		handle_heredoc_redirection(t_mini *mini, t_token *token);
+int		exec_pipe_cmd_with_heredoc(t_mini *mini, int i, t_pipe *p);
+int		exec_paren_with_redir_heredoc(t_mini *mini, t_token *token);
+int		exec_redirections_with_heredoc(t_mini *mini, t_token *token);
+int		process_single_heredoc(t_mini *mini, t_token *current, int i);
+int		exec_logical_with_redir_heredoc(t_mini *mini, t_token *token);
+int		here_doc_with_num(t_mini *mini, char *limiter, int heredoc_num);
+int		process_single_redir_with_heredoc(t_mini *mini, t_token *token);
 int		process_remaining_cmds(t_mini *mini, t_token *tokens, t_bool condition);
 int		process_remaining_cmds_heredoc(t_mini *mini, t_token *tokens,
 			t_bool condition);
-int		exec_logical_ops_heredoc(t_mini *mini, t_token *token);
+
+char	*generate_temp_name(int counter);
+char	*create_heredoc_prompt(int heredoc_num);
+
+void	free_heredoc_arrays(t_mini *mini);
+void	reset_heredoc_processed_flags(t_token *token);
+void	here_doc_child_with_num(t_mini *mini, char *limiter, int temp_fd,
+			int heredoc_num);
+
 t_bool	is_parenthesis_cmd(t_token *token);
-int		process_single_heredoc(t_mini *mini, t_token *current, int i);
-int		allocate_heredoc_arrays(t_mini *mini, int count);
-int		count_heredocs(t_token *token);
+
+t_token	*find_next_pipe_token(t_token *token);
 
 /*---------------------------------- Error ----------------------------------*/
 
-void	free_pipe_resources(t_pipe *p);
+int		show_err_return(char *cmd, char *err, int code);
+
 void	free_all(t_mini *mini);
+void	show_cmd_not_found(char *cmd);
+void	free_pipe_resources(t_pipe *p);
 void	show_err_msg(char *cmd, char *error);
 void	show_error_exit(char *cmd, char *error, int code);
-int		show_err_return(char *cmd, char *err, int code);
-void	show_cmd_not_found(char *cmd);
 
 #endif

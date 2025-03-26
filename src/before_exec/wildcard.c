@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 16:46:21 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/03/25 15:59:50 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/26 21:38:10 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static char	**add_prefix(char **tab, char *prefixe)
 	{
 		new_file = ft_strjoin(prefixe, tab[i]);
 		if (!new_file)
-			return(NULL);
+			return (NULL);
 		free(tab[i]);
 		tab[i] = new_file;
 		i++;
@@ -48,12 +48,10 @@ static char	**combine_utils(char **cmd_dest, char **cmd_src, int *pos, int j)
 static char	**combine_tabs(char **cmd, char **wildcard_tab, int k)
 {
 	int		i;
-	int		j;
 	int		args;
 	char	**new_tab;
 
 	i = -1;
-	j = 0;
 	args = (ft_tablen(cmd) - 1) + ft_tablen(wildcard_tab);
 	new_tab = malloc(sizeof(char *) * (args + 1));
 	if (!new_tab)
@@ -64,14 +62,15 @@ static char	**combine_tabs(char **cmd, char **wildcard_tab, int k)
 		if (!new_tab[i])
 			return (free_tab(new_tab), NULL);
 	}
-	new_tab = combine_utils(new_tab, wildcard_tab, &i, j);
+	new_tab = combine_utils(new_tab, wildcard_tab, &i, 0);
 	if (!new_tab)
 		return (NULL);
 	new_tab = combine_utils(new_tab, cmd, &i, k + 1);
 	if (!new_tab)
 		return (NULL);
 	new_tab[i] = NULL;
-	return (free_tab(cmd), new_tab);
+	safe_free_tab((void ***)&cmd);
+	return (safe_free_tab((void ***)&wildcard_tab), new_tab);
 }
 
 static char	**wildcard(char **cmd, char *wildcard, int i)
@@ -90,14 +89,16 @@ static char	**wildcard(char **cmd, char *wildcard, int i)
 	if (!ft_strcmp(wildcard, "*"))
 		args = 0;
 	files = read_dir(cwd, args, wildcard);
+	safe_free((void **)&wildcard);
 	if (!files)
-		return (cmd);
+		return (safe_free((void **)&cwd), cmd);
 	files = sort_wildcard_tab(files);
 	if (prefix)
 		if (add_prefix(files, prefix) == NULL)
-			return (NULL);
+			return (safe_free((void **)&prefix), free(cwd), NULL);
+	safe_free((void **)&prefix);
 	result = combine_tabs(cmd, files, i);
-	return (result);
+	return (safe_free((void **)&cwd), result);
 }
 
 char	**search_wildcard(t_token *token)
@@ -116,7 +117,7 @@ char	**search_wildcard(t_token *token)
 			token->cmd = wildcard(token->cmd, wildcard_cpy, i);
 			if (!token->cmd)
 				return (show_err_msg("wildcard", "Wildcard failed"), NULL);
-			//free(wildcard_cpy);
+			safe_free((void **)&wildcard_cpy);
 		}
 		i++;
 	}

@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 12:00:00 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/26 17:19:22 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/26 17:52:00 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,6 @@ static void	read_heredoc_lines(char *limiter, int temp_fd, int heredoc_num)
 void	here_doc_child_with_num(t_mini *mini, char *limiter, int temp_fd,
 			int heredoc_num)
 {
-	//SIGNAL HANDLE
-	
 	read_heredoc_lines(limiter, temp_fd, heredoc_num);
 	close(temp_fd);
 	free_all(mini);

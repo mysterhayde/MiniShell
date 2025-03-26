@@ -6,13 +6,13 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 15:04:03 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/26 16:04:17 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/26 17:50:58 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int g_signo = 0;
+int	g_signo = 0;
 
 int	check_entry(char *entry, t_mini *mini)
 {

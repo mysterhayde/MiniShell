@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_heredoc.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
+/*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 13:39:40 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/25 17:54:58 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/26 17:49:42 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ static int	prepare_pipe(t_mini *mini, t_pipe *p)
 	}
 	return (0);
 }
-
 
 /**
  * @brief Executes a pipeline with preprocessed heredocs
