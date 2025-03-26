@@ -3,15 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
+/*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 13:43:01 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/25 16:17:09 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/26 16:03:41 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <signal.h>
-#include <unistd.h>
 #include "../../include/minishell.h"
 
 static void	handle_signal(int signal)
