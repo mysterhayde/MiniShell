@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bin.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
+/*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 13:48:58 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/25 12:59:06 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/26 17:19:13 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@ static void	child_process(char *path, char **cmd, t_mini *mini)
 {
 	struct stat	path_stat;
 
-	signal(SIGINT, SIG_DFL);
-	signal(SIGQUIT, SIG_DFL);
 	if (access(path, F_OK) == -1)
 	{
 		free(path);
@@ -43,11 +41,13 @@ static void	child_process(char *path, char **cmd, t_mini *mini)
 static int	handle_parent(char *path, pid_t pid)
 {
 	int	status;
+	void (*old_int)(int);
 
+	old_int = signal(SIGINT, SIG_IGN); //test
 	free(path);
 	if (waitpid(pid, &status, 0) == -1)
 		return (show_err_return("waitpid", "Wait failed", ERR_GENERAL));
-	setup_signal_handlers();
+	signal(SIGINT, old_int);
 	if (WIFSIGNALED(status))
 	{
 		if (WTERMSIG(status) == SIGINT)
@@ -77,7 +77,10 @@ static int	execute_direct(char *path, char **cmd, t_mini *mini)
 		return (show_err_return(cmd[0], "fork failed", 126));
 	}
 	if (pid == 0)
+	{
+		signal(SIGINT, SIG_DFL);
 		child_process(path, cmd, mini);
+	}
 	return (handle_parent(path, pid));
 }
 

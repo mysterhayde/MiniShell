@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_wait.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
+/*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 16:55:01 by cbopp             #+#    #+#             */
-/*   Updated: 2025/02/18 17:04:57 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/26 16:58:29 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,10 @@ int	wait_for_children(t_mini *mini, pid_t *pids)
 {
 	int	i;
 	int	status;
+	void (*old_int)(int); //test
 
 	i = 0;
+	old_int = signal(SIGINT, SIG_IGN);
 	while (i <= mini->pipe_num)
 	{
 		waitpid(pids[i], &status, 0);
@@ -25,5 +27,6 @@ int	wait_for_children(t_mini *mini, pid_t *pids)
 			mini->ret = 128 + WTERMSIG(status);
 		i++;
 	}
+	signal(SIGINT, old_int);
 	return (mini->ret);
 }

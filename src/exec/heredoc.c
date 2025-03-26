@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
+/*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 15:34:38 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/03/25 13:57:05 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/26 17:19:25 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,12 @@ static int	wait_here_doc(pid_t pid, int temp_fd, char *temp_name)
 {
 	int	status;
 	int	read_fd;
-
+	void (*old_int)(int); //test
+	
 	close(temp_fd);
+	old_int = signal(SIGINT, SIG_IGN);
 	waitpid(pid, &status, 0);
+	signal(SIGINT, old_int);
 	if (WIFEXITED(status) && WEXITSTATUS(status) != 0)
 	{
 		unlink(temp_name);
