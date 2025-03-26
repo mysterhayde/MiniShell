@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_utils2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
+/*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 12:00:00 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/25 12:06:57 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/26 16:08:59 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,8 @@ static void	read_heredoc_lines(char *limiter, int temp_fd, int heredoc_num)
  */
 void	here_doc_child_with_num(char *limiter, int temp_fd, int heredoc_num)
 {
-	signal(SIGINT, SIG_DFL);
-	signal(SIGQUIT, SIG_IGN);
+	//SIGNAL HANDLE
+	
 	read_heredoc_lines(limiter, temp_fd, heredoc_num);
 	close(temp_fd);
 	exit(0);

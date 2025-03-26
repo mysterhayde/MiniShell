@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_heredoc.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
+/*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 13:29:13 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/24 13:29:14 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/26 16:42:11 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,6 @@ int	exec_pipe_cmd_with_heredoc(t_mini *mini, int i, int *pipe_fds)
 	if (pid == 0)
 	{
 		signal(SIGINT, SIG_DFL);
-		signal(SIGQUIT, SIG_DFL);
 		handle_pipe_child_with_heredoc(mini, i, pipe_fds);
 		cmd_token = skip_redirections(mini->token);
 		if (cmd_token && cmd_token->cmd && cmd_token->cmd[0])
