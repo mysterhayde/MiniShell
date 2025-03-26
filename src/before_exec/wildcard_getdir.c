@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 16:46:24 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/03/25 13:01:49 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/25 16:10:42 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ static int search_path(char **wildcard_src, char **path_src)
 	char	*temp;
 	
 	i = -1;
+	path = NULL;
 	wildcard = *wildcard_src;
 	size = pathlen(wildcard);
 	if (size)
@@ -52,30 +53,27 @@ static int search_path(char **wildcard_src, char **path_src)
 	temp = ft_strdup(wildcard + size);
 	if (!*wildcard)
 		return (-1);
-	free(wildcard);
 	*(wildcard_src) = temp;
-	return (0);
+	return (free(wildcard), 0);
 }
 
-char	*get_directory(char **wildcard, char **prefix) 	//if str[0] is a . add current path and add "./" before all file
+char	*get_directory(char **wildcard, char **prefix)
 {
-	char	*cwd;
-	char	*path;
+	char	*path;									//if str[0] is a . add current path and add "./" before all file
+	char	*temp;
 	char	current_path[PATH_MAX + 1];
 
-	(void) cwd;
 	path = NULL;
+	*(prefix) = NULL;
 	if (search_path(wildcard, prefix) == -1)
 		return (NULL);
-	printf("PREFIX %p\n", *prefix);
-	if (*wildcard[0] == '/')
-		return (path);
-	if (getcwd(current_path ,PATH_MAX) == NULL)
+	if (*prefix && *prefix[0] == '/')
+		return (*prefix);
+	if (getcwd(current_path, PATH_MAX) == NULL)
 		return (NULL);
-	if (!prefix)
+	if (*(prefix) == NULL)
 		return (ft_strdup(current_path));
-	printf("Wildcard %s\n", *wildcard);
-	printf("Prefix %p\n", *prefix);
-	printf("PATH %s\n", path);
+	temp = ft_strjoin(current_path, "/");
+	path = ft_strjoin(temp, *prefix);
 	return (path);
 }

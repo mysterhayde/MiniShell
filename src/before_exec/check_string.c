@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_string.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
+/*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 16:40:34 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/03/25 17:11:58 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/26 17:19:08 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	transform_string(t_token *current, char **envp, int return_code)
 		if (error || !current->cmd[j])
 			return (handle_var_error(current->cmd[0]));
 		current->cmd[j] = search_error_code(return_code, current->cmd[j]);
-		if (strchr(current->cmd[j], '\"') || strchr(current->cmd[j], '\''))
+		if (ft_strchr(current->cmd[j], '\"') || ft_strchr(current->cmd[j], '\''))
 		{
 			current->cmd[j] = clean_quote(current->cmd[j]);
 			if (!current->cmd[j])

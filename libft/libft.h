@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 13:27:54 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/03/22 01:50:36 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/25 16:12:15 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@
 
 //-------------------------------- COLORS --------------------------------------
 
+# define COLOR_START		"\001"
+# define COLOR_END			"\002"
 # define COLOR_RED 			"\x1b[31m"
 # define COLOR_RED_ULTRA	"\x1b[31;1m"
 # define COLOR_GREEN 		"\x1b[32m"
