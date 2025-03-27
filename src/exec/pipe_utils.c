@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 16:50:34 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/26 17:20:21 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/27 14:54:21 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,7 @@ int	wait_pipe_children(t_mini *mini, t_pipe *p)
 	if (WTERMSIG(status) == SIGINT)
 	write(STDERR_FILENO, "\n", 1);		//test
 	signal(SIGINT, old_int);
-	free(p->pids);
+	// safe_free((void **) p->pids);
 	if (last_status == 0 && mini->ret != 0)
 		last_status = mini->ret;
 	mini->ret = last_status;
