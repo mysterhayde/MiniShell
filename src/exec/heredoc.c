@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 15:34:38 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/03/27 22:37:54 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/27 22:55:03 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ static int	wait_here_doc(pid_t pid, int temp_fd, char *temp_name)
 {
 	int	status;
 	int	read_fd;
+
 	void (*old_int)(int); //test
-	
 	close(temp_fd);
 	old_int = signal(SIGINT, SIG_IGN);
 	waitpid(pid, &status, 0);
