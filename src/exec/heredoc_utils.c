@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 15:22:18 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/25 13:54:36 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/27 17:41:39 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,6 @@ int	create_temp_file(char **temp_name)
 	int		counter;
 
 	counter = 0;
-	if (*temp_name)
-		free(*temp_name);
 	*temp_name = NULL;
 	while (counter < 1000)
 	{
