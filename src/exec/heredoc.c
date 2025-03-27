@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 15:34:38 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/03/26 17:19:25 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/27 22:37:54 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ int	here_doc_with_num(t_mini *mini, char *limiter, int heredoc_num)
 	}
 	if (pid == 0)
 	{
-		unlink(temp_name);
 		free(temp_name);
 		here_doc_child_with_num(mini, limiter, temp_fd, heredoc_num);
 	}
