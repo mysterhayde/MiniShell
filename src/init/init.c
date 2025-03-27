@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
+/*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 15:03:54 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/25 13:34:50 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/27 09:38:23 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,22 +20,6 @@ void	getcurpath(t_mini *mini)
 	if (mini->cur_path != NULL)
 		return ;
 	perror("Pwd");
-}
-
-/**
- * @brief Gets USER from env
- * @param t_mini *mini
- */
-static void	getuser(t_mini *mini)
-{
-	int	i;
-
-	i = 0;
-	while (mini->envp[i] && ft_strnstr(mini->envp[i], "USER=", 5) == 0)
-	{
-		i++;
-	}
-	mini->user = ft_strjoin(COLOR_BLUE, mini->envp[i] + 5);
 }
 
 static char	**make_env(void)
@@ -57,6 +41,6 @@ void	setupenv(t_mini *mini, char **envp)
 		mini->envp = make_env();
 	else
 		mini->envp = copy_env(envp);
-	getuser(mini);
+	//getuser(mini);
 	getcurpath(mini);
 }

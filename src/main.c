@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 15:04:03 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/26 17:50:58 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/27 09:48:34 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,15 +41,16 @@ static void	process_input(t_mini *mini, char *entry)
  */
 void	init(t_mini *mini, char **envp)
 {
-	mini->exit = 0;
 	mini->ret = 0;
+	mini->exit = 0;
+	mini->envp = NULL;
+	mini->user = NULL;
 	mini->token = NULL;
 	mini->backup = NULL;
 	mini->last_cmd = NULL;
-	mini->envp = NULL;
 	mini->isheredoc = FALSE;
-	mini->heredoc_tokens = NULL;
 	mini->heredoc_fds = NULL;
+	mini->heredoc_tokens = NULL;
 	mini->heredoc_count = 0;
 	setupenv(mini, envp);
 	init_readline_history(mini);
