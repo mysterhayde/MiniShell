@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 13:39:40 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/25 12:55:45 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/25 13:28:02 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int	exec_paren_with_redir_heredoc(t_mini *mini, t_token *token)
 	if (has_logical_ops(mini->token))
 		ret = exec_logical_ops(mini, mini->token);
 	else
-		ret = exec_redirections_with_heredoc(mini, mini->token);
+		ret = check_string(mini, mini->token);
 	mini->token = prev_token;
 	return (ret);
 }
@@ -107,11 +107,11 @@ int	exec_logical_with_redir_heredoc(t_mini *mini, t_token *token)
 		return (0);
 	next_op = find_next_logical(token);
 	if (!next_op)
-		return (exec_redirections_with_heredoc(mini, token));
+		return (check_string(mini, token));
 	if (has_parentheses(token))
 		ret = exec_paren_with_redir_heredoc(mini, token);
 	else
-		ret = exec_redirections_with_heredoc(mini, token);
+		ret = check_string(mini, token);
 	if (next_op->type == AND_OP)
 		return (process_remaining_cmds_heredoc(mini, next_op->next, ret == 0));
 	else if (next_op->type == OR_OP)
