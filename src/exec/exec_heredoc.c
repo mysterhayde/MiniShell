@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_heredoc.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 13:39:40 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/26 17:49:42 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/27 14:50:29 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static int	prepare_pipe(t_mini *mini, t_pipe *p)
 	p->pids = malloc(sizeof(pid_t) * (mini->pipe_num + 1));
 	if (!p->pids)
 	{
-		free(p->pipe_fds);
+		safe_free((void **) p->pipe_fds);
 		p->pipe_fds = NULL;
 		return (1);
 	}
