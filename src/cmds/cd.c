@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 15:03:34 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/11 14:28:25 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/27 17:38:38 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ int	cd(t_mini *mini, char **cmd)
 	char	current_dir[PATH_MAX];
 	char	*path;
 
-	if (cmd[2])
+	if (cmd[1] && cmd[2])
 		return (show_err_return("cd", "too many arguments", ERR_GENERAL));
 	if (getcwd(current_dir, PATH_MAX) == NULL)
 		return (show_err_return("cd", strerror(errno), ERR_GENERAL));
