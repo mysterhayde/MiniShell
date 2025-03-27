@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 17:10:09 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/26 17:48:14 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/27 22:37:16 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 # include "../libft/libft.h"
 
 # define ERR_MALLOC		"memory allocation failed"
-# define ERR_PERMISSION	"permiss`ion denied"
+# define ERR_PERMISSION	"permission denied"
 # define ERR_TOOMANY	"too many arguments"
 # define ERR_NOVALID	"not a valid identifier"
 # define ERR_NOTNUMERIC	"numeric argument required"
