@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 17:10:09 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/27 22:37:16 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/27 22:51:34 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,6 @@ typedef struct s_mini
 {
 	char		**envp;
 	char		*user;
-	char		*cur_path;
 	int			pipe_num;
 	t_token		**heredoc_tokens;
 	int			heredoc_count;
@@ -162,7 +161,7 @@ char	*get_history_path(t_mini *mini);
 
 /*--------------------------------- Builtins --------------------------------*/
 
-int		pwd(t_mini *mini);
+int		pwd(void);
 int		echo(char **cmd);
 int		env(t_mini *mini);
 int		cd(t_mini *mini, char **cmd);

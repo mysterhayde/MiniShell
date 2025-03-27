@@ -6,21 +6,22 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 15:03:54 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/25 13:34:50 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/27 22:50:55 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	getcurpath(t_mini *mini)
-{
-	char	buf[BUFFER_SIZE];
+// void	getcurpath(t_mini *mini)
+// {
+// 	char	*buf;
 
-	mini->cur_path = getcwd(buf, BUFFER_SIZE);
-	if (mini->cur_path != NULL)
-		return ;
-	perror("Pwd");
-}
+// 	buf = malloc(sizeof(char) * BUFFER_SIZE + 1);
+// 	mini->cur_path = getcwd(buf, BUFFER_SIZE);
+// 	if (mini->cur_path != NULL)
+// 		return ;
+// 	perror("Pwd");
+// }
 
 /**
  * @brief Gets USER from env
@@ -58,5 +59,4 @@ void	setupenv(t_mini *mini, char **envp)
 	else
 		mini->envp = copy_env(envp);
 	getuser(mini);
-	getcurpath(mini);
 }
