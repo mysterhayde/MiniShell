@@ -3,40 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
+/*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 15:03:54 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/27 22:50:55 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/28 14:33:19 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-// void	getcurpath(t_mini *mini)
-// {
-// 	char	*buf;
-
-// 	buf = malloc(sizeof(char) * BUFFER_SIZE + 1);
-// 	mini->cur_path = getcwd(buf, BUFFER_SIZE);
-// 	if (mini->cur_path != NULL)
-// 		return ;
-// 	perror("Pwd");
-// }
-
-/**
- * @brief Gets USER from env
- * @param t_mini *mini
- */
-static void	getuser(t_mini *mini)
+void	getcurpath(t_mini *mini)
 {
-	int	i;
+	char	buf[BUFFER_SIZE];
 
-	i = 0;
-	while (mini->envp[i] && ft_strnstr(mini->envp[i], "USER=", 5) == 0)
-	{
-		i++;
-	}
-	mini->user = ft_strjoin(COLOR_BLUE, mini->envp[i] + 5);
+	mini->cur_path = getcwd(buf, BUFFER_SIZE);
+	if (mini->cur_path != NULL)
+		return ;
+	perror("Pwd");
 }
 
 static char	**make_env(void)
@@ -58,5 +41,6 @@ void	setupenv(t_mini *mini, char **envp)
 		mini->envp = make_env();
 	else
 		mini->envp = copy_env(envp);
-	getuser(mini);
+	//getuser(mini);
+	getcurpath(mini);
 }
