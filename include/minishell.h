@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 17:10:09 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/28 14:33:34 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/28 16:29:50 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,10 @@ extern int	g_signo;
 
 /*---------------------------------- INIT ------------------------------------*/
 
+
 int		check_signal_interrupt(void);
+int		setup_signal_handlers_fork();
+int		handle_fork_signal(int status);
 int		setup_signal_handlers(t_mini *mini);
 
 void	cleanup_history(void);

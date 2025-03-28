@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 18:20:31 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/27 09:49:31 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/28 14:46:10 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void	getuser(t_mini *mini)
 	if (mini->user)
 		free(mini->user);
 	if (!mini->envp)
-		mini->user = COLOR_BLUE"user"COLOR_RESET;
+		mini->user = ft_strdup(COLOR_BLUE"user"COLOR_RESET);
 	while (mini->envp[i])
 	{
 		if (ft_strnstr(mini->envp[i], "USER=", 5))
@@ -34,7 +34,7 @@ static void	getuser(t_mini *mini)
 		}
 		i++;
 	}
-	mini->user = COLOR_BLUE"user"COLOR_RESET;
+	mini->user = ft_strdup(COLOR_BLUE"user"COLOR_RESET);
 }
 
 char	*get_prompt(t_mini *mini)
