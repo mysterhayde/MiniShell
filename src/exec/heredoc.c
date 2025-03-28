@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
+/*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 15:34:38 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/03/27 22:55:03 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/28 17:00:05 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,28 +19,27 @@
  * @param temp_name Name of the temporary file
  * @return 0 on success, -1 on error
  */
-static int	wait_here_doc(pid_t pid, int temp_fd, char *temp_name)
+static int	wait_here_doc(pid_t pid, int temp_fd, char *temp_name, t_mini *mini)
 {
 	int	status;
 	int	read_fd;
 
-	void (*old_int)(int); //test
+	setup_signal_handlers_fork();
 	close(temp_fd);
-	old_int = signal(SIGINT, SIG_IGN);
 	waitpid(pid, &status, 0);
-	signal(SIGINT, old_int);
+	handle_fork_signal(status);
 	if (WIFEXITED(status) && WEXITSTATUS(status) != 0)
 	{
 		unlink(temp_name);
 		free(temp_name);
-		return (-1);
+		return (setup_signal_handlers(mini),-1);
 	}
 	read_fd = open(temp_name, O_RDONLY);
 	unlink(temp_name);
 	free(temp_name);
 	if (read_fd == -1)
-		return (-1);
-	return (read_fd);
+		return (setup_signal_handlers(mini), -1);
+	return (setup_signal_handlers(mini), read_fd);
 }
 
 /**
@@ -68,8 +67,10 @@ int	here_doc_with_num(t_mini *mini, char *limiter, int heredoc_num)
 	}
 	if (pid == 0)
 	{
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
 		free(temp_name);
 		here_doc_child_with_num(mini, limiter, temp_fd, heredoc_num);
 	}
-	return (wait_here_doc(pid, temp_fd, temp_name));
+	return (wait_here_doc(pid, temp_fd, temp_name, mini));
 }

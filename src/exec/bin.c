@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 13:48:58 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/26 17:19:13 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/28 16:31:46 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ static void	child_process(char *path, char **cmd, t_mini *mini)
 
 	if (access(path, F_OK) == -1)
 	{
-		free(path);
+
+	(void) mini;		free(path);
 		show_error_exit(cmd[0], "No such file or directory", 127);
 	}
 	if (stat(path, &path_stat) == 0 && S_ISDIR(path_stat.st_mode))
@@ -38,24 +39,17 @@ static void	child_process(char *path, char **cmd, t_mini *mini)
 	}
 }
 
-static int	handle_parent(char *path, pid_t pid)
+static int	handle_parent(char *path, pid_t pid, t_mini *mini)
 {
 	int	status;
-	void (*old_int)(int);
 
-	old_int = signal(SIGINT, SIG_IGN); //test
+	setup_signal_handlers_fork();
 	free(path);
 	if (waitpid(pid, &status, 0) == -1)
 		return (show_err_return("waitpid", "Wait failed", ERR_GENERAL));
-	signal(SIGINT, old_int);
 	if (WIFSIGNALED(status))
-	{
-		if (WTERMSIG(status) == SIGINT)
-			write(STDERR_FILENO, "\n", 1);
-		else if (WTERMSIG(status) == SIGQUIT)
-			write(STDERR_FILENO, "Quit (core dumped)\n", 19);
-		return (128 + WTERMSIG(status));
-	}
+		return (handle_fork_signal(status));
+	setup_signal_handlers(mini);
 	return (WEXITSTATUS(status));
 }
 
@@ -78,10 +72,11 @@ static int	execute_direct(char *path, char **cmd, t_mini *mini)
 	}
 	if (pid == 0)
 	{
+		signal(SIGQUIT, SIG_DFL);
 		signal(SIGINT, SIG_DFL);
 		child_process(path, cmd, mini);
 	}
-	return (handle_parent(path, pid));
+	return (handle_parent(path, pid, mini));
 }
 
 static int	handle_direct_path(t_mini *mini, char **cmd)

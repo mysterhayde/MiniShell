@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 15:04:03 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/27 09:48:34 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/28 16:50:04 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ static void	shell_loop(t_mini *mini)
 	char	*prompt;
 	int		ret;
 
+	setup_signal_handlers(mini);
 	while (mini->exit == 0)
 	{
 		prompt = get_prompt(mini);
