@@ -6,37 +6,37 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 18:20:31 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/29 02:38:42 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/30 03:49:57 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static char	*get_current_directory(char *current_dir)
+static char	*get_current_directory(void)
 {
 	int		i;
-	int		last_dir;
 	char	path[PATH_MAX + 1];
-	
+
 	i = 0;
 	if (getcwd(path, PATH_MAX) == NULL)
 		return (NULL);
-	while (path[i])
+	if (ft_strnstr(path, "home/", ft_strlen(path)))
 	{
-		if (path[i] == '/')
-			last_dir = i;
-		i++;
+		while (path[i])
+		{
+			if (strncmp("home/", path + i, 5) == 0)
+			{
+				i += 5;
+				while (path[i] && path[i] != '/')
+					i++;
+				if (!path[i])
+					return (ft_strdup(" ~"));
+				return (ft_strjoin(" ~", path + i));
+			}
+			i++;
+		}
 	}
-	i = 0;
-	last_dir++;
-	current_dir = malloc(sizeof(char) * ((ft_strlen(path)) + 2));
-	if (!current_dir)
-		return (NULL);
-	current_dir[i++] = ' ';
-	while (path[last_dir])
-		current_dir[i++] = path[last_dir++];
-	current_dir[i] = '\0';
-	return (current_dir);
+	return (ft_strjoin(" ", path));
 }
 
 /**
@@ -78,7 +78,7 @@ char	*get_prompt(t_mini *mini)
 	if (mini->user == NULL)
 	return (NULL);
 	directory = NULL;
-	directory = get_current_directory(directory);
+	directory = get_current_directory();
 	if (!directory)
 		return (show_err_msg("Myshell", "prompt fail"), NULL);
 	color = ft_strjoin(COLOR_CYAN_ULTRA, directory);
@@ -89,7 +89,7 @@ char	*get_prompt(t_mini *mini)
 	free(color);
 	if (!temp)
 		return (show_err_msg("Myshell", "prompt fail"), NULL);
-	prompt = ft_strjoin(temp, COLOR_PURPLE_ULTRA" ~ MyShell> "COLOR_RESET);
+	prompt = ft_strjoin(temp, COLOR_PURPLE_ULTRA" MyShell> "COLOR_RESET);
 	free(temp);
 	if (!prompt)
 		return (show_err_msg("Myshell", "prompt fail"), NULL);
