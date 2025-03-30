@@ -3,71 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_heredoc.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 13:29:13 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/28 16:55:03 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/30 16:35:32 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
 /**
- * @brief Finds the next pipe token
- * @param token Starting token
- * @return Next pipe token or NULL
- */
-t_token	*find_next_pipe_token(t_token *token)
-{
-	t_token	*current;
-
-	current = token;
-	while (current)
-	{
-		if (current->type == PIPE)
-			return (current);
-		current = current->next;
-	}
-	return (NULL);
-}
-
-/**
- * @brief Applies redirections up to the next pipe with heredoc support
- * @param mini Shell state
- * @param token Starting token
- * @return 0 on success, 1 on failure
- */
-int	apply_pipe_redir_with_heredoc(t_mini *mini, t_token *token)
-{
-	t_token	*current;
-	t_token	*next_pipe;
-
-	current = token;
-	next_pipe = find_next_pipe_token(token);
-	while (current && current != next_pipe)
-	{
-		if (((current->type == RDIT && current->next->type == FILES)
-				|| current->type == HERE_DOC) && current->next)
-		{
-			if (process_single_redir_with_heredoc(mini, current))
-				return (1);
-		}
-		current = current->next;
-	}
-	return (0);
-}
-
-/**
- * @brief Sets up pipe redirections for a command with heredoc support
+ * @brief Sets up pipe input/output redirections
  * @param mini Shell state
  * @param i Current command index
- * @param pipe_fds Array of pipe file descriptors
+ * @param pipe_fds Array of piep file descriptors
  */
-void	handle_pipe_child_with_heredoc(t_mini *mini, int i, int *pipe_fds)
+static void	setup_pipe_fds(t_mini *mini, int i, int *pipe_fds)
 {
-	int	j;
-
-	j = 0;
 	if (i > 0)
 	{
 		if (dup2(pipe_fds[(i - 1) * 2], STDIN_FILENO) == -1)
@@ -84,12 +36,64 @@ void	handle_pipe_child_with_heredoc(t_mini *mini, int i, int *pipe_fds)
 			safe_exit(mini, 1);
 		}
 	}
+}
+
+/**
+ * @brief Closes all pipe file descriptors
+ * @param mini Shell state with pipe number
+ * @param pipe_fds Array of pipe file descriptors
+ */
+static void	close_pipe_fds(t_mini *mini, int *pipe_fds)
+{
+	int	j;
+
+	j = 0;
 	while (j < (mini->pipe_num * 2))
 	{
 		close(pipe_fds[j]);
 		j++;
 	}
-	apply_pipe_redir_with_heredoc(mini, mini->token);
+}
+
+/**
+ * @brief Process redirections for a command based on position
+ * @param mini Shell state
+ * @param is_last_cmd Flag indicating
+ */
+static void	process_cmd_redirections(t_mini *mini, t_bool is_last_cmd)
+{
+	t_token *current;
+	t_token	*next_pipe;
+
+	current = mini->token;
+	next_pipe = find_next_pipe_token(mini->token);
+	while (current && current != next_pipe)
+	{
+		if (((current->type == RDIT && current->next
+					&& current->next->type == FILES)
+				|| current->type == HERE_DOC) && current->next)
+		{
+			if (!should_skip_token(current, is_last_cmd))
+				process_single_redir_with_heredoc(mini, current);
+		}
+		current = current->next;
+	}
+}
+
+/**
+ * @brief Sets up pipe redirections for a command with heredoc support
+ * @param mini Shell state
+ * @param i Current command index
+ * @param pipe_fds Array of pipe file descriptors
+ */
+void	handle_pipe_child_with_heredoc(t_mini *mini, int i, int *pipe_fds)
+{
+	t_bool	is_last_cmd;
+
+	is_last_cmd = (i == mini->pipe_num);
+	setup_pipe_fds(mini, i, pipe_fds);
+	close_pipe_fds(mini, pipe_fds);
+	process_cmd_redirections(mini, is_last_cmd);
 }
 
 /**

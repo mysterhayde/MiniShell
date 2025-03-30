@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 13:39:40 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/27 14:50:29 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/30 16:34:03 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ int	minipipe_with_heredoc(t_mini *mini)
 	if (mini->token && mini->token->cmd
 		&& ft_strmincmp(mini->token->cmd[0], "exit", 4) == 0)
 		return (handle_exit_in_pipe(mini, mini->token->cmd));
+	mark_last_command_tokens(mini->token);
 	if (prepare_pipe(mini, &p))
 		return (1);
 	if (run_pipe_commands_with_heredoc(mini, &p) == 1)
