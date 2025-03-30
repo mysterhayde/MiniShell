@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_string.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 16:40:34 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/03/28 17:40:18 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/30 13:47:23 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ int	transform_string(t_token *token, char **envp, int return_code)
 int	check_string(t_mini *mini, t_token *cmd_token)
 {
 	int	ret;
+
 	cmd_token->cmd = search_wildcard(cmd_token);
 	if (!cmd_token->cmd)
 		return (ERR_GENERAL);

@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 13:28:04 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/24 16:09:07 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/30 13:57:09 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static int	handle_output_redir(char *filename, t_bool append)
 	int	target_fd;
 
 	if (append)
-		fd = open(filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
+		fd = open_file_append(filename);
 	else
 		fd = open_file_output(filename);
 	target_fd = STDOUT_FILENO;
