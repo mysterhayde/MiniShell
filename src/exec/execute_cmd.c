@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 13:13:51 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/28 16:54:24 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/30 22:48:37 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,30 @@ static void	execute_complex(t_mini *mini)
 		mini->ret = check_string(mini, mini->token);
 }
 
+int	check_all_file_permission(t_token *token)
+{
+	while (token)
+	{
+		if (token->type == RDIT && token->cmd[0][0] == '<')
+		{
+			if (access(token->next->cmd[0], F_OK) == -1)
+				return (file_access_failed(token->next->cmd[0]), 1);
+			if (access(token->next->cmd[0], R_OK) == -1)
+				return (file_access_failed(token->next->cmd[0]), 1);
+		}
+		if (token->type == RDIT && token->cmd[0][0] == '>')
+		{
+			if (access(token->next->cmd[0], F_OK) == 0)
+			{
+				if (access(token->next->cmd[0], W_OK) == -1)
+					return (file_access_failed(token->next->cmd[0]), 1);
+			}
+		}
+		token = token->next;
+	}
+	return (0);
+}
+
 /**
  * @brief Calls of expansion of argument(s) and then manages
  * builtin or bin commands
@@ -90,6 +114,8 @@ static void	execute_complex(t_mini *mini)
 void	execute(t_mini *mini)
 {
 	if (!mini->token || !mini->token->cmd)
+		return ;
+	if (check_all_file_permission(mini->backup))
 		return ;
 	if (pre_process(mini))
 	{

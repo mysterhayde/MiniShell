@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 17:10:09 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/28 16:29:50 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/30 22:46:44 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,6 +203,7 @@ int		exec_pipe_cmd(t_mini *mini, int i, int *pipe_fds);
 
 void	execute(t_mini *mini);
 void	find_cmd(t_mini *mini);
+void	file_access_failed(char *file);
 void	close_all_pipes(int pipe_count, int *pipe_fds);
 
 /*---------------------------------- Redir ----------------------------------*/
