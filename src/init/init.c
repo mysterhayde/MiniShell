@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
+/*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 15:03:54 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/30 12:23:29 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/30 14:54:28 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,30 +14,13 @@
 
 // void	getcurpath(t_mini *mini)
 // {
-// 	char	*buf;
+// 	char	buf[BUFFER_SIZE];
 
-// 	buf = malloc(sizeof(char) * BUFFER_SIZE + 1);
 // 	mini->cur_path = getcwd(buf, BUFFER_SIZE);
 // 	if (mini->cur_path != NULL)
 // 		return ;
 // 	perror("Pwd");
 // }
-
-/**
- * @brief Gets USER from env
- * @param t_mini *mini
- */
-static void	getuser(t_mini *mini)
-{
-	int	i;
-
-	i = 0;
-	while (mini->envp[i] && ft_strnstr(mini->envp[i], "USER=", 5) == 0)
-	{
-		i++;
-	}
-	mini->user = ft_strjoin(COLOR_BLUE, mini->envp[i] + 5);
-}
 
 static char	**make_env(void)
 {
@@ -76,5 +59,5 @@ void	setupenv(t_mini *mini, char **envp)
 		free(shlvl_env);
 		free(shlvl);
 	}
-	getuser(mini);
+	//getuser(mini);
 }

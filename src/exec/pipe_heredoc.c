@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 13:29:13 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/26 17:20:04 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/28 16:55:03 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,8 @@ int	exec_pipe_cmd_with_heredoc(t_mini *mini, int i, t_pipe *p)
 		return (-1);
 	if (pid == 0)
 	{
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
 		handle_pipe_child_with_heredoc(mini, i, p->pipe_fds);
 		cmd_token = skip_redirections(mini->token);
 		if (cmd_token && cmd_token->cmd && cmd_token->cmd[0])
