@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 15:03:54 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/27 22:50:55 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/30 12:22:48 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,26 @@ static char	**make_env(void)
 
 void	setupenv(t_mini *mini, char **envp)
 {
+	char	*shlvl;
+	char	*temp_str;
+	char	*shlvl_env;
+	int		temp;
+
 	if (!envp || !*envp)
 		mini->envp = make_env();
 	else
+	{
 		mini->envp = copy_env(envp);
+		shlvl = get_env_value(envp, "SHLVL");
+		temp = ft_atoi(shlvl);
+		temp++;
+		temp_str = ft_itoa(temp);
+		shlvl = ft_strdup(temp_str);
+		free(temp_str);
+		shlvl_env = ft_strjoin("SHLVL=", shlvl);
+		mini->envp = update_env_var(mini->envp, "SHLVL", shlvl_env);
+		free(shlvl_env);
+		free(shlvl);
+	}
 	getuser(mini);
 }
