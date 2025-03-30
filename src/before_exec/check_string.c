@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 16:40:34 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/03/26 17:36:59 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/28 17:40:18 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ int	transform_string(t_token *token, char **envp, int return_code)
 int	check_string(t_mini *mini, t_token *cmd_token)
 {
 	int	ret;
-
 	cmd_token->cmd = search_wildcard(cmd_token);
 	if (!cmd_token->cmd)
 		return (ERR_GENERAL);
@@ -74,5 +73,6 @@ int	check_string(t_mini *mini, t_token *cmd_token)
 	fix_index(cmd_token);
 	ret = exec_redirections_with_heredoc(mini, cmd_token);
 	mini->ret = ret;
+	setup_signal_handlers(mini);
 	return (ret);
 }
