@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 15:03:54 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/30 12:22:48 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/30 12:23:29 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ static char	**make_env(void)
 		return (NULL);
 	env[0] = ft_strdup("PATH=/usr/local/bin:/usr/bin:/bin");
 	env[1] = ft_strdup("USER=user");
-	env[2] = NULL;
+	env[2] = ft_strdup("SHLVL=1");
+	env[3] = NULL;
 	return (env);
 }
 
