@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 17:10:09 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/28 16:29:50 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/30 16:34:57 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,6 +147,8 @@ int		check_signal_interrupt(void);
 int		setup_signal_handlers_fork();
 int		handle_fork_signal(int status);
 int		setup_signal_handlers(t_mini *mini);
+void	reset_error_reporting(void);
+void	mark_last_command_tokens(t_token *token);
 
 void	cleanup_history(void);
 void	free_env_arr(char **env);
@@ -200,6 +202,7 @@ int		wait_pipe_children(t_mini *mini, t_pipe *p);
 int		create_pipes(int pipe_count, int **pipe_fds);
 int		wait_for_children(t_mini *mini, pid_t *pids);
 int		exec_pipe_cmd(t_mini *mini, int i, int *pipe_fds);
+t_bool	should_skip_token(t_token *token, t_bool is_last_cmd);
 
 void	execute(t_mini *mini);
 void	find_cmd(t_mini *mini);
@@ -212,6 +215,9 @@ int		exec_parenthesis(t_mini *mini);
 int		open_file_input(char *filename);
 int		open_file_output(char *filename);
 int		open_file_append(char *filename);
+t_bool	is_output_redir(t_token *token);
+int		apply_pipe_redir_with_heredoc(t_mini *mini, t_token *token,
+			t_bool is_last_cmd);
 int		check_paren_balance(t_token *token);
 int		process_single_redir(t_token *current);
 int		apply_paren_redirections(t_token *token);

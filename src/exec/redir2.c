@@ -6,32 +6,11 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:55:42 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/27 22:54:41 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/30 14:37:21 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-
-/**
- * @brief Opens a file for output redirection (append)
- * @param filename name of the file to open/create
- * @return file descriptor or -1 on error
- */
-int	open_file_append(char *filename)
-{
-	int	fd;
-
-	fd = open(filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
-	if (fd == -1)
-	{
-		ft_putstr_fd("minishell: ", 2);
-		ft_putstr_fd(filename, 2);
-		ft_putstr_fd(": ", 2);
-		ft_putstr_fd(strerror(errno), 2);
-		ft_putstr_fd("\n", 2);
-	}
-	return (fd);
-}
 
 /**
  * @brief Saves the original stdin/stdout file descriptors

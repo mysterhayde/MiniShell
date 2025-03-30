@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_cmd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 13:13:51 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/28 16:54:24 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/30 14:36:15 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ void	execute(t_mini *mini)
 {
 	if (!mini->token || !mini->token->cmd)
 		return ;
+	reset_error_reporting();
 	if (pre_process(mini))
 	{
 		mini->ret = 1;
