@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 13:13:51 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/30 22:48:37 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/30 23:01:05 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,10 @@ void	execute(t_mini *mini)
 	if (!mini->token || !mini->token->cmd)
 		return ;
 	if (check_all_file_permission(mini->backup))
+	{
+		mini->ret = 1;
 		return ;
+	}
 	if (pre_process(mini))
 	{
 		mini->ret = 1;
