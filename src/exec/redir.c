@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
+/*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:49:37 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/30 14:38:09 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/31 11:28:49 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	open_file_output(char *filename)
 	int	fd;
 
 	fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	if (fd == -1)
+	if (!access(filename, R_OK) && fd == -1)
 		report_file_error(filename);
 	return (fd);
 }
@@ -71,7 +71,7 @@ int	open_file_append(char *filename)
 	int	fd;
 
 	fd = open(filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
-	if (fd == -1)
+	if (!access(filename, R_OK) && fd == -1)
 		report_file_error(filename);
 	return (fd);
 }

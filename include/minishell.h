@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
+/*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 17:10:09 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/30 16:34:57 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/31 11:06:51 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -206,6 +206,7 @@ t_bool	should_skip_token(t_token *token, t_bool is_last_cmd);
 
 void	execute(t_mini *mini);
 void	find_cmd(t_mini *mini);
+void	file_access_failed(char *file);
 void	close_all_pipes(int pipe_count, int *pipe_fds);
 
 /*---------------------------------- Redir ----------------------------------*/
