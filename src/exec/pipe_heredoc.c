@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_heredoc.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
+/*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 13:29:13 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/30 16:35:32 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/31 11:46:29 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static void	close_pipe_fds(t_mini *mini, int *pipe_fds)
  */
 static void	process_cmd_redirections(t_mini *mini, t_bool is_last_cmd)
 {
-	t_token *current;
+	t_token	*current;
 	t_token	*next_pipe;
 
 	current = mini->token;

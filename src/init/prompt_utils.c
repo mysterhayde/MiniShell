@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 18:20:31 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/30 03:49:57 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/31 11:48:13 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ char	*get_prompt(t_mini *mini)
 
 	getuser(mini);
 	if (mini->user == NULL)
-	return (NULL);
+		return (NULL);
 	directory = NULL;
 	directory = get_current_directory();
 	if (!directory)

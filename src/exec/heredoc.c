@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 15:34:38 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/03/28 18:12:53 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/31 12:59:47 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,16 +30,17 @@ static int	wait_here_doc(pid_t pid, int temp_fd, char *temp_name, t_mini *mini)
 	if ((WIFEXITED(status) && WEXITSTATUS(status)) != 0
 		|| (WIFSIGNALED(status) && WIFSIGNALED(status != 0)))
 	{
-		handle_fork_signal(status);
+		mini->ret = handle_fork_signal(status);
 		unlink(temp_name);
 		free(temp_name);
-		return (setup_signal_handlers(mini),-1);
+		return (setup_signal_handlers(mini), -1);
 	}
 	read_fd = open(temp_name, O_RDONLY);
 	unlink(temp_name);
 	free(temp_name);
 	if (read_fd == -1)
 		return (setup_signal_handlers(mini), -1);
+	mini->ret = 0;
 	return (setup_signal_handlers(mini), read_fd);
 }
 
