@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 16:17:39 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/03/26 21:17:35 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/31 11:50:32 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	safe_free(void **ptr)
 
 void	safe_free_tab(void ***ptr)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while ((*ptr)[i])

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_redir_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
+/*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 14:05:35 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/30 14:14:42 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/31 11:46:43 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ t_bool	is_output_redir(t_token *token)
 {
 	if (token->type == RDIT && token->cmd && token->cmd[0])
 	{
-		if (ft_strmincmp(token->cmd[0], ">", 1) == 0 ||
-			ft_strmincmp(token->cmd[0], ">>", 2) == 0)
+		if (ft_strmincmp(token->cmd[0], ">", 1) == 0
+			|| ft_strmincmp(token->cmd[0], ">>", 2) == 0)
 			return (TRUE);
 	}
 	return (FALSE);

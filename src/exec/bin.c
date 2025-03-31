@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 13:48:58 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/31 10:43:46 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/31 11:44:51 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,7 @@ static void	child_process(char *path, char **cmd, t_mini *mini)
 
 	if (access(path, F_OK) == -1)
 	{
-
-	(void) mini;		free(path);
+		free(path);
 		show_error_exit(cmd[0], "No such file or directory", 127);
 	}
 	if (stat(path, &path_stat) == 0 && S_ISDIR(path_stat.st_mode))

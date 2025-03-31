@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 17:10:09 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/31 11:06:51 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/31 11:50:02 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,12 +84,12 @@ typedef enum e_type
 	CMD			= 1,
 	ARG			= 2,
 	PIPE		= 3,
-	RDIT		= 4, // Redirection
+	RDIT		= 4,
 	FILES		= 5,
 	HERE_DOC	= 6,
 	LIMITER		= 7,
-	AND_OP		= 8, // &&
-	OR_OP		= 9, // ||
+	AND_OP		= 8,
+	OR_OP		= 9,
 	LEFT_PAREN	= 10,
 	RIGHT_PAREN	= 11
 }	t_type;
@@ -142,9 +142,8 @@ extern int	g_signo;
 
 /*---------------------------------- INIT ------------------------------------*/
 
-
 int		check_signal_interrupt(void);
-int		setup_signal_handlers_fork();
+int		setup_signal_handlers_fork(void);
 int		handle_fork_signal(int status);
 int		setup_signal_handlers(t_mini *mini);
 void	reset_error_reporting(void);

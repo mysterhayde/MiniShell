@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 13:13:51 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/31 11:13:24 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/31 12:52:56 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,8 @@ void	execute(t_mini *mini)
 		return ;
 	if (pre_process(mini))
 	{
-		mini->ret = 1;
+		if (mini->ret < 130 || mini->ret > 131)
+			mini->ret = 1;
 		return ;
 	}
 	if (!execute_exit(mini))
