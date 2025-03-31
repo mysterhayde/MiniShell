@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_string.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
+/*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 16:40:34 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/03/30 13:47:23 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/31 10:31:16 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,5 @@ int	check_string(t_mini *mini, t_token *cmd_token)
 	fix_index(cmd_token);
 	ret = exec_redirections_with_heredoc(mini, cmd_token);
 	mini->ret = ret;
-	setup_signal_handlers(mini);
 	return (ret);
 }

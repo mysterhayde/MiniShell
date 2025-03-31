@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 10:00:47 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/03/26 17:20:35 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/31 10:16:32 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ static int	check_token_syntax(t_token *token, int last_type)
 	if (last_type == 0 && (token->type != CMD
 			&& token->type != RDIT && token->type != HERE_DOC
 			&& token->type != LEFT_PAREN))
+		return (1);
+	if (last_type == HERE_DOC && token->type != LIMITER)
 		return (1);
 	if ((last_type == PIPE || last_type == OR_OP || last_type == AND_OP)
 		&& (token->type != CMD && token->type != RDIT
@@ -197,7 +199,7 @@ int	parsing(char *str, t_mini *mini)
 			return (EXIT_FAILURE);
 		next_token += len;
 	}
-	//print_tokens(mini->backup); // Debug
+	// print_tokens(mini->backup); // Debug
 	mini->token = mini->backup;
 	if (check_syntax(mini->token))
 		return (show_err_msg("Syntax Error", "unexpected token"), EXIT_FAILURE);
