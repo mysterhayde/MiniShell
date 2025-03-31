@@ -6,30 +6,11 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 13:13:51 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/31 10:29:41 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/31 11:13:24 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-
-/**
- * @brief Check if command has parentheses
- * @param token Token to check
- * @return TRUE if contains parentheses, FALSE otherwise
- */
-// static t_bool	has_parentheses_check(t_token *token)
-// {
-// 	t_token	*current;
-
-// 	current = token;
-// 	while (current)
-// 	{
-// 		if (current->type == LEFT_PAREN || current->type == RIGHT_PAREN)
-// 			return (TRUE);
-// 		current = current->next;
-// 	}
-// 	return (FALSE);
-// }
 
 /**
  * @brief Process first part before executing command
@@ -91,7 +72,6 @@ void	execute(t_mini *mini)
 {
 	if (!mini->token || !mini->token->cmd)
 		return ;
-	reset_error_reporting();
 	if (pre_process(mini))
 	{
 		mini->ret = 1;
