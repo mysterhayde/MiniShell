@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 16:55:01 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/28 17:50:17 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/31 10:43:14 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,6 @@ int	wait_for_children(t_mini *mini, pid_t *pids)
 			mini->ret = handle_fork_signal(status);
 		i++;
 	}
-	setup_signal_handlers(mini);
+	// setup_signal_handlers(mini);
 	return (mini->ret);
 }
