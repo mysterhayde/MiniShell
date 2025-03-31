@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
+/*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 15:04:03 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/30 14:36:06 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/31 10:31:32 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,9 @@ static void	shell_loop(t_mini *mini)
 	char	*prompt;
 	int		ret;
 
-	setup_signal_handlers(mini);
 	while (mini->exit == 0)
 	{
+		setup_signal_handlers(mini);
 		prompt = get_prompt(mini);
 		if (!prompt)
 			break ;

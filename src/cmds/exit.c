@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
+/*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 15:03:41 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/25 17:31:03 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/03/31 10:37:07 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ static int	handle_non_num_exit(t_mini *mini)
 {
 	mini->exit = 1;
 	mini->ret = 2;
+	show_err_msg("exit", "numeric argument required");
 	return (2);
 }
 

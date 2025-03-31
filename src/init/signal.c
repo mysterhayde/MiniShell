@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 13:43:01 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/28 17:40:42 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/31 10:32:59 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ int	setup_signal_handlers(t_mini *mini)
 	s_quit.sa_flags = 0;
 	if (sigaction(SIGQUIT, &s_quit, NULL) == -1)
 		return (1);
-	mini->ret = g_signo;
+	if (g_signo > 0)
+		mini->ret = g_signo;
 	return (0);
 }
