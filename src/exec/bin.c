@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 13:48:58 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/28 16:31:46 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/31 10:43:46 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static void	child_process(char *path, char **cmd, t_mini *mini)
 	}
 }
 
-static int	handle_parent(char *path, pid_t pid, t_mini *mini)
+static int	handle_parent(char *path, pid_t pid)
 {
 	int	status;
 
@@ -49,7 +49,6 @@ static int	handle_parent(char *path, pid_t pid, t_mini *mini)
 		return (show_err_return("waitpid", "Wait failed", ERR_GENERAL));
 	if (WIFSIGNALED(status))
 		return (handle_fork_signal(status));
-	setup_signal_handlers(mini);
 	return (WEXITSTATUS(status));
 }
 
@@ -76,7 +75,7 @@ static int	execute_direct(char *path, char **cmd, t_mini *mini)
 		signal(SIGINT, SIG_DFL);
 		child_process(path, cmd, mini);
 	}
-	return (handle_parent(path, pid, mini));
+	return (handle_parent(path, pid));
 }
 
 static int	handle_direct_path(t_mini *mini, char **cmd)

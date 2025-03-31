@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 16:50:34 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/28 17:58:53 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/03/31 11:02:42 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,18 +125,18 @@ int	wait_pipe_children(t_mini *mini, t_pipe *p)
 	{
 		
 		waitpid(p->pids[i], &status, 0);
-		if (WIFSIGNALED(status))
+		if (WTERMSIG(status) == SIGINT || WTERMSIG(status) == SIGQUIT)
+		{
 			last_status = handle_fork_signal(status);
+			break ;
+		}
 		if (WIFEXITED(status))
 			last_status = WEXITSTATUS(status);
-		if (last_status != 0) //Need charlie check
-			break ;
 		i++;
 	}
 	if (last_status == 0 && mini->ret != 0)
 		last_status = mini->ret;
 	mini->ret = last_status;
 	free_pipe_resources(p);
-	setup_signal_handlers(mini);
 	return (last_status);
 }
