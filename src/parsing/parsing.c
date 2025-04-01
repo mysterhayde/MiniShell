@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 10:00:47 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/03/31 12:57:20 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/04/01 16:52:46 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,5 +128,14 @@ int	parsing(char *str, t_mini *mini)
 	mini->token = mini->backup;
 	if (check_syntax(mini->token))
 		return (show_err_msg("Syntax Error", "unexpected token"), EXIT_FAILURE);
+	if (check_parenthesis(mini))
+		return (show_err_msg("Malloc", "Allocation failed"), EXIT_FAILURE);
+	while(mini->token) //debug
+	{
+		for (int i = 0; mini->token->cmd[i]; i++)
+			printf("DEBUG %s\n", mini->token->cmd[i]);
+		mini->token = mini->token->next;
+	}
+	mini->token = mini->backup;
 	return (EXIT_SUCCESS);
 }
