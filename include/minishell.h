@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 17:10:09 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/31 11:50:02 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/04/01 16:12:37 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -254,6 +254,7 @@ char	*find_path(char *cmd, char **envp);
 /*--------------------------------- Parsing ---------------------------------*/
 
 int		count_leading_spaces(char *str);
+int		check_parenthesis(t_mini *mini);
 int		parsing(char *str, t_mini *mini);
 int		check_final_token(t_token *token);
 int		is_operator(t_mini *mini, char *str);
