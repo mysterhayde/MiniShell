@@ -131,12 +131,11 @@ int	parsing(char *str, t_mini *mini)
 	if (check_parenthesis(mini))
 		return (show_err_msg("Malloc", "Allocation failed"), EXIT_FAILURE);
 	mini->token = mini->backup;
-	while(mini->token) //debug
-	{
-		for (int i = 0; mini->token->cmd[i]; i++)
-			printf("DEBUG %s\n", mini->token->cmd[i]);
-		mini->token = mini->token->next;
-	}
-	mini->token = mini->backup;
+	// while(mini->token) //debug
+	// {
+	// 	for (int i = 0; mini->token->cmd[i]; i++)
+	// 		printf("DEBUG %s\n", mini->token->cmd[i]);
+	// 	mini->token = mini->token->next;
+	// }
 	return (EXIT_SUCCESS);
 }

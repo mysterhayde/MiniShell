@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
+/*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 15:03:44 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/09 18:24:57 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/04/02 16:58:26 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,9 +110,10 @@ int	export(t_mini *mini, char **cmd)
 	int		i;
 	int		ret;
 
-	if (!cmd[1])
-		return (print_export_list(mini->envp));
 	tempenv = copy_env(mini->envp);
+	tempenv = ft_asort_char(tempenv);
+	if (!cmd[1])
+		return (print_export_list(tempenv));
 	if (!tempenv)
 		return (show_err_return("export", ERR_MALLOC, ERR_GENERAL));
 	i = 1;
