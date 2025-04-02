@@ -130,6 +130,7 @@ int	parsing(char *str, t_mini *mini)
 		return (show_err_msg("Syntax Error", "unexpected token"), EXIT_FAILURE);
 	if (check_parenthesis(mini))
 		return (show_err_msg("Malloc", "Allocation failed"), EXIT_FAILURE);
+	mini->token = mini->backup;
 	while(mini->token) //debug
 	{
 		for (int i = 0; mini->token->cmd[i]; i++)
