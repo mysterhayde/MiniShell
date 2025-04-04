@@ -97,6 +97,8 @@ fclean: clean
 
 re: fclean all
 
+valgrind: re
+	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --track-origins=yes --suppressions=resources/a.supp --log-file="resources/leaks.log" ./minishell
 bonus:
 	@echo $(CURSIVE)$(GRAY) " - Compiling bonus $(NAME)..." $(NONE)
 	@echo $(GREEN)"- Compiled -"$(NONE)
