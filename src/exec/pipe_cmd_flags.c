@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_cmd_flags.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 15:55:27 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/31 11:46:08 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/04/06 13:12:39 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,35 @@ void	mark_last_command_tokens(t_token *token)
 		}
 		else
 			current->processed = FALSE;
+		current = current->next;
+	}
+}
+
+/**
+ * @brief Process redirections for a command in a pipeline
+ * @param mini Shell state
+ * @param is_last_cmd Flag indicating if current command is last in pipeline
+ */
+void	process_pipe_redirections(t_mini *mini, t_bool is_last_cmd)
+{
+	t_token	*current;
+	t_token	*next_pipe;
+
+	current = mini->token;
+	next_pipe = find_next_pipe_token(mini->token);
+	while (current && current != next_pipe)
+	{
+		if (((current->type == RDIT && current->next
+					&& current->next->type == FILES)
+				|| current->type == HERE_DOC) && current->next)
+		{
+			if (current->type == HERE_DOC
+				|| (current->cmd && ft_strmincmp(current->cmd[0], "<", 1) == 0)
+				|| (is_last_cmd && current->cmd
+					&& (ft_strmincmp(current->cmd[0], ">", 1) == 0
+						|| ft_strmincmp(current->cmd[0], ">>", 2) == 0)))
+				process_single_redir_with_heredoc(mini, current);
+		}
 		current = current->next;
 	}
 }
