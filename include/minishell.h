@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 17:10:09 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/31 11:50:02 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/04/06 13:13:45 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
-# define MINISHELL_H
+# define MINISHELL_Hprocess_pipe_redirections
 
 # include <errno.h>
 # include <fcntl.h>
@@ -202,6 +202,7 @@ int		create_pipes(int pipe_count, int **pipe_fds);
 int		wait_for_children(t_mini *mini, pid_t *pids);
 int		exec_pipe_cmd(t_mini *mini, int i, int *pipe_fds);
 t_bool	should_skip_token(t_token *token, t_bool is_last_cmd);
+void	process_pipe_redirections(t_mini *mini, t_bool is_last_cmd);
 
 void	execute(t_mini *mini);
 void	find_cmd(t_mini *mini);

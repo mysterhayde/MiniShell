@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_heredoc.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 13:29:13 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/31 11:46:29 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/04/06 14:28:52 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,31 +56,6 @@ static void	close_pipe_fds(t_mini *mini, int *pipe_fds)
 }
 
 /**
- * @brief Process redirections for a command based on position
- * @param mini Shell state
- * @param is_last_cmd Flag indicating
- */
-static void	process_cmd_redirections(t_mini *mini, t_bool is_last_cmd)
-{
-	t_token	*current;
-	t_token	*next_pipe;
-
-	current = mini->token;
-	next_pipe = find_next_pipe_token(mini->token);
-	while (current && current != next_pipe)
-	{
-		if (((current->type == RDIT && current->next
-					&& current->next->type == FILES)
-				|| current->type == HERE_DOC) && current->next)
-		{
-			if (!should_skip_token(current, is_last_cmd))
-				process_single_redir_with_heredoc(mini, current);
-		}
-		current = current->next;
-	}
-}
-
-/**
  * @brief Sets up pipe redirections for a command with heredoc support
  * @param mini Shell state
  * @param i Current command index
@@ -93,7 +68,7 @@ void	handle_pipe_child_with_heredoc(t_mini *mini, int i, int *pipe_fds)
 	is_last_cmd = (i == mini->pipe_num);
 	setup_pipe_fds(mini, i, pipe_fds);
 	close_pipe_fds(mini, pipe_fds);
-	process_cmd_redirections(mini, is_last_cmd);
+	apply_pipe_redir_with_heredoc(mini, mini->token, is_last_cmd);
 }
 
 /**

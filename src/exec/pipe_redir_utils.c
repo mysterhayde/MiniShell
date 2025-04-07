@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_redir_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 14:05:35 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/31 11:46:43 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/04/06 14:41:18 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,16 +45,17 @@ int	apply_pipe_redir_with_heredoc(t_mini *mini, t_token *token,
 	next_pipe = find_next_pipe_token(token);
 	while (current && current != next_pipe)
 	{
-		if (((current->type == RDIT && current->next->type == FILES)
+		if (((current->type == RDIT && current->next
+					&& current->next->type == FILES)
 				|| current->type == HERE_DOC) && current->next)
 		{
-			if (!is_last_cmd && is_output_redir(current))
+			if (current->type == HERE_DOC
+				|| !is_output_redir(current)
+				|| (is_last_cmd && is_output_redir(current)))
 			{
-				current = current->next->next;
-				continue ;
+				if (process_single_redir_with_heredoc(mini, current))
+					return (1);
 			}
-			if (process_single_redir_with_heredoc(mini, current))
-				return (1);
 		}
 		current = current->next;
 	}
