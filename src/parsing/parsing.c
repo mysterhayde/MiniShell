@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
+/*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 10:00:47 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/04/08 12:45:19 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/04/08 21:44:15 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,5 +204,14 @@ int	parsing(char *str, t_mini *mini)
 	print_tokens(mini->backup); // Debug
 	if (check_syntax(mini->token))
 		return (show_err_msg("Syntax Error", "unexpected token"), EXIT_FAILURE);
+	if (check_parenthesis(mini))
+		return (show_err_msg("Malloc", "Allocation failed"), EXIT_FAILURE);
+	mini->token = mini->backup;
+	// while(mini->token) //debug
+	// {
+	// 	for (int i = 0; mini->token->cmd[i]; i++)
+	// 		printf("DEBUG %s\n", mini->token->cmd[i]);
+	// 	mini->token = mini->token->next;
+	// }
 	return (EXIT_SUCCESS);
 }

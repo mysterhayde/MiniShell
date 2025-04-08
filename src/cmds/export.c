@@ -6,32 +6,35 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 15:03:44 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/09 18:24:57 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/04/08 11:37:20 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-int	print_export_list(char	**envp)
+int	print_export_list(char **envp)
 {
 	int		i;
 	char	*eq;
+	char	**temp;
 
+	temp = ft_asort_char(copy_env(envp));
 	i = 0;
-	while (envp && envp[i])
+	while (temp && temp[i])
 	{
 		ft_printf("declare -x ");
-		eq = ft_strchr(envp[i], '=');
+		eq = ft_strchr(temp[i], '=');
 		if (eq)
 		{
-			write(1, envp[i], eq - envp[i] + 1);
+			write(1, temp[i], eq - temp[i] + 1);
 			ft_printf("\"%s\"", eq + 1);
 		}
 		else
-			ft_printf("%s", envp[i]);
+			ft_printf("%s", temp[i]);
 		ft_printf("\n");
 		i++;
 	}
+	ft_free_chartable(temp);
 	return (0);
 }
 
@@ -91,8 +94,6 @@ static int	handle_export_arg(char	***env_ptr, char *arg)
 
 	if (!is_valid_identifier(arg))
 		return (show_err_return("export", ERR_NOVALID, ERR_GENERAL));
-	if (!ft_strchr(arg, '='))
-		return (0);
 	new_env = update_env_var(*env_ptr, arg, arg);
 	if (!new_env)
 		return (show_err_return("export", ERR_MALLOC, ERR_GENERAL));
@@ -111,7 +112,7 @@ int	export(t_mini *mini, char **cmd)
 	int		ret;
 
 	if (!cmd[1])
-		return (print_export_list(mini->envp));
+		return (print_export_list(mini->envp), 0);
 	tempenv = copy_env(mini->envp);
 	if (!tempenv)
 		return (show_err_return("export", ERR_MALLOC, ERR_GENERAL));

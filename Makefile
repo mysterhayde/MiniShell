@@ -39,7 +39,7 @@ EXEC = $(addprefix $(EXEC_DIR), $(EXEC_SRC))
 
 PARS_SRC =	parsing.c parsing_utils.c split_entry.c tokens.c parenthesis.c \
 			parenthesis_ops.c parenthesis_redir.c parenthesis_exec.c \
-			token_utils.c
+			token_utils.c parenthesis_utils.c
 PARS_DIR = src/parsing/
 PARS = $(addprefix $(PARS_DIR), $(PARS_SRC))
 
@@ -100,5 +100,8 @@ re: fclean all
 bonus:
 	@echo $(CURSIVE)$(GRAY) " - Compiling bonus $(NAME)..." $(NONE)
 	@echo $(GREEN)"- Compiled -"$(NONE)
+
+valgrind: re
+	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --track-origins=yes --suppressions=resources/a.supp --log-file="resources/leaks.log" ./minishell
 
 .PHONY: all clean fclean re bonus

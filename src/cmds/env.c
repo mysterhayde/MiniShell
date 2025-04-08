@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 15:03:39 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/09 14:10:55 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/04/08 09:47:07 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,5 +84,5 @@ int	env(t_mini *mini)
 {
 	if (!mini || !mini->envp)
 		return (1);
-	return (ft_print_chartable(mini->envp));
+	return (print_env(mini->envp));
 }
