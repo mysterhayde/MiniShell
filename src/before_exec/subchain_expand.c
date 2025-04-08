@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 23:08:16 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/04/08 23:48:19 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/04/08 23:53:14 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static t_subchain	*new_subchain(char *str)
 	
 }
 
-t_subchain	*create_subchain(char *str)
+char	*subchain_system(char *str)
 {
 	int			i;
 	t_subchain	first;

@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 16:40:34 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/04/08 23:37:40 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/04/08 23:54:55 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,16 +41,19 @@ int	transform_string(t_token *token, char **envp, int return_code)
 	error = 0;
 	while (token->cmd[j])
 	{
-		token->cmd[j] = search_variable(token->cmd[j], envp, &error);
-		if (error || !token->cmd[j])
+		token->cmd[j] = subchain_system(token->cmd[j]);
+		if (!token->cmd[j])
 			return (handle_var_error(token->cmd[0]));
-		token->cmd[j] = search_error_code(return_code, token->cmd[j]);
-		if (ft_strchr(token->cmd[j], '\"') || ft_strchr(token->cmd[j], '\''))
-		{
-			token->cmd[j] = clean_quote(token->cmd[j]);
-			if (!token->cmd[j])
-				return (handle_var_error(token->cmd[0]));
-		}
+	// 	token->cmd[j] = search_variable(token->cmd[j], envp, &error);
+	// 	if (error || !token->cmd[j])
+	// 		return (handle_var_error(token->cmd[0]));
+	// 	token->cmd[j] = search_error_code(return_code, token->cmd[j]);
+	// 	if (ft_strchr(token->cmd[j], '\"') || ft_strchr(token->cmd[j], '\''))
+	// 	{
+	// 		token->cmd[j] = clean_quote(token->cmd[j]);
+	// 		if (!token->cmd[j])
+	// 			return (handle_var_error(token->cmd[0]));
+	// 	}
 		j++;
 	}
 	return (0);

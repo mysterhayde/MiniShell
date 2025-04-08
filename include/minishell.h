@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 17:10:09 by cbopp             #+#    #+#             */
-/*   Updated: 2025/04/08 23:38:35 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/04/08 23:53:06 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -298,13 +298,13 @@ int		check_string(t_mini *mini, t_token *cmd_token);
 int		transform_string(t_token *token, char **envp, int return_code);
 int		compare_wildcard_and_file(char *file, char *wildcard);
 
+char	*subchain_system(char *str);
 char	*search_error_code(int return_code, char *str);
 char	*expand_error_code(char *str, int return_code);
 char	*replace_error_code(char *str, int i, int return_code);
 
 void	fix_index(t_token *cmd_token);
 
-t_subchain	*create_subchain(char *str);
 
 
 /*------------------------------- Redirection -------------------------------*/
