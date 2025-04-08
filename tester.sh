@@ -53,6 +53,9 @@ ls -la
 "/bin/ls"
 "ls"
 "ls -la"
+echo "Hello World" > hello.txt
+touch test.txt
+echo Hello >test.txt World
 EOF
 
 # Création du fichier de commandes avec marqueur
