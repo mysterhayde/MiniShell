@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parenthesis_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 16:02:22 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/04/01 17:00:03 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/04/08 09:49:21 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static t_token	*find_last_token(t_token *token, int *paren)
 {
-	while(token->next)
+	while (token->next)
 	{
 		if (token->type == LEFT_PAREN || token->type == RIGHT_PAREN)
 			*(paren) = 1;
@@ -29,7 +29,7 @@ static int	add_before_token(t_mini *mini)
 
 	first = malloc(sizeof(t_token));
 	if (!first)
-		return(1);
+		return (1);
 	first->cmd = malloc(sizeof(char *) * 2);
 	if (!first->cmd)
 		return (free(first), 1);
