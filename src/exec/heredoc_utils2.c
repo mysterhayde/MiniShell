@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 12:00:00 by cbopp             #+#    #+#             */
-/*   Updated: 2025/04/08 17:26:56 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/04/08 17:29:54 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ static void	signal_clean_exit(t_mini *mini, char *prompt ,int temp_fd)
 	signal(SIGQUIT, SIG_DFL);
 	if (g_signo == SIGINT)
 		kill(0, SIGINT);
+	if (g_signo == SIGQUIT)
+		kill(0, SIGQUIT);
 }
 
 /**
