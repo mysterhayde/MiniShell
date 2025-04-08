@@ -6,11 +6,30 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 09:39:58 by cbopp             #+#    #+#             */
-/*   Updated: 2025/02/21 08:01:17 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/04/08 11:15:50 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+int	print_env(char **env)
+{
+	size_t	size;
+	size_t	i;
+
+	i = 0;
+	size = ft_chartable_linecount(env);
+	while (i < size)
+	{
+		if (ft_strchr(env[i], '='))
+		{
+			if (ft_printf("%s\n", env[i]) < 0)
+				return (1);
+		}
+		i++;
+	}
+	return (0);
+}
 
 static char	**remove_env_var(char **envp, int rm_index)
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
+/*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 17:10:09 by cbopp             #+#    #+#             */
-/*   Updated: 2025/04/07 10:47:15 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/04/08 21:44:11 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,6 +175,7 @@ int		export(t_mini *mini, char **cmd);
 int		exit_builtin(t_mini *mini, char **cmd);
 int		handle_exit_in_pipe(t_mini *mini, char **cmd);
 int		match_var_name(const char *env_var, const char *var_name);
+int		print_env(char **env);
 
 char	**copy_env(char **env);
 char	*expand(char *str, char **envp);
@@ -255,6 +256,7 @@ char	*find_path(char *cmd, char **envp);
 /*--------------------------------- Parsing ---------------------------------*/
 
 int		count_leading_spaces(char *str);
+int		check_parenthesis(t_mini *mini);
 int		parsing(char *str, t_mini *mini);
 int		check_final_token(t_token *token);
 int		is_operator(t_mini *mini, char *str);
