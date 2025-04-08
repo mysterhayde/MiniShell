@@ -6,11 +6,23 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 15:34:38 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/03/31 12:59:47 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/04/08 17:23:18 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+static void	handle_heredoc_signal(int signal)
+{
+	if (signal == SIGINT)
+		g_signo = SIGINT;
+	if (signal == SIGQUIT)
+		g_signo = SIGQUIT;
+	rl_replace_line("", 0);
+	rl_on_new_line();
+	rl_done = 1;
+	close(STDIN_FILENO);
+}
 
 /**
  * @brief Waits for the here_doc child process to complete
@@ -69,8 +81,8 @@ int	here_doc_with_num(t_mini *mini, char *limiter, int heredoc_num)
 	}
 	if (pid == 0)
 	{
-		signal(SIGINT, SIG_DFL);
-		signal(SIGQUIT, SIG_DFL);
+		signal(SIGINT, handle_heredoc_signal);
+		signal(SIGQUIT, handle_heredoc_signal);
 		free(temp_name);
 		here_doc_child_with_num(mini, limiter, temp_fd, heredoc_num);
 	}
