@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 15:03:44 by cbopp             #+#    #+#             */
-/*   Updated: 2025/04/08 09:41:18 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/04/08 10:31:16 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,6 @@ int	export(t_mini *mini, char **cmd)
 		}
 		i++;
 	}
-	ft_free_chartable(mini->envp);
-	mini->envp = tempenv;
+	ft_free_chartable(tempenv);
 	return (0);
 }
