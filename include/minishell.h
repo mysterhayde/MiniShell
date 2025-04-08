@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 17:10:09 by cbopp             #+#    #+#             */
-/*   Updated: 2025/04/08 21:44:11 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/04/08 23:38:35 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,13 @@ typedef struct s_state
 	int		original_pipe_num;
 }	t_state;
 
+typedef struct s_subchain
+{
+	char	*str;
+	t_bool	expand;
+}
+	t_subchain;
+
 typedef struct s_mini
 {
 	char		**envp;
@@ -129,6 +136,8 @@ typedef struct s_mini
 	t_token		**heredoc_tokens;
 	int			heredoc_count;
 	int			*heredoc_fds;
+	t_bool		expand;			//check
+	t_bool		clean_quote;	//check
 	t_bool		isheredoc;
 	t_bool		is_pipe;
 	t_token		*token;
@@ -294,6 +303,9 @@ char	*expand_error_code(char *str, int return_code);
 char	*replace_error_code(char *str, int i, int return_code);
 
 void	fix_index(t_token *cmd_token);
+
+t_subchain	*create_subchain(char *str);
+
 
 /*------------------------------- Redirection -------------------------------*/
 

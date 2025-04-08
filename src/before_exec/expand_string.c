@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 14:55:09 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/03/13 18:25:55 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/04/08 23:33:39 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,12 +86,14 @@ static char	*isolate_variables(char *str, int i, char **envp)
  */
 char	*search_variable(char *str, char **envp, int *error)
 {
-	int		i;
-	char	*temp;
-	char	*new_str;
-	char	*expanded;
+	int			i;
+	char		*temp;
+	char		*new_str;
+	char		*expanded;
+	//t_subchain	*subchain;
 
 	i = 0;
+	//subchain = create_subchain(str);
 	while (str[i])
 	{
 		if (str[i] == '\'')
