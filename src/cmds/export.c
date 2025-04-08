@@ -6,19 +6,19 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 15:03:44 by cbopp             #+#    #+#             */
-/*   Updated: 2025/04/08 11:18:09 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/04/08 11:37:20 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-int	print_export_list(char	**envp)
+int	print_export_list(char **envp)
 {
 	int		i;
 	char	*eq;
 	char	**temp;
 
-	temp = ft_asort_char(envp);
+	temp = ft_asort_char(copy_env(envp));
 	i = 0;
 	while (temp && temp[i])
 	{
@@ -34,7 +34,7 @@ int	print_export_list(char	**envp)
 		ft_printf("\n");
 		i++;
 	}
-	free(temp);
+	ft_free_chartable(temp);
 	return (0);
 }
 
@@ -111,9 +111,9 @@ int	export(t_mini *mini, char **cmd)
 	int		i;
 	int		ret;
 
-	tempenv = copy_env(mini->envp);
 	if (!cmd[1])
-		return (print_export_list(tempenv), 0);
+		return (print_export_list(mini->envp), 0);
+	tempenv = copy_env(mini->envp);
 	if (!tempenv)
 		return (show_err_return("export", ERR_MALLOC, ERR_GENERAL));
 	i = 1;
