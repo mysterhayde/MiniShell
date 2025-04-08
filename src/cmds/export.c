@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 15:03:44 by cbopp             #+#    #+#             */
-/*   Updated: 2025/04/08 10:31:16 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/04/08 11:18:09 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,22 +16,25 @@ int	print_export_list(char	**envp)
 {
 	int		i;
 	char	*eq;
+	char	**temp;
 
+	temp = ft_asort_char(envp);
 	i = 0;
-	while (envp && envp[i])
+	while (temp && temp[i])
 	{
 		ft_printf("declare -x ");
-		eq = ft_strchr(envp[i], '=');
+		eq = ft_strchr(temp[i], '=');
 		if (eq)
 		{
-			write(1, envp[i], eq - envp[i] + 1);
+			write(1, temp[i], eq - temp[i] + 1);
 			ft_printf("\"%s\"", eq + 1);
 		}
 		else
-			ft_printf("%s", envp[i]);
+			ft_printf("%s", temp[i]);
 		ft_printf("\n");
 		i++;
 	}
+	free(temp);
 	return (0);
 }
 
@@ -109,9 +112,8 @@ int	export(t_mini *mini, char **cmd)
 	int		ret;
 
 	tempenv = copy_env(mini->envp);
-	tempenv = ft_asort_char(tempenv);
 	if (!cmd[1])
-		return (print_export_list(tempenv));
+		return (print_export_list(tempenv), 0);
 	if (!tempenv)
 		return (show_err_return("export", ERR_MALLOC, ERR_GENERAL));
 	i = 1;
@@ -125,6 +127,7 @@ int	export(t_mini *mini, char **cmd)
 		}
 		i++;
 	}
-	ft_free_chartable(tempenv);
+	ft_free_chartable(mini->envp);
+	mini->envp = tempenv;
 	return (0);
 }
