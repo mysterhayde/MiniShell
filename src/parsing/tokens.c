@@ -6,7 +6,7 @@
 /*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 14:00:12 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/03/26 17:50:35 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/04/08 17:42:35 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,8 @@ static void	create_first_node(t_mini *mini, char *str, int type)
  */
 void	add_last_token(char *str, t_mini *mini, int type)
 {
+	if (type == PIPE)
+		mini->last_cmd = NULL;
 	if (!mini->token)
 	{
 		create_first_node(mini, str, type);

@@ -3,14 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_utils2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
+/*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 12:00:00 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/27 22:37:42 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/04/08 17:29:54 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+static void	signal_clean_exit(t_mini *mini, char *prompt ,int temp_fd)
+{
+	free(prompt);
+	close(temp_fd);
+	free_all(mini);
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
+	if (g_signo == SIGINT)
+		kill(0, SIGINT);
+	if (g_signo == SIGQUIT)
+		kill(0, SIGQUIT);
+}
 
 /**
  * @brief Display EOF warning for heredoc
@@ -31,13 +44,14 @@ static void	display_heredoc_eof_warning(char *limiter)
  * @param temp_fd File descriptor to write to
  * @return 1 if delimiter found, 0 to continue reading
  */
-static int	process_heredoc_line(char *line, char *limiter, int temp_fd)
+static int	process_heredoc_line(t_mini *mini, char *line, char *limiter, int temp_fd)
 {
 	if (is_delimiter(line, limiter))
 	{
 		free(line);
 		return (1);
 	}
+	line = search_variable(line, mini->envp, &mini->ret);
 	ft_putstr_fd(line, temp_fd);
 	ft_putstr_fd("\n", temp_fd);
 	free(line);
@@ -50,7 +64,7 @@ static int	process_heredoc_line(char *line, char *limiter, int temp_fd)
  * @param temp_fd File descriptor to write to
  * @param heredoc_num The heredoc number for the prompt
  */
-static void	read_heredoc_lines(char *limiter, int temp_fd, int heredoc_num)
+static void	read_heredoc_lines(t_mini *mini, char *limiter, int temp_fd, int heredoc_num)
 {
 	char	*line;
 	char	*prompt;
@@ -61,12 +75,14 @@ static void	read_heredoc_lines(char *limiter, int temp_fd, int heredoc_num)
 	while (1)
 	{
 		line = readline(prompt);
+		if (g_signo != 0)
+			signal_clean_exit(mini, prompt, temp_fd);
 		if (!line)
 		{
 			display_heredoc_eof_warning(limiter);
 			break ;
 		}
-		if (process_heredoc_line(line, limiter, temp_fd))
+		if (process_heredoc_line(mini, line, limiter, temp_fd))
 			break ;
 	}
 	free(prompt);
@@ -81,7 +97,7 @@ static void	read_heredoc_lines(char *limiter, int temp_fd, int heredoc_num)
 void	here_doc_child_with_num(t_mini *mini, char *limiter, int temp_fd,
 			int heredoc_num)
 {
-	read_heredoc_lines(limiter, temp_fd, heredoc_num);
+	read_heredoc_lines(mini, limiter, temp_fd, heredoc_num);
 	close(temp_fd);
 	free_all(mini);
 	exit(0);
