@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   token_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
+/*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 14:17:11 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/09 14:18:18 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/04/08 17:41:48 by hdougoud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+// void	free_lastcmd_list
 
 /**
  * @brief Frees a cmd array (array of strings)
