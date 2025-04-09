@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 10:00:00 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/25 13:39:11 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/04/09 11:37:26 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ int	allocate_heredoc_arrays(t_mini *mini, int count)
 	mini->heredoc_tokens = malloc(sizeof(t_token *) * count);
 	if (!mini->heredoc_tokens)
 		return (1);
+	ft_memset(mini->heredoc_tokens, 0, sizeof(t_token *) * count);
 	mini->heredoc_fds = malloc(sizeof(int) * count);
 	if (!mini->heredoc_fds)
 	{
@@ -54,6 +55,7 @@ int	allocate_heredoc_arrays(t_mini *mini, int count)
 		mini->heredoc_tokens = NULL;
 		return (1);
 	}
+	ft_memset(mini->heredoc_fds, 0, sizeof(int) * count);
 	return (0);
 }
 

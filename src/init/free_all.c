@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 16:18:45 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/27 22:51:57 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/04/09 10:30:41 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,7 @@ void	free_all(t_mini *mini)
 	cleanup_history();
 	if (!mini)
 		return ;
-	if (mini->heredoc_fds)
-		free(mini->heredoc_fds);
-	if (mini->heredoc_tokens)
-		free(mini->heredoc_tokens);
+	free_heredoc_arrays(mini);
 	if (mini->user)
 		free(mini->user);
 	if (mini->token || mini->backup)
