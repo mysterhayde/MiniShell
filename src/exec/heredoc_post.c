@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 10:00:00 by cbopp             #+#    #+#             */
-/*   Updated: 2025/03/27 22:33:21 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/04/09 10:31:42 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ void	free_heredoc_arrays(t_mini *mini)
 		{
 			if (mini->heredoc_fds[i] > 0)
 				close(mini->heredoc_fds[i]);
+			mini->heredoc_fds[i] = 0;
 			i++;
 		}
 		free(mini->heredoc_fds);

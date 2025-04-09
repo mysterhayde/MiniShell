@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_utils2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 12:00:00 by cbopp             #+#    #+#             */
-/*   Updated: 2025/04/08 17:29:54 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/04/09 10:37:18 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static void	signal_clean_exit(t_mini *mini, char *prompt ,int temp_fd)
+static void	signal_clean_exit(t_mini *mini, char *prompt, int temp_fd)
 {
 	free(prompt);
 	close(temp_fd);
@@ -44,7 +44,8 @@ static void	display_heredoc_eof_warning(char *limiter)
  * @param temp_fd File descriptor to write to
  * @return 1 if delimiter found, 0 to continue reading
  */
-static int	process_heredoc_line(t_mini *mini, char *line, char *limiter, int temp_fd)
+static int	process_heredoc_line(t_mini *mini, char *line, char *limiter,
+			int temp_fd)
 {
 	if (is_delimiter(line, limiter))
 	{
@@ -64,7 +65,8 @@ static int	process_heredoc_line(t_mini *mini, char *line, char *limiter, int tem
  * @param temp_fd File descriptor to write to
  * @param heredoc_num The heredoc number for the prompt
  */
-static void	read_heredoc_lines(t_mini *mini, char *limiter, int temp_fd, int heredoc_num)
+static void	read_heredoc_lines(t_mini *mini, char *limiter, int temp_fd,
+			int heredoc_num)
 {
 	char	*line;
 	char	*prompt;

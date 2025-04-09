@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 10:00:47 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/04/08 21:44:15 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/04/09 09:54:24 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,79 +76,79 @@ static char	*allocate_tokens(char *str, t_mini *mini)
 	return (str);
 }
 
-static void	print_tokens(t_token *token)			// Debug function
-{
-	while (token)
-	{
-		if (token->type == CMD)
-		{
-			printf("%s	", token->cmd[0]);
-			printf(COLOR_GREEN"TYPE:	CMD");
-			printf(COLOR_RESET"\n");
-			for (int i = 1; token->cmd[i]; i++)
-			{
-				printf("%s	", token->cmd[i]);
-				printf(COLOR_GREEN_ULTRA"TYPE:	ARG");
-				printf(COLOR_RESET"\n");
-			}
-		}
-		else if (token->type == PIPE)
-		{
-			printf("%s	", token->cmd[0]);
-			printf(COLOR_RED"TYPE:	PIPE");
-			printf(COLOR_RESET"\n");
-		}
-		else if (token->type == RDIT)
-		{
-			printf("%s	", token->cmd[0]);
-			printf(COLOR_BLUE"TYPE:	REDIRECTION");
-			printf(COLOR_RESET"\n");
-		}
-		else if (token->type == FILES)
-		{
-			printf("%s	", token->cmd[0]);
-			printf(COLOR_PURPLE"TYPE:	FILE");
-			printf(COLOR_RESET"\n");
-		}
-		else if (token->type == HERE_DOC)
-		{
-			printf("%s	", token->cmd[0]);
-			printf(COLOR_CYAN"TYPE:	HERE_DOC");
-			printf(COLOR_RESET"\n");
-		}
-		else if (token->type == LIMITER)
-		{
-			printf("%s	", token->cmd[0]);
-			printf(COLOR_CYAN"TYPE:	LIMITER");
-			printf(COLOR_RESET"\n");
-		}
-		else if (token->type == AND_OP)
-		{
-			printf("%s	", token->cmd[0]);
-			printf(COLOR_RED"TYPE:	AND");
-			printf(COLOR_RESET"\n");
-		}
-		else if (token->type == OR_OP)
-		{
-			printf("%s	", token->cmd[0]);
-			printf(COLOR_RED"TYPE:	OR");
-			printf(COLOR_RESET"\n");
-		}
-		else if (token->type == LEFT_PAREN || token->type == RIGHT_PAREN)
-		{
-			printf("%s	", token->cmd[0]);
-			printf(COLOR_YELLOW"TYPE:	PARENTHESE");
-			printf(COLOR_RESET"\n");
-		}
-		else 
-		{
-			printf("%s	", token->cmd[0]);
-			printf(COLOR_RED_ULTRA"TYPE:	UNKNOW");
-			printf(COLOR_RESET"\n");
-		}
-		token = token->next;
-	}
-}
+// static void	print_tokens(t_token *token)			// Debug function
+// {
+// 	while (token)
+// 	{
+// 		if (token->type == CMD)
+// 		{
+// 			printf("%s	", token->cmd[0]);
+// 			printf(COLOR_GREEN"TYPE:	CMD");
+// 			printf(COLOR_RESET"\n");
+// 			for (int i = 1; token->cmd[i]; i++)
+// 			{
+// 				printf("%s	", token->cmd[i]);
+// 				printf(COLOR_GREEN_ULTRA"TYPE:	ARG");
+// 				printf(COLOR_RESET"\n");
+// 			}
+// 		}
+// 		else if (token->type == PIPE)
+// 		{
+// 			printf("%s	", token->cmd[0]);
+// 			printf(COLOR_RED"TYPE:	PIPE");
+// 			printf(COLOR_RESET"\n");
+// 		}
+// 		else if (token->type == RDIT)
+// 		{
+// 			printf("%s	", token->cmd[0]);
+// 			printf(COLOR_BLUE"TYPE:	REDIRECTION");
+// 			printf(COLOR_RESET"\n");
+// 		}
+// 		else if (token->type == FILES)
+// 		{
+// 			printf("%s	", token->cmd[0]);
+// 			printf(COLOR_PURPLE"TYPE:	FILE");
+// 			printf(COLOR_RESET"\n");
+// 		}
+// 		else if (token->type == HERE_DOC)
+// 		{
+// 			printf("%s	", token->cmd[0]);
+// 			printf(COLOR_CYAN"TYPE:	HERE_DOC");
+// 			printf(COLOR_RESET"\n");
+// 		}
+// 		else if (token->type == LIMITER)
+// 		{
+// 			printf("%s	", token->cmd[0]);
+// 			printf(COLOR_CYAN"TYPE:	LIMITER");
+// 			printf(COLOR_RESET"\n");
+// 		}
+// 		else if (token->type == AND_OP)
+// 		{
+// 			printf("%s	", token->cmd[0]);
+// 			printf(COLOR_RED"TYPE:	AND");
+// 			printf(COLOR_RESET"\n");
+// 		}
+// 		else if (token->type == OR_OP)
+// 		{
+// 			printf("%s	", token->cmd[0]);
+// 			printf(COLOR_RED"TYPE:	OR");
+// 			printf(COLOR_RESET"\n");
+// 		}
+// 		else if (token->type == LEFT_PAREN || token->type == RIGHT_PAREN)
+// 		{
+// 			printf("%s	", token->cmd[0]);
+// 			printf(COLOR_YELLOW"TYPE:	PARENTHESE");
+// 			printf(COLOR_RESET"\n");
+// 		}
+// 		else 
+// 		{
+// 			printf("%s	", token->cmd[0]);
+// 			printf(COLOR_RED_ULTRA"TYPE:	UNKNOW");
+// 			printf(COLOR_RESET"\n");
+// 		}
+// 		token = token->next;
+// 	}
+// }
 
 /**
  * @brief Checks token syntax and balancing of parentheses
@@ -201,7 +201,7 @@ int	parsing(char *str, t_mini *mini)
 		next_token += len;
 	}
 	mini->token = mini->backup;
-	print_tokens(mini->backup); // Debug
+	// print_tokens(mini->backup); // Debug
 	if (check_syntax(mini->token))
 		return (show_err_msg("Syntax Error", "unexpected token"), EXIT_FAILURE);
 	if (check_parenthesis(mini))
