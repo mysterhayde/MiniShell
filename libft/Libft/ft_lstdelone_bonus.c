@@ -3,15 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstdelone_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 10:08:24 by hdougoud          #+#    #+#             */
-/*   Updated: 2024/11/27 10:55:11 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/05/08 15:50:59 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft.h"
 
+/**
+ * @brief Deletes a node in a t_list linked list
+ * @param lst The linked list
+ * @param del The function that will be used to delete the content of a node.
+ */
 void	ft_lstdelone(t_list *lst, void (*del)(void *))
 {
 	if (lst)

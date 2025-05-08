@@ -3,15 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   ft_free_tab.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 11:33:09 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/02/05 11:37:39 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/05/08 15:43:26 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft.h"
 
+/**
+ * @brief Frees a char **table
+ * @param tab The char table to be freed
+ */
 void	free_tab(char **tab)
 {
 	int	i;

@@ -3,15 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstadd_back_bonus.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 23:23:09 by hdougoud          #+#    #+#             */
-/*   Updated: 2024/11/27 10:55:04 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/05/08 15:48:42 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft.h"
 
+/**
+ * @brief Adds 'new' node to the back of linked list 'lst'.
+ * @param lst A pointer to the linked list
+ * @param new A pointer to the node to be added to the end of 'lst'
+ */
 void	ft_lstadd_back(t_list **lst, t_list *new)
 {
 	t_list	*ulst;

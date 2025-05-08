@@ -3,15 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstclear_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 11:00:35 by hdougoud          #+#    #+#             */
-/*   Updated: 2024/11/27 10:55:09 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/05/08 15:49:59 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft.h"
 
+/**
+ * @brief Clears a linked list of t_list type
+ * @param lst The t_list linked list
+ * @param del The delete function.
+ */
 void	ft_lstclear(t_list **lst, void (*del)(void *))
 {
 	t_list	*blst;

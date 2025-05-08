@@ -3,15 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atol.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 20:25:33 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/02/21 11:07:29 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/05/08 15:40:21 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 /**
- * @brief transforms a string into an long
+ * @brief transforms a string into an integer
+ * @param str Pointer to a const str
+ * @returns The integer transfromed from ascii
  */
 long	ft_atol(const char *str)
 {

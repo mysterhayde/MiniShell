@@ -3,15 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstlast_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 23:13:29 by hdougoud          #+#    #+#             */
-/*   Updated: 2024/11/27 10:55:16 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/05/08 15:53:08 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft.h"
 
+/**
+ * @brief Finds the last element of a linked list.
+ * @param lst The t_list linked list.
+ * @return A pointer to the last node in the list.
+ */
 t_list	*ft_lstlast(t_list *lst)
 {
 	if (lst == NULL)

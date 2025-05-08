@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 13:54:38 by hdougoud          #+#    #+#             */
-/*   Updated: 2024/11/27 10:55:52 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/05/08 16:12:37 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,12 @@ static char	**ft_fill_tab(char const *s, char c, char **tab)
 	return (tab);
 }
 
+/**
+ * @brief Splits a string, at every 'c', into a table of strings
+ * @param s A pointer to the string to split.
+ * @param c The character used to split the string.
+ * @return A pointer to the table of strings.
+ */
 char	**ft_split(char const *s, char c)
 {
 	char			**tab;

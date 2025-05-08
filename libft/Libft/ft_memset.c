@@ -3,15 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 13:49:33 by hdougoud          #+#    #+#             */
-/*   Updated: 2024/11/27 10:55:39 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/05/08 16:07:46 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft.h"
 
+/**
+ * @brief Fills the first n bytes of the memory area pointed to by s with the
+ * constant byte c.
+ * @param b A pointer to the string to be manipulated
+ * @param c The byte to fill the memory.
+ * @param len The number of bytes to fill.
+ */
 void	*ft_memset(void *b, int c, size_t len)
 {
 	unsigned int	i;

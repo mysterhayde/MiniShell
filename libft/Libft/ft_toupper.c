@@ -3,13 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   ft_toupper.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:24:59 by hdougoud          #+#    #+#             */
-/*   Updated: 2024/10/02 14:37:30 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/05/08 16:25:54 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+/**
+ * @brief Transforms an lower case alphabetical character to upper case.
+ * @param c Character to be transformed (if necessary).
+ * @return The transformed character.
+ */
 int	ft_toupper(int c)
 {
 	if (c >= 97 && c <= 122)

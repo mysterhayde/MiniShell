@@ -3,15 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putchar_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 09:56:16 by hdougoud          #+#    #+#             */
-/*   Updated: 2024/11/27 10:55:44 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/05/08 16:08:41 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft.h"
 
+/**
+ * @brief Writes a character to a given fd.
+ * @param c The character to print.
+ * @param fd The fd to write to.
+ */
 void	ft_putchar_fd(char c, int fd)
 {
 	write(fd, &c, 1);

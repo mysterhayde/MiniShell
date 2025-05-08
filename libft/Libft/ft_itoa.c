@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 16:38:06 by hdougoud          #+#    #+#             */
-/*   Updated: 2024/11/27 10:55:02 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/05/08 15:46:42 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,11 @@ static char	*ft_min_int(void)
 	return (str);
 }
 
-static int	ft_is_negative(int n)
+/**
+ * @brief Checks if an integer is negative
+ * @returns 1 if true, 0 if false
+ */
+int	ft_is_negative(int n)
 {
 	if (n < 0)
 		return (1);
@@ -45,6 +49,11 @@ static char	*ft_convert(int n, int len, char *str, int negative)
 	return (str);
 }
 
+/**
+ * @brief Converts an integer in to a string
+ * @param n The integer to convert
+ * @return A pointer to the first character in the string.
+ */
 char	*ft_itoa(int n)
 {
 	char	*str;
