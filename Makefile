@@ -84,6 +84,16 @@ $(NAME): $(OBJECTS)
 
 $(OBJ_DIR)%.o: %.c
 	@$(CC) $(FLAGS) -c $< -o $@
+	@count=$$(ls $(OBJ_DIR) | wc -l); \
+	total=$(words $(OBJECTS)); \
+	percent=$$((100 * $$count / $$total)); \
+	barlen=30; \
+	done=$$((barlen * $$percent / 100)); \
+	todo=$$((barlen - $$done)); \
+	bar=$$(printf "█%.0s" $$(seq 1 $$done)); \
+	space=$$(printf "░%.0s" $$(seq 1 $$todo)); \
+	printf "\r\033[1;36mCompiling [%-30s] %3d%%\033[0m" "$$bar$$space" "$$percent"; \
+	if [ $$count -eq $$total ]; then echo ""; fi
 
 clean:
 	@echo $(CURSIVE)$(GRAY) " -> Cleaning object files.." $(NONE)
