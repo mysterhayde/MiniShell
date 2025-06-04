@@ -12,40 +12,98 @@ PRINTF = $(addprefix $(PRINTF_DIR), $(PRINTF_A))
 
 #--------------------------------------SOURCES---------------------------------#
 SRC_DIR = src/
-MAIN_SRC = main.c \
- show_error.c \
- free_all.c
-SRC = $(addprefix $(SRC_DIR), $(MAIN_SRC))
+SRC_SRC =  \
+	main.c \
+	show_error.c
+SRC = $(addprefix $(SRC_DIR), $(SRC_SRC))
 
-INIT_SRC = init.c history.c history_utils.c signal.c prompt_utils.c env_utils.c check_null.c
-INIT_DIR = src/init/
-INIT = $(addprefix $(INIT_DIR), $(INIT_SRC))
+BEFORE_EXEC_DIR = src/before_exec/
+BEFORE_EXEC_SRC =  \
+	check_string.c \
+	clear_quotes.c \
+	error_code.c \
+	expand_string.c \
+	read_dir.c \
+	wildcard.c \
+	wildcard_cmp.c \
+	wildcard_getdir.c \
+	wildcard_utils.c
+BEFORE_EXEC = $(addprefix $(BEFORE_EXEC_DIR), $(BEFORE_EXEC_SRC))
 
-CMDS_SRC = pwd.c cd.c env.c echo.c exit.c unset.c export.c expand.c
 CMDS_DIR = src/cmds/
+CMDS_SRC =  \
+	cd.c \
+	echo.c \
+	env.c \
+	env_utils.c \
+	exit.c \
+	expand.c \
+	export.c \
+	pwd.c \
+	unset.c
 CMDS = $(addprefix $(CMDS_DIR), $(CMDS_SRC))
 
-EXEC_SRC = execute.c builtin.c bin.c path.c pipe.c exec_utils.c pipe_utils.c pipe_wait.c \
- redir.c redir2.c exec_redir.c operators.c operators2.c heredoc.c operator_state.c \
- heredoc_utils.c execute_cmd.c heredoc_post.c heredoc_pre.c heredoc_redir.c heredoc_utils2.c \
- pipe_heredoc_utils.c pipe_heredoc.c exec_heredoc.c heredoc_exec.c logical_heredoc.c heredoc_scan.c \
- pipe_redir_utils.c pipe_cmd_flags.c pipe_token_utils.c
 EXEC_DIR = src/exec/
+EXEC_SRC =  \
+	bin.c \
+	builtin.c \
+	exec_heredoc.c \
+	exec_redir.c \
+	exec_utils.c \
+	execute.c \
+	execute_cmd.c \
+	heredoc.c \
+	heredoc_exec.c \
+	heredoc_post.c \
+	heredoc_pre.c \
+	heredoc_redir.c \
+	heredoc_scan.c \
+	heredoc_utils.c \
+	heredoc_utils2.c \
+	logical_heredoc.c \
+	operator_state.c \
+	operators.c \
+	operators2.c \
+	path.c \
+	pipe.c \
+	pipe_cmd_flags.c \
+	pipe_heredoc.c \
+	pipe_heredoc_utils.c \
+	pipe_redir_utils.c \
+	pipe_token_utils.c \
+	pipe_utils.c \
+	pipe_wait.c \
+	redir.c \
+	redir2.c
 EXEC = $(addprefix $(EXEC_DIR), $(EXEC_SRC))
 
-PARS_SRC = parsing.c parsing_utils.c split_entry.c tokens.c parenthesis.c \
- parenthesis_ops.c parenthesis_redir.c parenthesis_exec.c \
- token_utils.c parenthesis_utils.c
-PARS_DIR = src/parsing/
-PARS = $(addprefix $(PARS_DIR), $(PARS_SRC))
+INIT_DIR = src/init/
+INIT_SRC =  \
+	check_null.c \
+	free_all.c \
+	history.c \
+	history_utils.c \
+	init.c \
+	prompt_utils.c \
+	signal.c
+INIT = $(addprefix $(INIT_DIR), $(INIT_SRC))
 
-BEF_EXEC = check_string.c expand_string.c clear_quotes.c wildcard.c read_dir.c \
- wildcard_utils.c wildcard_cmp.c wildcard_getdir.c error_code.c
-BEF_DIR = src/before_exec/
-BEFORE = $(addprefix $(BEF_DIR), $(BEF_EXEC))
+PARSING_DIR = src/parsing/
+PARSING_SRC =  \
+	parenthesis.c \
+	parenthesis_exec.c \
+	parenthesis_ops.c \
+	parenthesis_redir.c \
+	parenthesis_utils.c \
+	parsing.c \
+	parsing_utils.c \
+	split_entry.c \
+	token_utils.c \
+	tokens.c
+PARSING = $(addprefix $(PARSING_DIR), $(PARSING_SRC))
 
-ALL_SRC = $(SRC) $(INIT) $(CMDS) $(PARS) $(EXEC) $(BEFORE)
-
+ALL_SRC = $(SRC) $(BEFORE_EXEC) $(CMDS) $(EXEC) $(INIT) $(PARSING)
+vpath %.c src src/before_exec src/cmds src/exec src/init src/parsing
 #--------------------------------------OBJECTS----------------------------------#
 OBJ_DIR = Objects/
 # Generate object files with same names but in Objects directory
@@ -60,7 +118,7 @@ ANIMATION_COLOR = '\033[1;36m'
 TOTAL_FILES := $(words $(OBJECTS))
 
 #--------------------------------------COLORS-----------------------------------#
-NONE='\033[0m'
+NONE='\033[0m'	
 GREEN='\033[32m'
 YELLOW='\033[33m'
 GRAY='\033[2;37m'
