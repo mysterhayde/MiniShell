@@ -3,15 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 11:31:01 by hdougoud          #+#    #+#             */
-/*   Updated: 2024/11/27 10:55:26 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/06/04 12:12:09 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft.h"
 
+/**
+ * @brief Searches for the character 'c' in the first 'n' bytes of string 's'
+ * @param s A pointer to the byte of the string.
+ * @param c The character that is being looked for.
+ * @param n The maximum number of bytes to look in.
+ */
 void	*ft_memchr(const void *s, int c, size_t n)
 {
 	unsigned char	*us;

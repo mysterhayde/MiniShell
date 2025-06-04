@@ -3,15 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstsize_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 14:18:52 by hdougoud          #+#    #+#             */
-/*   Updated: 2024/11/27 10:55:23 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/06/04 12:12:02 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft.h"
 
+/**
+ * @brief Counts the number of nodes in a linked list
+ * @param lst A pointer to the linked list.
+ * @return The number of nodes in the list.
+ */
 int	ft_lstsize(t_list *lst)
 {
 	int	i;

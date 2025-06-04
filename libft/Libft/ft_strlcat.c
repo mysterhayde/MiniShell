@@ -3,15 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlcat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 13:30:19 by hdougoud          #+#    #+#             */
-/*   Updated: 2024/11/27 10:56:08 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/06/04 12:13:11 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft.h"
 
+/**
+ * @brief Copy  and  catenate  the  input string into a destination string.
+ * If the destination buffer, limited by its size, isn't large enough to hold
+ * the copy, the resulting string is truncated (but it is guaranteed to be 
+ * null-terminated).
+ * @param dst A pointer to the destination string.
+ * @param src A pointer to the string 
+ * @return The size of the final str;
+ */
 size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
 {
 	unsigned int	i;

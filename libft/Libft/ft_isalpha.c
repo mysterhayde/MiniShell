@@ -3,13 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isalpha.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 10:34:46 by hdougoud          #+#    #+#             */
-/*   Updated: 2024/12/08 03:26:19 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/06/04 12:09:50 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+/**
+ * @brief Checks if c is in the alphabet
+ * @param c The character to check
+ * @returns 1 if true, 0 if false
+ */
 int	ft_isalpha(int c)
 {
 	if ((c >= 97 && c <= 122) || (c >= 65 && c <= 90))

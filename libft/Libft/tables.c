@@ -6,12 +6,17 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 14:42:44 by cbopp             #+#    #+#             */
-/*   Updated: 2025/04/08 09:45:03 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/06/04 12:07:44 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft.h"
 
+/**
+ * @brief Counts the amount of strings in a table of strings.
+ * @param table The table of strings.
+ * @return The amount of strings in the table.
+ */
 size_t	ft_chartable_linecount(char **table)
 {
 	size_t	count;
@@ -22,7 +27,11 @@ size_t	ft_chartable_linecount(char **table)
 	return (count);
 }
 
-// Frees a 2D table
+/**
+ * @brief Frees all the elements in a table of strings
+ * @param char **table of chars
+ * @returns 0 on success, 1 on fail
+ */
 void	ft_free_chartable(char **table)
 {
 	int	i;

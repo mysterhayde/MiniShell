@@ -3,13 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isprint.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 11:37:22 by hdougoud          #+#    #+#             */
-/*   Updated: 2024/10/01 16:08:29 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/06/04 12:10:13 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+/**
+ * @brief Checks if c is a printable ascii character
+ * @param c The character to check
+ * @returns 1 if true, 0 if false
+ */
 int	ft_isprint(int c)
 {
 	if ((c >= 32 && c <= 126))

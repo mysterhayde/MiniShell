@@ -3,22 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstadd_front_bonus.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 14:21:12 by hdougoud          #+#    #+#             */
-/*   Updated: 2024/11/27 10:55:07 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/06/04 12:10:55 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft.h"
 
-void	ft_lstadd_front(t_list **lst, t_list *new)
+/**
+ * @brief Adds 'new' node to the front of linked list 'lst'.
+ * @param lst A pointer to the linked list
+ * @param new A pointer to the node to be added to the front of 'lst'
+ */
 {
 	new->next = *lst;
 	*lst = new;
 }
+
 /*int main(void)
-{
 	t_list *low= malloc(sizeof(t_list));
 	low->content = "Bonjour";
 	low->next = NULL;

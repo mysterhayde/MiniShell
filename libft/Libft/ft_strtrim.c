@@ -3,15 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 14:31:40 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/03/10 22:25:05 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/06/04 12:09:01 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft.h"
 
+/**
+ * @brief Trims the start and end of a string of characters 'set'.
+ * @param s1 A pointer to the string to be trimmed.
+ * @param set The set of characters to trim from 's1'.
+ * @return The trimmed string.
+ */
 char	*ft_strtrim(char const *s1, char const *set)
 {
 	char	*str;

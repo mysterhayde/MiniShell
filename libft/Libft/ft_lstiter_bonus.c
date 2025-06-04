@@ -3,15 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstiter_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 11:56:00 by hdougoud          #+#    #+#             */
-/*   Updated: 2024/11/27 10:55:14 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/06/04 12:11:30 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft.h"
 
+/**
+ * @brief Iterates function 'f' on the content of each node.
+ * @param lst The t_list linked list
+ * @param f A pointer to the function that will be applied on
+ * the content of each node.
+ */
 void	ft_lstiter(t_list *lst, void (*f)(void *))
 {
 	while (lst)

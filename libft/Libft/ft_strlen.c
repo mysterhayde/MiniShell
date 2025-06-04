@@ -3,15 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 13:15:04 by hdougoud          #+#    #+#             */
-/*   Updated: 2024/11/27 10:56:25 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/06/04 12:13:25 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft.h"
 
+/**
+ * @brief Counts the number of characters in a string
+ * @param s A pointer to the string.
+ * @returns The amount of characters in string 's'.
+ */
 size_t	ft_strlen(const char *s)
 {
 	size_t	i;

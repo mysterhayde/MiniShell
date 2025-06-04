@@ -3,15 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hdougoud <hdougoud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 14:15:02 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/02/28 16:41:54 by hdougoud         ###   ########.fr       */
+/*   Updated: 2025/06/04 12:09:10 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 /**
  * @brief transforms a string into an integer
+ * @param str Pointer to a const str
+ * @returns The integer transfromed from ascii
  */
 int	ft_atoi(const char *str)
 {
