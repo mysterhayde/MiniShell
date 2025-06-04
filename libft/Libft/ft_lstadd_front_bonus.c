@@ -6,7 +6,7 @@
 /*   By: cbopp <cbopp@student.42lausanne.ch>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 14:21:12 by hdougoud          #+#    #+#             */
-/*   Updated: 2025/06/04 12:10:55 by cbopp            ###   ########.fr       */
+/*   Updated: 2025/06/04 17:11:19 by cbopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
  * @param lst A pointer to the linked list
  * @param new A pointer to the node to be added to the front of 'lst'
  */
+void	ft_lstadd_front(t_list **lst, t_list *new)
 {
 	new->next = *lst;
 	*lst = new;
